@@ -7,15 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D0A53A021CF0EA5F002DE853 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53A011CF0EA5F002DE853 /* Shaders.swift */; };
+		D0A53A041CF10A5A002DE853 /* MainGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53A031CF10A5A002DE853 /* MainGameState.swift */; };
 		D0E470131CF02EB40003E80D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E470121CF02EB40003E80D /* AppDelegate.swift */; };
-		D0E470151CF02EB40003E80D /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470141CF02EB40003E80D /* Shader.fsh */; };
-		D0E470171CF02EB40003E80D /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470161CF02EB40003E80D /* Shader.vsh */; };
 		D0E470191CF02EB40003E80D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E470181CF02EB40003E80D /* GameViewController.swift */; };
 		D0E4701C1CF02EB40003E80D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0E4701A1CF02EB40003E80D /* Main.storyboard */; };
 		D0E4701E1CF02EB40003E80D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0E4701D1CF02EB40003E80D /* Assets.xcassets */; };
 		D0E470211CF02EB40003E80D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0E4701F1CF02EB40003E80D /* LaunchScreen.storyboard */; };
 		D0E4702C1CF02EB40003E80D /* TransverseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E4702B1CF02EB40003E80D /* TransverseTests.swift */; };
 		D0E470371CF02EB40003E80D /* TransverseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E470361CF02EB40003E80D /* TransverseUITests.swift */; };
+		D0E470451CF0310D0003E80D /* SolidColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470441CF0310D0003E80D /* SolidColor.fsh */; };
+		D0E470471CF031280003E80D /* SolidColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470461CF031280003E80D /* SolidColor.vsh */; };
+		D0E470491CF0313B0003E80D /* Image.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470481CF0313B0003E80D /* Image.fsh */; };
+		D0E4704B1CF0314D0003E80D /* Image.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E4704A1CF0314D0003E80D /* Image.vsh */; };
+		D0E4704F1CF031AB0003E80D /* SolidImage.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E4704E1CF031AB0003E80D /* SolidImage.fsh */; };
+		D0E470511CF031C70003E80D /* SolidImage.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470501CF031C70003E80D /* SolidImage.vsh */; };
+		D0E470531CF031E10003E80D /* SolidLine.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470521CF031E10003E80D /* SolidLine.fsh */; };
+		D0E470551CF031F60003E80D /* SolidLine.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470541CF031F60003E80D /* SolidLine.vsh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,10 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D0A53A011CF0EA5F002DE853 /* Shaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
+		D0A53A031CF10A5A002DE853 /* MainGameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainGameState.swift; sourceTree = "<group>"; };
 		D0E4700F1CF02EB40003E80D /* Transverse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transverse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E470121CF02EB40003E80D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D0E470141CF02EB40003E80D /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
-		D0E470161CF02EB40003E80D /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
 		D0E470181CF02EB40003E80D /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		D0E4701B1CF02EB40003E80D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D0E4701D1CF02EB40003E80D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +59,14 @@
 		D0E470321CF02EB40003E80D /* TransverseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransverseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E470361CF02EB40003E80D /* TransverseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransverseUITests.swift; sourceTree = "<group>"; };
 		D0E470381CF02EB40003E80D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0E470441CF0310D0003E80D /* SolidColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidColor.fsh; sourceTree = "<group>"; };
+		D0E470461CF031280003E80D /* SolidColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidColor.vsh; sourceTree = "<group>"; };
+		D0E470481CF0313B0003E80D /* Image.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Image.fsh; sourceTree = "<group>"; };
+		D0E4704A1CF0314D0003E80D /* Image.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Image.vsh; sourceTree = "<group>"; };
+		D0E4704E1CF031AB0003E80D /* SolidImage.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = SolidImage.fsh; path = ../SolidImage.fsh; sourceTree = "<group>"; };
+		D0E470501CF031C70003E80D /* SolidImage.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidImage.vsh; sourceTree = "<group>"; };
+		D0E470521CF031E10003E80D /* SolidLine.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidLine.fsh; sourceTree = "<group>"; };
+		D0E470541CF031F60003E80D /* SolidLine.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidLine.vsh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,13 +118,21 @@
 			isa = PBXGroup;
 			children = (
 				D0E470121CF02EB40003E80D /* AppDelegate.swift */,
-				D0E470141CF02EB40003E80D /* Shader.fsh */,
-				D0E470161CF02EB40003E80D /* Shader.vsh */,
 				D0E470181CF02EB40003E80D /* GameViewController.swift */,
+				D0A53A031CF10A5A002DE853 /* MainGameState.swift */,
+				D0A53A011CF0EA5F002DE853 /* Shaders.swift */,
 				D0E4701A1CF02EB40003E80D /* Main.storyboard */,
 				D0E4701D1CF02EB40003E80D /* Assets.xcassets */,
 				D0E4701F1CF02EB40003E80D /* LaunchScreen.storyboard */,
 				D0E470221CF02EB40003E80D /* Info.plist */,
+				D0E470441CF0310D0003E80D /* SolidColor.fsh */,
+				D0E470461CF031280003E80D /* SolidColor.vsh */,
+				D0E470481CF0313B0003E80D /* Image.fsh */,
+				D0E4704A1CF0314D0003E80D /* Image.vsh */,
+				D0E4704E1CF031AB0003E80D /* SolidImage.fsh */,
+				D0E470501CF031C70003E80D /* SolidImage.vsh */,
+				D0E470521CF031E10003E80D /* SolidLine.fsh */,
+				D0E470541CF031F60003E80D /* SolidLine.vsh */,
 			);
 			path = Transverse;
 			sourceTree = "<group>";
@@ -236,10 +260,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0E4701C1CF02EB40003E80D /* Main.storyboard in Resources */,
-				D0E470171CF02EB40003E80D /* Shader.vsh in Resources */,
+				D0E470551CF031F60003E80D /* SolidLine.vsh in Resources */,
+				D0E470451CF0310D0003E80D /* SolidColor.fsh in Resources */,
+				D0E470531CF031E10003E80D /* SolidLine.fsh in Resources */,
+				D0E4704F1CF031AB0003E80D /* SolidImage.fsh in Resources */,
+				D0E470491CF0313B0003E80D /* Image.fsh in Resources */,
 				D0E4701E1CF02EB40003E80D /* Assets.xcassets in Resources */,
 				D0E470211CF02EB40003E80D /* LaunchScreen.storyboard in Resources */,
-				D0E470151CF02EB40003E80D /* Shader.fsh in Resources */,
+				D0E4704B1CF0314D0003E80D /* Image.vsh in Resources */,
+				D0E470511CF031C70003E80D /* SolidImage.vsh in Resources */,
+				D0E470471CF031280003E80D /* SolidColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +296,8 @@
 			files = (
 				D0E470191CF02EB40003E80D /* GameViewController.swift in Sources */,
 				D0E470131CF02EB40003E80D /* AppDelegate.swift in Sources */,
+				D0A53A041CF10A5A002DE853 /* MainGameState.swift in Sources */,
+				D0A53A021CF0EA5F002DE853 /* Shaders.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,6 +526,7 @@
 				D0E4703D1CF02EB40003E80D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D0E4703E1CF02EB40003E80D /* Build configuration list for PBXNativeTarget "TransverseTests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +535,7 @@
 				D0E470401CF02EB40003E80D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D0E470411CF02EB40003E80D /* Build configuration list for PBXNativeTarget "TransverseUITests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +544,7 @@
 				D0E470431CF02EB40003E80D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
