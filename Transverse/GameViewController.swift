@@ -9,7 +9,7 @@
 import GLKit
 import OpenGLES
 
-let SHOULD_LOG_FPS : Bool = true
+let SHOULD_LOG_FPS : Bool = false
 
 class GameViewController: GLKViewController {
     
@@ -72,6 +72,8 @@ class GameViewController: GLKViewController {
         print("Transverse: Loading Shaders")
         Shaders.loadShaders()
         
+        print("Transverse: Loading Textures")
+        Textures.loadTextures()
         
         glEnable(GLenum(GL_DITHER))
         glEnable(GLenum(GL_BLEND));
@@ -85,8 +87,6 @@ class GameViewController: GLKViewController {
         let view = self.view as! GLKView
         let width: Int32 = Int32(view.drawableWidth)
         let height: Int32 = Int32(view.drawableHeight)
-        
-        glViewport(0, 0, width, height)
         
         let projectionMatrix: GLKMatrix4 = GLKMatrix4MakeOrtho(0, Float(width), Float(height), 0, 0, 50)
         let viewMatrix: GLKMatrix4 = GLKMatrix4MakeLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0)
@@ -107,15 +107,13 @@ class GameViewController: GLKViewController {
                 lastFPSCalc = NSDate().timeIntervalSince1970*1000
             }
         }
-        
+        glClearColor(1, 1, 1, 1)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT) | GLbitfield(GL_DEPTH_BUFFER_BIT))
         if let gameState = self.gameState {
             gameState.onDrawFrame()
         }
         
     }
-    
-
     
     
 }

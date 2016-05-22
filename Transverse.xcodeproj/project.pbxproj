@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D074C4051CF119F6001A3AFC /* AlphaShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4041CF119F6001A3AFC /* AlphaShape.swift */; };
+		D074C4071CF11A74001A3AFC /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4061CF11A74001A3AFC /* Shape.swift */; };
+		D074C4091CF11ABC001A3AFC /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4081CF11ABC001A3AFC /* Circle.swift */; };
+		D074C4491CF129C0001A3AFC /* RenderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4481CF129C0001A3AFC /* RenderType.swift */; };
+		D074C44B1CF12B45001A3AFC /* SolidRenderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C44A1CF12B45001A3AFC /* SolidRenderType.swift */; };
+		D074C44D1CF132B6001A3AFC /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C44C1CF132B6001A3AFC /* Line.swift */; };
+		D074C44F1CF140BE001A3AFC /* UtilityMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C44E1CF140BE001A3AFC /* UtilityMath.swift */; };
+		D074C4511CF16213001A3AFC /* Textures.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4501CF16213001A3AFC /* Textures.swift */; };
+		D074C4531CF16A69001A3AFC /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = D074C4521CF16A69001A3AFC /* trophy.png */; };
+		D074C4551CF16A6E001A3AFC /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = D074C4541CF16A6E001A3AFC /* forward.png */; };
+		D074C4571CF16A73001A3AFC /* leaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = D074C4561CF16A73001A3AFC /* leaderboard.png */; };
+		D074C4591CF16CB3001A3AFC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4581CF16CB3001A3AFC /* Image.swift */; };
 		D0A53A021CF0EA5F002DE853 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53A011CF0EA5F002DE853 /* Shaders.swift */; };
 		D0A53A041CF10A5A002DE853 /* MainGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53A031CF10A5A002DE853 /* MainGameState.swift */; };
 		D0E470131CF02EB40003E80D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E470121CF02EB40003E80D /* AppDelegate.swift */; };
@@ -44,6 +56,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D074C4041CF119F6001A3AFC /* AlphaShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlphaShape.swift; path = ../AlphaShape.swift; sourceTree = "<group>"; };
+		D074C4061CF11A74001A3AFC /* Shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
+		D074C4081CF11ABC001A3AFC /* Circle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
+		D074C4481CF129C0001A3AFC /* RenderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderType.swift; path = ../RenderType.swift; sourceTree = "<group>"; };
+		D074C44A1CF12B45001A3AFC /* SolidRenderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolidRenderType.swift; sourceTree = "<group>"; };
+		D074C44C1CF132B6001A3AFC /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		D074C44E1CF140BE001A3AFC /* UtilityMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityMath.swift; sourceTree = "<group>"; };
+		D074C4501CF16213001A3AFC /* Textures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Textures.swift; sourceTree = "<group>"; };
+		D074C4521CF16A69001A3AFC /* trophy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trophy.png; path = ../../Desktop/trophy.png; sourceTree = "<group>"; };
+		D074C4541CF16A6E001A3AFC /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forward.png; path = ../../Desktop/forward.png; sourceTree = "<group>"; };
+		D074C4561CF16A73001A3AFC /* leaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leaderboard.png; path = ../../Desktop/leaderboard.png; sourceTree = "<group>"; };
+		D074C4581CF16CB3001A3AFC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		D0A53A011CF0EA5F002DE853 /* Shaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		D0A53A031CF10A5A002DE853 /* MainGameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainGameState.swift; sourceTree = "<group>"; };
 		D0E4700F1CF02EB40003E80D /* Transverse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transverse.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,10 +141,22 @@
 		D0E470111CF02EB40003E80D /* Transverse */ = {
 			isa = PBXGroup;
 			children = (
+				D074C4561CF16A73001A3AFC /* leaderboard.png */,
+				D074C4541CF16A6E001A3AFC /* forward.png */,
+				D074C4521CF16A69001A3AFC /* trophy.png */,
+				D074C44E1CF140BE001A3AFC /* UtilityMath.swift */,
+				D074C44A1CF12B45001A3AFC /* SolidRenderType.swift */,
+				D074C4481CF129C0001A3AFC /* RenderType.swift */,
+				D074C4041CF119F6001A3AFC /* AlphaShape.swift */,
+				D074C4061CF11A74001A3AFC /* Shape.swift */,
+				D074C4081CF11ABC001A3AFC /* Circle.swift */,
+				D074C44C1CF132B6001A3AFC /* Line.swift */,
 				D0E470121CF02EB40003E80D /* AppDelegate.swift */,
 				D0E470181CF02EB40003E80D /* GameViewController.swift */,
 				D0A53A031CF10A5A002DE853 /* MainGameState.swift */,
 				D0A53A011CF0EA5F002DE853 /* Shaders.swift */,
+				D074C4501CF16213001A3AFC /* Textures.swift */,
+				D074C4581CF16CB3001A3AFC /* Image.swift */,
 				D0E4701A1CF02EB40003E80D /* Main.storyboard */,
 				D0E4701D1CF02EB40003E80D /* Assets.xcassets */,
 				D0E4701F1CF02EB40003E80D /* LaunchScreen.storyboard */,
@@ -260,12 +296,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0E4701C1CF02EB40003E80D /* Main.storyboard in Resources */,
+				D074C4571CF16A73001A3AFC /* leaderboard.png in Resources */,
 				D0E470551CF031F60003E80D /* SolidLine.vsh in Resources */,
 				D0E470451CF0310D0003E80D /* SolidColor.fsh in Resources */,
 				D0E470531CF031E10003E80D /* SolidLine.fsh in Resources */,
+				D074C4551CF16A6E001A3AFC /* forward.png in Resources */,
 				D0E4704F1CF031AB0003E80D /* SolidImage.fsh in Resources */,
 				D0E470491CF0313B0003E80D /* Image.fsh in Resources */,
 				D0E4701E1CF02EB40003E80D /* Assets.xcassets in Resources */,
+				D074C4531CF16A69001A3AFC /* trophy.png in Resources */,
 				D0E470211CF02EB40003E80D /* LaunchScreen.storyboard in Resources */,
 				D0E4704B1CF0314D0003E80D /* Image.vsh in Resources */,
 				D0E470511CF031C70003E80D /* SolidImage.vsh in Resources */,
@@ -294,10 +333,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D074C4091CF11ABC001A3AFC /* Circle.swift in Sources */,
 				D0E470191CF02EB40003E80D /* GameViewController.swift in Sources */,
+				D074C4071CF11A74001A3AFC /* Shape.swift in Sources */,
 				D0E470131CF02EB40003E80D /* AppDelegate.swift in Sources */,
 				D0A53A041CF10A5A002DE853 /* MainGameState.swift in Sources */,
+				D074C4511CF16213001A3AFC /* Textures.swift in Sources */,
+				D074C4591CF16CB3001A3AFC /* Image.swift in Sources */,
+				D074C4491CF129C0001A3AFC /* RenderType.swift in Sources */,
 				D0A53A021CF0EA5F002DE853 /* Shaders.swift in Sources */,
+				D074C4051CF119F6001A3AFC /* AlphaShape.swift in Sources */,
+				D074C44F1CF140BE001A3AFC /* UtilityMath.swift in Sources */,
+				D074C44B1CF12B45001A3AFC /* SolidRenderType.swift in Sources */,
+				D074C44D1CF132B6001A3AFC /* Line.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
