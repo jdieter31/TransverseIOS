@@ -67,6 +67,8 @@ class GameViewController: GLKViewController {
     func setupGL() {
         EAGLContext.setCurrentContext(self.context)
         
+        glEnable(GLenum(GL_MULTISAMPLE))
+        
         glClearColor(1, 1, 1, 1)
         
         print("Transverse: Loading Shaders")
@@ -74,6 +76,9 @@ class GameViewController: GLKViewController {
         
         print("Transverse: Loading Textures")
         Textures.loadTextures()
+        
+        print("Transverse: Loading font from XML")
+        Text.loadFont(NSBundle.mainBundle().pathForResource("forward", ofType: "xml")!, textureHandle: Textures.fffForwardFontTexture, name: "FFF Forward")
         
         glEnable(GLenum(GL_DITHER))
         glEnable(GLenum(GL_BLEND));

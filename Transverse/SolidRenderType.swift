@@ -81,4 +81,8 @@ class SolidRenderType: RenderType {
         
         image.draw(GLuint(positionHandle), uvCoordinateHandle: GLuint(mTexCoordLoc), textureVariableHandle: mSamplerLoc)
     }
+    
+    func drawText(text: Text) {
+        drawImage(text.textImage!)
+    }
 }

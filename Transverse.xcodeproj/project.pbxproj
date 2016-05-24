@@ -21,6 +21,9 @@
 		D074C4591CF16CB3001A3AFC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4581CF16CB3001A3AFC /* Image.swift */; };
 		D0A53A021CF0EA5F002DE853 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53A011CF0EA5F002DE853 /* Shaders.swift */; };
 		D0A53A041CF10A5A002DE853 /* MainGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53A031CF10A5A002DE853 /* MainGameState.swift */; };
+		D0C5972D1CF3C13B00F8F7C3 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5972C1CF3C13B00F8F7C3 /* Font.swift */; };
+		D0C5972F1CF4031400F8F7C3 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5972E1CF4031400F8F7C3 /* Text.swift */; };
+		D0C597311CF4080800F8F7C3 /* forward.xml in Resources */ = {isa = PBXBuildFile; fileRef = D0C597301CF4080800F8F7C3 /* forward.xml */; };
 		D0E470131CF02EB40003E80D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E470121CF02EB40003E80D /* AppDelegate.swift */; };
 		D0E470191CF02EB40003E80D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E470181CF02EB40003E80D /* GameViewController.swift */; };
 		D0E4701C1CF02EB40003E80D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0E4701A1CF02EB40003E80D /* Main.storyboard */; };
@@ -70,6 +73,9 @@
 		D074C4581CF16CB3001A3AFC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		D0A53A011CF0EA5F002DE853 /* Shaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		D0A53A031CF10A5A002DE853 /* MainGameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainGameState.swift; sourceTree = "<group>"; };
+		D0C5972C1CF3C13B00F8F7C3 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		D0C5972E1CF4031400F8F7C3 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		D0C597301CF4080800F8F7C3 /* forward.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = forward.xml; sourceTree = "<group>"; };
 		D0E4700F1CF02EB40003E80D /* Transverse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transverse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E470121CF02EB40003E80D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0E470181CF02EB40003E80D /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +149,7 @@
 			children = (
 				D074C4561CF16A73001A3AFC /* leaderboard.png */,
 				D074C4541CF16A6E001A3AFC /* forward.png */,
+				D0C597301CF4080800F8F7C3 /* forward.xml */,
 				D074C4521CF16A69001A3AFC /* trophy.png */,
 				D074C44E1CF140BE001A3AFC /* UtilityMath.swift */,
 				D074C44A1CF12B45001A3AFC /* SolidRenderType.swift */,
@@ -157,6 +164,8 @@
 				D0A53A011CF0EA5F002DE853 /* Shaders.swift */,
 				D074C4501CF16213001A3AFC /* Textures.swift */,
 				D074C4581CF16CB3001A3AFC /* Image.swift */,
+				D0C5972C1CF3C13B00F8F7C3 /* Font.swift */,
+				D0C5972E1CF4031400F8F7C3 /* Text.swift */,
 				D0E4701A1CF02EB40003E80D /* Main.storyboard */,
 				D0E4701D1CF02EB40003E80D /* Assets.xcassets */,
 				D0E4701F1CF02EB40003E80D /* LaunchScreen.storyboard */,
@@ -304,6 +313,7 @@
 				D0E4704F1CF031AB0003E80D /* SolidImage.fsh in Resources */,
 				D0E470491CF0313B0003E80D /* Image.fsh in Resources */,
 				D0E4701E1CF02EB40003E80D /* Assets.xcassets in Resources */,
+				D0C597311CF4080800F8F7C3 /* forward.xml in Resources */,
 				D074C4531CF16A69001A3AFC /* trophy.png in Resources */,
 				D0E470211CF02EB40003E80D /* LaunchScreen.storyboard in Resources */,
 				D0E4704B1CF0314D0003E80D /* Image.vsh in Resources */,
@@ -334,7 +344,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D074C4091CF11ABC001A3AFC /* Circle.swift in Sources */,
+				D0C5972F1CF4031400F8F7C3 /* Text.swift in Sources */,
 				D0E470191CF02EB40003E80D /* GameViewController.swift in Sources */,
+				D0C5972D1CF3C13B00F8F7C3 /* Font.swift in Sources */,
 				D074C4071CF11A74001A3AFC /* Shape.swift in Sources */,
 				D0E470131CF02EB40003E80D /* AppDelegate.swift in Sources */,
 				D0A53A041CF10A5A002DE853 /* MainGameState.swift in Sources */,
