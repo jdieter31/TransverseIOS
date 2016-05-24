@@ -43,9 +43,9 @@ class SolidRenderType: RenderType {
     func drawShape(shape: Shape) {
         glUseProgram(Shaders.solidColorProgram)
         
-        let positionHandle: GLint = glGetAttribLocation(Shaders.solidLineProgram, "vPosition")
+        let positionHandle: GLint = glGetAttribLocation(Shaders.solidColorProgram, "vPosition")
         
-        let matrixHandle: GLint = glGetUniformLocation(Shaders.solidLineProgram, "uMVPMatrix")
+        let matrixHandle: GLint = glGetUniformLocation(Shaders.solidColorProgram, "uMVPMatrix")
         
         if var matrix: GLKMatrix4 = self.matrix {
             withUnsafePointer(&matrix, {
@@ -53,7 +53,7 @@ class SolidRenderType: RenderType {
             })
         }
         
-        let colorHandle: GLint = glGetUniformLocation(Shaders.solidLineProgram, "vColor");
+        let colorHandle: GLint = glGetUniformLocation(Shaders.solidColorProgram, "vColor");
         glUniform4f(colorHandle, color.red, color.blue, color.green, alpha)
         
         shape.draw(positionHandle)

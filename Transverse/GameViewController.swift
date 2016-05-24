@@ -20,6 +20,9 @@ class GameViewController: GLKViewController {
     var lastFPSCalc: Double = 0
     var frames: Int = 0
     
+    var width: Int32 = -1
+    var height: Int32 = -1
+    
     deinit {
         if EAGLContext.currentContext() === self.context {
             EAGLContext.setCurrentContext(nil)
@@ -38,6 +41,7 @@ class GameViewController: GLKViewController {
         let view = self.view as! GLKView
         view.context = self.context!
         view.drawableDepthFormat = .Format24
+        view.drawableMultisample = GLKViewDrawableMultisample.Multisample4X
         
         self.setupGL()
         
@@ -67,7 +71,6 @@ class GameViewController: GLKViewController {
     func setupGL() {
         EAGLContext.setCurrentContext(self.context)
         
-        glEnable(GLenum(GL_MULTISAMPLE))
         
         glClearColor(1, 1, 1, 1)
         
@@ -93,6 +96,9 @@ class GameViewController: GLKViewController {
         let width: Int32 = Int32(view.drawableWidth)
         let height: Int32 = Int32(view.drawableHeight)
         
+        self.width = width
+        self.height = height
+        
         let projectionMatrix: GLKMatrix4 = GLKMatrix4MakeOrtho(0, Float(width), Float(height), 0, 0, 50)
         let viewMatrix: GLKMatrix4 = GLKMatrix4MakeLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0)
         
@@ -115,7 +121,9 @@ class GameViewController: GLKViewController {
         glClearColor(1, 1, 1, 1)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT) | GLbitfield(GL_DEPTH_BUFFER_BIT))
         if let gameState = self.gameState {
-            gameState.onDrawFrame()
+            if (width != -1 && height != -1) {
+                gameState.onDrawFrame()
+            }
         }
         
     }

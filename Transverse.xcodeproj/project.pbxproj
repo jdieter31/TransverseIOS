@@ -21,6 +21,8 @@
 		D074C4591CF16CB3001A3AFC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4581CF16CB3001A3AFC /* Image.swift */; };
 		D0A53A021CF0EA5F002DE853 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53A011CF0EA5F002DE853 /* Shaders.swift */; };
 		D0A53A041CF10A5A002DE853 /* MainGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53A031CF10A5A002DE853 /* MainGameState.swift */; };
+		D0B1F38F1CF5071300C5CF8F /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B1F38E1CF5071300C5CF8F /* Rectangle.swift */; };
+		D0B1F3911CF509E900C5CF8F /* RoundedRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B1F3901CF509E900C5CF8F /* RoundedRectangle.swift */; };
 		D0C5972D1CF3C13B00F8F7C3 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5972C1CF3C13B00F8F7C3 /* Font.swift */; };
 		D0C5972F1CF4031400F8F7C3 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5972E1CF4031400F8F7C3 /* Text.swift */; };
 		D0C597311CF4080800F8F7C3 /* forward.xml in Resources */ = {isa = PBXBuildFile; fileRef = D0C597301CF4080800F8F7C3 /* forward.xml */; };
@@ -73,6 +75,8 @@
 		D074C4581CF16CB3001A3AFC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		D0A53A011CF0EA5F002DE853 /* Shaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		D0A53A031CF10A5A002DE853 /* MainGameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainGameState.swift; sourceTree = "<group>"; };
+		D0B1F38E1CF5071300C5CF8F /* Rectangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rectangle.swift; sourceTree = "<group>"; };
+		D0B1F3901CF509E900C5CF8F /* RoundedRectangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedRectangle.swift; sourceTree = "<group>"; };
 		D0C5972C1CF3C13B00F8F7C3 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		D0C5972E1CF4031400F8F7C3 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		D0C597301CF4080800F8F7C3 /* forward.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = forward.xml; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 				D074C4581CF16CB3001A3AFC /* Image.swift */,
 				D0C5972C1CF3C13B00F8F7C3 /* Font.swift */,
 				D0C5972E1CF4031400F8F7C3 /* Text.swift */,
+				D0B1F38E1CF5071300C5CF8F /* Rectangle.swift */,
+				D0B1F3901CF509E900C5CF8F /* RoundedRectangle.swift */,
 				D0E4701A1CF02EB40003E80D /* Main.storyboard */,
 				D0E4701D1CF02EB40003E80D /* Assets.xcassets */,
 				D0E4701F1CF02EB40003E80D /* LaunchScreen.storyboard */,
@@ -355,9 +361,11 @@
 				D074C4491CF129C0001A3AFC /* RenderType.swift in Sources */,
 				D0A53A021CF0EA5F002DE853 /* Shaders.swift in Sources */,
 				D074C4051CF119F6001A3AFC /* AlphaShape.swift in Sources */,
+				D0B1F3911CF509E900C5CF8F /* RoundedRectangle.swift in Sources */,
 				D074C44F1CF140BE001A3AFC /* UtilityMath.swift in Sources */,
 				D074C44B1CF12B45001A3AFC /* SolidRenderType.swift in Sources */,
 				D074C44D1CF132B6001A3AFC /* Line.swift in Sources */,
+				D0B1F38F1CF5071300C5CF8F /* Rectangle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
