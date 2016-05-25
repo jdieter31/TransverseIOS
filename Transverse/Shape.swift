@@ -10,7 +10,7 @@ import Foundation
 import GLKit
 import OpenGLES
 
-protocol Shape {
+protocol Shape: class {
     func refresh()
     func draw(verticeMatrixHandle: GLint)
 }

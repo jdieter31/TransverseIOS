@@ -49,6 +49,9 @@ class MainGameState {
     }
     
     func refreshDimensions(width: Float, height: Float, viewProjectionMatrix: GLKMatrix4) {
+        if (self.width == width && self.height == height) {
+            return
+        }
         self.width = width
         self.height = height
         self.viewProjectionMatrix = viewProjectionMatrix

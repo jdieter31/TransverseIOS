@@ -67,4 +67,13 @@ class UtilityMath {
         }
         return true;
     }
+    
+    static func gaussian() -> Float {
+        //Box-Muller transform
+        let u1 : Float = Float(drand48())
+        let u2: Float = Float(drand48())
+        let f1: Float = sqrt(-2 * log(u1));
+        let f2: Float = 2 * Float(M_PI) * u2;
+        return f1 * cos(f2); // gaussian distribution
+    }
 }

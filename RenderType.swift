@@ -11,7 +11,7 @@ import GLKit
 import OpenGLES
 
 
-protocol RenderType {
+protocol RenderType: class {
     func drawShape(shape: Shape)
     func drawAlphaShape(line: AlphaShape)
     func drawImage(image: Image)

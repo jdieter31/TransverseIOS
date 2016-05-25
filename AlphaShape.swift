@@ -10,7 +10,7 @@ import Foundation
 import GLKit
 import OpenGLES
 
-protocol AlphaShape {
+protocol AlphaShape: class {
     func refresh()
     func draw(verticeMatrixHandle: GLint, alphaHandle: GLint)
 }
