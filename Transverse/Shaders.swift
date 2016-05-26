@@ -15,6 +15,7 @@ class Shaders {
     static var imageProgram: GLuint = 0
     static var solidImageProgram: GLuint = 0
     static var solidLineProgram: GLuint = 0
+    static var pathProgram: GLuint = 0
     
     static var vsSolidColorHandle: GLuint = 0
     static var fsSolidColorHandle: GLuint = 0
@@ -24,6 +25,8 @@ class Shaders {
     static var fsSolidImageHandle: GLuint = 0
     static var vsSolidLineHandle: GLuint = 0
     static var fsSolidLineHandle: GLuint = 0
+    static var vsPathHandle: GLuint = 0
+    static var fsPathHandle: GLuint = 0
     
     private static func loadShader(type: GLenum, file: String) -> GLuint {
         var shader : GLuint = glCreateShader(type)
@@ -89,6 +92,19 @@ class Shaders {
         glAttachShader(solidLineProgram, vsSolidLineHandle);   // add the vertex shader to program
         glAttachShader(solidLineProgram, fsSolidLineHandle); // add the fragment shader to program
         glLinkProgram(solidLineProgram);                  // creates OpenGL ES program executables
+        
+        let vsPathSource = NSBundle.mainBundle().pathForResource("point", ofType: "vsh")!
+        let fsPathSource = NSBundle.mainBundle().pathForResource("point", ofType: "fsh")!
+        
+        // Create the shaders
+        vsPathHandle = Shaders.loadShader(GLenum(GL_VERTEX_SHADER), file: vsPathSource);
+        fsPathHandle = Shaders.loadShader(GLenum(GL_FRAGMENT_SHADER), file: fsPathSource);
+        
+        pathProgram = glCreateProgram();             // create empty OpenGL ES Program
+        glAttachShader(pathProgram, vsPathHandle);   // add the vertex shader to program
+        glAttachShader(pathProgram, fsPathHandle); // add the fragment shader to program
+        glLinkProgram(pathProgram);// creates OpenGL ES program executables
+        print("\(pathProgram)")
 
     }
 }

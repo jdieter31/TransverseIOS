@@ -174,8 +174,8 @@ class MainGameState {
         lineRenderType?.color = (0.322, 0.808, 1.0)
         verticalTranslate = GLKMatrix4Identity
         
-        leftPath.width = 10
-        rightPath.width = 10
+        leftPath.width = 7
+        rightPath.width = 7
         
         backgroundRenderType = SolidRenderType()
         defaultBackgroundRenderer = backgroundRenderType
@@ -258,9 +258,9 @@ class MainGameState {
                 }
                 if (rightDown && leftDown) {
                     leftPath = Path()
-                    leftPath.width = 10
+                    leftPath.width = 7
                     rightPath = Path()
-                    rightPath.width = 10
+                    rightPath.width = 7
                     startingSecondChance = false
                     scheduledLoss = false
                     started = true
@@ -354,9 +354,9 @@ class MainGameState {
         rightDown = false
         leftDown = false
         leftPath = Path()
-        leftPath.width = 10
+        leftPath.width = 7
         rightPath = Path()
-        rightPath.width = 10
+        rightPath.width = 7
         
         leftSecondChanceCircle = Circle()
         leftSecondChanceCircle?.precision = 360
@@ -824,9 +824,9 @@ class MainGameState {
         leftDown = false
         rightDown = false
         leftPath = Path()
-        leftPath.width = 10
+        leftPath.width = 7
         rightPath = Path()
-        rightPath.width = 10
+        rightPath.width = 7
         titleInView = true
         circlesInView = true
         wallsInView = true
@@ -1143,8 +1143,8 @@ class MainGameState {
                 lineRenderType!.drawShape(rightCircle!);
             }
             lineRenderType!.matrix = verticalTranslateMVP
-            lineRenderType!.drawAlphaShape(leftPath);
-            lineRenderType!.drawAlphaShape(rightPath);
+            lineRenderType!.drawPath(leftPath);
+            lineRenderType!.drawPath(rightPath);
             greyRenderType!.matrix = viewProjectionMatrix
             greyRenderType!.drawText(scoreText!);
         }

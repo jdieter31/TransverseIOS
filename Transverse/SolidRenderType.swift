@@ -85,4 +85,31 @@ class SolidRenderType: RenderType {
     func drawText(text: Text) {
         drawImage(text.textImage!)
     }
+    
+    func drawPath(path: Path) {
+        glUseProgram(Shaders.pathProgram)
+        
+        let positionHandle: GLint = glGetAttribLocation(Shaders.pathProgram, "vPosition")
+        
+        let matrixHandle: GLint = glGetUniformLocation(Shaders.pathProgram, "uMVPMatrix")
+        
+        if var matrix: GLKMatrix4 = self.matrix {
+            withUnsafePointer(&matrix, {
+                glUniformMatrix4fv(matrixHandle, 1, GLboolean(GL_FALSE), UnsafePointer($0))
+            })
+        }
+        
+        let colorHandle: GLint = glGetUniformLocation(Shaders.pathProgram, "vColor");
+        glUniform4f(colorHandle, color.red, color.green, color.blue, alpha)
+        
+        let alphaHandle: GLint = glGetAttribLocation(Shaders.pathProgram, "aAlpha")
+        
+        let mSamplerLoc: GLint = glGetUniformLocation(Shaders.pathProgram, "texture")
+        
+        glUniform1i(mSamplerLoc, GLint(Textures.particleTexture))
+        
+        let pointSizeLoc: GLint = glGetUniformLocation(Shaders.pathProgram, "pointSize")
+        
+        path.draw(positionHandle, alphaHandle: alphaHandle, pointSizeHandle: pointSizeLoc)
+    }
 }
