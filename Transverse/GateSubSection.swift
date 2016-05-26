@@ -180,13 +180,13 @@ class GateSubSection: SubSection {
             gateCopy.angle = gate.angle
             gateCopy.startX = gate.startX
             gateCopy.endX = gate.endX
+            gateCopy.gateLength =  gate.gateLength
             gateCopy.centerGateY = gate.centerGateY
             gateCopy.centerGateX = gate.centerGateX
             gateCopy.inverted = inverted
             copy.gates.append(gateCopy)
         }
-        copy.origin.x = origin.x
-        copy.origin.y = origin.y
+        copy.origin = origin
         copy.width = width
         copy.inverted = inverted
         return copy

@@ -93,7 +93,7 @@ class DoubleSection: Section {
         length = section1!.length;
         
         if (Float(drand48()) < 0.7 - 0.5 * difficulty) {
-            section2 = section1?.copy();
+            section2 = section1!.copy();
             if (Float(drand48()) < 0.5) {
                 section1?.flip();
             }

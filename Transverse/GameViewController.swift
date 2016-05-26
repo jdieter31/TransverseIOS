@@ -9,7 +9,7 @@
 import GLKit
 import OpenGLES
 
-let SHOULD_LOG_FPS : Bool = false
+let SHOULD_LOG_FPS : Bool = true
 
 class GameViewController: GLKViewController {
     
@@ -20,8 +20,8 @@ class GameViewController: GLKViewController {
     var lastFPSCalc: Double = 0
     var frames: Int = 0
     
-    var width: Int32 = -1
-    var height: Int32 = -1
+    var width: Float = -1
+    var height: Float = -1
     
     deinit {
         if EAGLContext.currentContext() === self.context {
@@ -42,6 +42,7 @@ class GameViewController: GLKViewController {
         view.context = self.context!
         view.drawableDepthFormat = .Format24
         view.drawableMultisample = GLKViewDrawableMultisample.Multisample4X
+        view.multipleTouchEnabled = true
         
         self.setupGL()
         
@@ -83,8 +84,10 @@ class GameViewController: GLKViewController {
         print("Transverse: Loading font from XML")
         Text.loadFont(NSBundle.mainBundle().pathForResource("forward", ofType: "xml")!, textureHandle: Textures.fffForwardFontTexture, name: "FFF Forward")
         
+        glEnable(GLenum(GL_LINE_SMOOTH))
+        glHint(GLenum(GL_LINE_SMOOTH_HINT), GLenum(GL_NICEST) )
         glEnable(GLenum(GL_DITHER))
-        glEnable(GLenum(GL_BLEND));
+        glEnable(GLenum(GL_BLEND))
         glBlendFunc(GLenum(GL_SRC_ALPHA), GLenum(GL_ONE_MINUS_SRC_ALPHA));
         
     }
@@ -93,19 +96,19 @@ class GameViewController: GLKViewController {
     
     func update() {
         let view = self.view as! GLKView
-        let width: Int32 = Int32(view.drawableWidth)
-        let height: Int32 = Int32(view.drawableHeight)
-        
+        let width: Float = Float(view.frame.size.width)
+        let height: Float = Float(view.frame.size.height)
+         
         self.width = width
         self.height = height
         
-        let projectionMatrix: GLKMatrix4 = GLKMatrix4MakeOrtho(0, Float(width), Float(height), 0, 0, 50)
+        let projectionMatrix: GLKMatrix4 = GLKMatrix4MakeOrtho(0, width, height, 0, 0, 50)
         let viewMatrix: GLKMatrix4 = GLKMatrix4MakeLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0)
         
         let viewProjectionMatrix: GLKMatrix4 = GLKMatrix4Multiply(projectionMatrix, viewMatrix)
         
         if let gameState = self.gameState {
-            gameState.refreshDimensions(Float(width), height: Float(height), viewProjectionMatrix: viewProjectionMatrix)
+            gameState.refreshDimensions(Float(width), height: Float(height), viewProjectionMatrix: viewProjectionMatrix, force: false)
         }
     }
     
@@ -128,6 +131,38 @@ class GameViewController: GLKViewController {
         
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let gameState = gameState {
+            for touch in touches {
+                gameState.handleTouchEvent(touch)
+            }
+        }
+    }
     
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let gameState = gameState {
+            for touch in touches {
+                gameState.handleTouchEvent(touch)
+            }
+        }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let gameState = gameState {
+            for touch in touches {
+                gameState.handleTouchEvent(touch)
+            }
+        }
+    }
+    
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        if let gameState = gameState {
+            if let touches = touches {
+                for touch in touches {
+                    gameState.handleTouchEvent(touch)
+                }
+            }
+        }
+    }
 }
 

@@ -42,6 +42,14 @@ class Text {
         font = Text.fonts[fontName]
     }
     
+    func getWidth() -> Float {
+        return font!.widthOfString(text!, fontSize: textSize)
+    }
+    
+    func getHeight() -> Float {
+        return font!.heightOfString(text!, fontSize: textSize)
+    }
+    
     static func loadFont(urlOfXML: String, textureHandle: GLuint, name: String) {
         Text.fonts[name] = Font(urlOfXML: urlOfXML, textureHandle:  textureHandle)
     }

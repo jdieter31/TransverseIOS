@@ -33,7 +33,7 @@ class SolidRenderType: RenderType {
         }
         
         let colorHandle: GLint = glGetUniformLocation(Shaders.solidLineProgram, "vColor");
-        glUniform4f(colorHandle, color.red, color.blue, color.green, alpha)
+        glUniform4f(colorHandle, color.red, color.green, color.blue, alpha)
         
         let alphaHandle: GLint = glGetAttribLocation(Shaders.solidLineProgram, "aAlpha")
         
@@ -54,7 +54,7 @@ class SolidRenderType: RenderType {
         }
         
         let colorHandle: GLint = glGetUniformLocation(Shaders.solidColorProgram, "vColor");
-        glUniform4f(colorHandle, color.red, color.blue, color.green, alpha)
+        glUniform4f(colorHandle, color.red, color.green, color.blue, alpha)
         
         shape.draw(positionHandle)
     }
@@ -77,7 +77,7 @@ class SolidRenderType: RenderType {
         }
         
         let colorHandle: GLint = glGetUniformLocation(Shaders.solidImageProgram, "vColor");
-        glUniform4f(colorHandle, color.red, color.blue, color.green, alpha)
+        glUniform4f(colorHandle, color.red, color.green, color.blue, alpha)
         
         image.draw(GLuint(positionHandle), uvCoordinateHandle: GLuint(mTexCoordLoc), textureVariableHandle: mSamplerLoc)
     }

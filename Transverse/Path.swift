@@ -30,6 +30,7 @@ class Path: AlphaShape {
         vertices.append(x)
         vertices.append(y)
         vertices.append(0)
+        alpha.append(1)
     }
     
     func setAlpha(index: Int, alphaValue: Float) {
@@ -55,6 +56,8 @@ class Path: AlphaShape {
         glVertexAttribPointer(GLuint(alphaHandle), 1, GLenum(GL_FLOAT), UInt8(GL_FALSE),
                               0, alpha)
         glEnableVertexAttribArray(GLuint(alphaHandle))
+        
+        glLineWidth(width)
         
         glDrawArrays(GLenum(GL_LINE_STRIP), 0, Int32(vertices.count/3));
     }
