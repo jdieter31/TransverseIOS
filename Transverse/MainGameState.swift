@@ -10,7 +10,7 @@ import Foundation
 import GLKit
 import OpenGLES
 
-class MainGameState {
+class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
     
     //Schedule game events cause by touch events
     var scheduledLoss: Bool = false
@@ -148,7 +148,7 @@ class MainGameState {
     var achievementBox: RoundedRectangle?
     var achievementImage: Image?
     
-    var purchasedSecondChance: Bool = true
+    var purchasedSecondChance: Bool = false
     
     var purchaseSecondChanceBox: RoundedRectangle?
     var buyNoAdsAndText: Text?
@@ -161,9 +161,20 @@ class MainGameState {
     var loseShareBox: RoundedRectangle?
     var shareText: Text?
     
+    var gamesPlayedSinceAd: Int = 0
+    var initialAd: Bool = true
+    let initialAds: Int = 2
+    let gamesPerAd: Int = 5
     
     init(viewController: GameViewController) {
+        
         gameViewController = viewController
+        
+        super.init()
+        
+        AdColony.configureWithAppID("app09b63d44677f48e6ab", zoneIDs: ["vz6ae2ce67fcf642c1b1", "vz27856e528ba4462fbe"], delegate: self, logging: false)
+        
+        UnityAds.sharedInstance().delegate = self
         
         readHighScore()
         
@@ -289,7 +300,13 @@ class MainGameState {
                     if (purchasedSecondChance) {
                         scheduledSecondChance = true
                     } else {
-                        //TODO Ads
+                        if(drand48() > 0.5) {
+                            if (UnityAds.sharedInstance().setZone("rewardedVideo") && UnityAds.sharedInstance().canShow()) {
+                                UnityAds.sharedInstance().show()
+                            }
+                        } else {
+                            AdColony.playVideoAdForZone("vz6ae2ce67fcf642c1b1", withDelegate: nil, withV4VCPrePopup: false, andV4VCPostPopup: false)
+                        }
                     }
                 }
             }
@@ -821,65 +838,60 @@ class MainGameState {
         sectionsInView = [Section]()
         refreshDimensions(width, height: height, viewProjectionMatrix: viewProjectionMatrix!, force: true)
         
-        /* Ads TODO
+        
         if (!purchasedSecondChance) {
-            gamesPlayedSinceAd++
+            gamesPlayedSinceAd += 1
             if (initialAd && gamesPlayedSinceAd >= initialAds) {
                 gamesPlayedSinceAd = gamesPerAd
                 initialAd = false
             }
             if (gamesPlayedSinceAd >= gamesPerAd) {
-                if (Math.random() > .5f) {
-                    AdColonyVideoAd ad = new AdColonyVideoAd(MainActivity.interstitial_zone_id)
-                    ad.show()
+                if (drand48() > 0.5) {
+                    AdColony.playVideoAdForZone("vz27856e528ba4462fbe", withDelegate: nil)
                 } else {
-                    try {
-                        if (UnityAds.setZone("video") && UnityAds.canShow()) {
-                            UnityAds.show()
-                        }
-                    } catch (IllegalStateException e) {
-                        Log.e("Transverse", e.getMessage())
+                    if (UnityAds.sharedInstance().setZone("video") && UnityAds.sharedInstance().canShow()) {
+                        UnityAds.sharedInstance().show()
                     }
                 }
                 gamesPlayedSinceAd = 0
             }
         }
-        */
+        
     }
     
     func onDrawFrame() {
         if (scheduledRestart) {
-            triggerRestart();
+            triggerRestart()
         }
         if (scheduledEndGame) {
-            finishGame();
+            finishGame()
         }
         if (scheduledSecondChance) {
-            createSecondChance();
+            createSecondChance()
         }
         if (animatingColorChange) {
-            var dt = Int64(NSDate().timeIntervalSince1970*1000) - timeOfChange;
+            var dt = Int64(NSDate().timeIntervalSince1970*1000) - timeOfChange
             if (dt > 300) {
-                animatingColorChange = false;
-                dt = 300;
+                animatingColorChange = false
+                dt = 300
             }
-            var red = ((300.0 - Float(dt))/300.0)*previousRenderType!.color.red + (Float(dt)/300.0)*currentRenderer!.color.red;
+            var red = ((300.0 - Float(dt))/300.0)*previousRenderType!.color.red + (Float(dt)/300.0)*currentRenderer!.color.red
             var blue = ((300.0 - Float(dt))/300.0)*previousRenderType!.color.blue + (Float(dt)/300.0)*currentRenderer!.color.blue
             var green = ((300.0 - Float(dt))/300.0)*previousRenderType!.color.green + (Float(dt)/300.0)*currentRenderer!.color.green
             mixRenderType!.color = (red, green, blue)
             
-            red = ((300.0 - Float(dt))/300.0)*previousBackgroundRenderType!.color.red + (Float(dt)/300.0)*backgroundRenderType!.color.red;
+            red = ((300.0 - Float(dt))/300.0)*previousBackgroundRenderType!.color.red + (Float(dt)/300.0)*backgroundRenderType!.color.red
             blue = ((300.0 - Float(dt))/300.0)*previousBackgroundRenderType!.color.blue + (Float(dt)/300.0)*backgroundRenderType!.color.blue
             green = ((300.0 - Float(dt))/300.0)*previousBackgroundRenderType!.color.green + (Float(dt)/300.0)*backgroundRenderType!.color.green
-            mixBackgroundRenderType!.color = (red, green, blue);
+            mixBackgroundRenderType!.color = (red, green, blue)
             
             mixBackgroundRenderType!.matrix = viewProjectionMatrix
             mixBackgroundRenderType!.alpha = 1
-            mixBackgroundRenderType!.drawShape(backgroundRectangle!);
+            mixBackgroundRenderType!.drawShape(backgroundRectangle!)
         } else {
             backgroundRenderType!.matrix = viewProjectionMatrix
             backgroundRenderType!.alpha = 1
-            backgroundRenderType!.drawShape(backgroundRectangle!);
+            backgroundRenderType!.drawShape(backgroundRectangle!)
         }
         scoreRectangleRenderType!.matrix = viewProjectionMatrix
         scoreRectangleRenderType!.alpha = 1
@@ -888,51 +900,51 @@ class MainGameState {
             greyRenderType!.matrix = viewProjectionMatrix
             lineRenderType!.matrix = viewProjectionMatrix
             titleRenderType!.alpha = 1
-            greyRenderType!.drawShape(leftWall!);
-            greyRenderType!.drawShape(centerDivider!);
-            greyRenderType!.drawShape(rightWall!);
-            titleRenderType!.drawShape(tapToStartRectangle!);
-            titleRenderType!.drawShape(titleRectangle!);
-            backgroundRenderType!.drawText(titleText!);
-            backgroundRenderType!.drawText(tapAndHoldText!);
-            backgroundRenderType!.drawText(toStartText!);
+            greyRenderType!.drawShape(leftWall!)
+            greyRenderType!.drawShape(centerDivider!)
+            greyRenderType!.drawShape(rightWall!)
+            titleRenderType!.drawShape(tapToStartRectangle!)
+            titleRenderType!.drawShape(titleRectangle!)
+            backgroundRenderType!.drawText(titleText!)
+            backgroundRenderType!.drawText(tapAndHoldText!)
+            backgroundRenderType!.drawText(toStartText!)
             
-            titleRenderType!.drawShape(titleHighScoreBox!);
-            backgroundRenderType!.drawText(titleHighScoreText!);
+            titleRenderType!.drawShape(titleHighScoreBox!)
+            backgroundRenderType!.drawText(titleHighScoreText!)
             
-            titleRenderType!.drawShape(leaderboardBox!);
-            backgroundRenderType!.drawImage(leaderboardImage!);
+            titleRenderType!.drawShape(leaderboardBox!)
+            backgroundRenderType!.drawImage(leaderboardImage!)
             
-            titleRenderType!.drawShape(achievementBox!);
-            backgroundRenderType!.drawImage(achievementImage!);
+            titleRenderType!.drawShape(achievementBox!)
+            backgroundRenderType!.drawImage(achievementImage!)
             
             if (!purchasedSecondChance) {
-                titleRenderType!.drawShape(purchaseSecondChanceBox!);
-                backgroundRenderType!.drawText(buyNoAdsAndText!);
-                backgroundRenderType!.drawText(secondChancesText!);
+                titleRenderType!.drawShape(purchaseSecondChanceBox!)
+                backgroundRenderType!.drawText(buyNoAdsAndText!)
+                backgroundRenderType!.drawText(secondChancesText!)
             }
             
             if (leftDown) {
-                lineRenderType!.drawShape(leftCircle!);
+                lineRenderType!.drawShape(leftCircle!)
             } else {
-                greyRenderType!.drawShape(leftCircle!);
+                greyRenderType!.drawShape(leftCircle!)
             }
             if (rightDown) {
-                lineRenderType!.drawShape(rightCircle!);
+                lineRenderType!.drawShape(rightCircle!)
             } else {
-                greyRenderType!.drawShape(rightCircle!);
+                greyRenderType!.drawShape(rightCircle!)
             }
         } else if (inLossMenu || inSecondChanceMenu) {
             let verticalTranslateMVP: GLKMatrix4 = GLKMatrix4Multiply(viewProjectionMatrix!, verticalTranslate!)
             currentRenderer!.matrix = verticalTranslateMVP
             currentRenderer!.alpha = 1
             if (wallsInView) {
-                currentRenderer!.drawShape(leftWall!);
-                currentRenderer!.drawShape(centerDivider!);
-                currentRenderer!.drawShape(rightWall!);
+                currentRenderer!.drawShape(leftWall!)
+                currentRenderer!.drawShape(centerDivider!)
+                currentRenderer!.drawShape(rightWall!)
             }
             for section in sectionsInView {
-                section.draw(verticalTranslateMVP, renderType: currentRenderer!);
+                section.draw(verticalTranslateMVP, renderType: currentRenderer!)
             }
             redRenderType!.matrix = viewProjectionMatrix
             redRenderType!.alpha = 1
@@ -942,51 +954,51 @@ class MainGameState {
             darkRedRenderType!.alpha = 1
             if (inLossMenu) {
                 if (animatingLoss) {
-                    let dt = Int64(NSDate().timeIntervalSince1970*1000) - timeOfLoss;
-                    let alpha = Float(dt)*(1.0/1000.0);
+                    let dt = Int64(NSDate().timeIntervalSince1970*1000) - timeOfLoss
+                    let alpha = Float(dt)*(1.0/1000.0)
                     if (alpha > 1) {
-                        animatingLoss = false;
+                        animatingLoss = false
                     }
                     redRenderType!.alpha = alpha
-                    redRenderType!.drawShape(loseScoreRectangle!);
-                    redRenderType!.drawShape(highScoreBox!);
-                    redRenderType!.drawShape(retryRectangle!);
-                    redRenderType!.drawShape(loseShareBox!);
-                    redRenderType!.drawShape(loseAchievementBox!);
-                    redRenderType!.drawShape(loseLeaderboardBox!);
-                    defaultBackgroundRenderer!.drawText(loseScoreNumberText!);
-                    defaultBackgroundRenderer!.drawText(loseScoreText!);
-                    defaultBackgroundRenderer!.drawText(highScoreText!);
-                    defaultBackgroundRenderer!.drawText(retryText!);
-                    defaultBackgroundRenderer!.drawText(shareText!);
-                    defaultBackgroundRenderer!.drawImage(loseAchievementImage!);
-                    defaultBackgroundRenderer!.drawImage(loseLeaderboardImage!);
+                    redRenderType!.drawShape(loseScoreRectangle!)
+                    redRenderType!.drawShape(highScoreBox!)
+                    redRenderType!.drawShape(retryRectangle!)
+                    redRenderType!.drawShape(loseShareBox!)
+                    redRenderType!.drawShape(loseAchievementBox!)
+                    redRenderType!.drawShape(loseLeaderboardBox!)
+                    defaultBackgroundRenderer!.drawText(loseScoreNumberText!)
+                    defaultBackgroundRenderer!.drawText(loseScoreText!)
+                    defaultBackgroundRenderer!.drawText(highScoreText!)
+                    defaultBackgroundRenderer!.drawText(retryText!)
+                    defaultBackgroundRenderer!.drawText(shareText!)
+                    defaultBackgroundRenderer!.drawImage(loseAchievementImage!)
+                    defaultBackgroundRenderer!.drawImage(loseLeaderboardImage!)
                 } else {
-                    redRenderType!.drawShape(loseScoreRectangle!);
-                    redRenderType!.drawShape(highScoreBox!);
-                    redRenderType!.drawShape(retryRectangle!);
-                    redRenderType!.drawShape(loseShareBox!);
-                    redRenderType!.drawShape(loseLeaderboardBox!);
-                    redRenderType!.drawShape(loseAchievementBox!);
-                    defaultBackgroundRenderer!.drawText(loseScoreNumberText!);
-                    defaultBackgroundRenderer!.drawText(loseScoreText!);
-                    defaultBackgroundRenderer!.drawText(highScoreText!);
-                    defaultBackgroundRenderer!.drawText(retryText!);
-                    defaultBackgroundRenderer!.drawText(shareText!);
-                    defaultBackgroundRenderer!.drawImage(loseLeaderboardImage!);
-                    defaultBackgroundRenderer!.drawImage(loseAchievementImage!);
+                    redRenderType!.drawShape(loseScoreRectangle!)
+                    redRenderType!.drawShape(highScoreBox!)
+                    redRenderType!.drawShape(retryRectangle!)
+                    redRenderType!.drawShape(loseShareBox!)
+                    redRenderType!.drawShape(loseLeaderboardBox!)
+                    redRenderType!.drawShape(loseAchievementBox!)
+                    defaultBackgroundRenderer!.drawText(loseScoreNumberText!)
+                    defaultBackgroundRenderer!.drawText(loseScoreText!)
+                    defaultBackgroundRenderer!.drawText(highScoreText!)
+                    defaultBackgroundRenderer!.drawText(retryText!)
+                    defaultBackgroundRenderer!.drawText(shareText!)
+                    defaultBackgroundRenderer!.drawImage(loseLeaderboardImage!)
+                    defaultBackgroundRenderer!.drawImage(loseAchievementImage!)
                 }
             }
             
             if (inSecondChanceMenu) {
-                redRenderType!.drawShape(secondChanceBox!);
-                darkRedRenderType!.drawShape(endGameButton!);
-                darkRedRenderType!.drawShape(secondChanceButton!);
-                defaultBackgroundRenderer!.drawText(gameText!);
-                defaultBackgroundRenderer!.drawText(endText!);
-                defaultBackgroundRenderer!.drawText(secondChanceText!);
+                redRenderType!.drawShape(secondChanceBox!)
+                darkRedRenderType!.drawShape(endGameButton!)
+                darkRedRenderType!.drawShape(secondChanceButton!)
+                defaultBackgroundRenderer!.drawText(gameText!)
+                defaultBackgroundRenderer!.drawText(endText!)
+                defaultBackgroundRenderer!.drawText(secondChanceText!)
                 if (!purchasedSecondChance) {
-                    defaultBackgroundRenderer!.drawText(watchVideoText!);
+                    defaultBackgroundRenderer!.drawText(watchVideoText!)
                 }
             }
         } else if (startingSecondChance) {
@@ -999,133 +1011,133 @@ class MainGameState {
             currentRenderer!.matrix = verticalTranslateMVP
             defaultBackgroundRenderer!.matrix = verticalTranslateMVP
             if (wallsInView) {
-                currentRenderer!.drawShape(leftWall!);
-                currentRenderer!.drawShape(centerDivider!);
-                currentRenderer!.drawShape(rightWall!);
+                currentRenderer!.drawShape(leftWall!)
+                currentRenderer!.drawShape(centerDivider!)
+                currentRenderer!.drawShape(rightWall!)
             }
             for section in sectionsInView {
-                section.draw(verticalTranslateMVP, renderType: currentRenderer!);
+                section.draw(verticalTranslateMVP, renderType: currentRenderer!)
             }
-            titleRenderType!.drawShape(startingSecondChanceRectangle!);
-            defaultBackgroundRenderer!.drawText(secondChanceTapAndHoldText!);
-            defaultBackgroundRenderer!.drawText(toRetryText!);
+            titleRenderType!.drawShape(startingSecondChanceRectangle!)
+            defaultBackgroundRenderer!.drawText(secondChanceTapAndHoldText!)
+            defaultBackgroundRenderer!.drawText(toRetryText!)
             
             if (leftDown) {
-                lineRenderType!.drawShape(leftSecondChanceCircle!);
+                lineRenderType!.drawShape(leftSecondChanceCircle!)
             } else {
-                greyRenderType!.drawShape(leftSecondChanceCircle!);
+                greyRenderType!.drawShape(leftSecondChanceCircle!)
             }
             if (rightDown) {
-                lineRenderType!.drawShape(rightSecondChanceCircle!);
+                lineRenderType!.drawShape(rightSecondChanceCircle!)
             } else {
-                greyRenderType!.drawShape(rightSecondChanceCircle!);
+                greyRenderType!.drawShape(rightSecondChanceCircle!)
             }
         } else {
             if (scheduledLoss) {
-                handleLoss();
+                handleLoss()
             }
-            calculateMove();
-            adjustSpeed();
-            generateSections();
-            handleSectionTouch();
+            calculateMove()
+            adjustSpeed()
+            generateSections()
+            handleSectionTouch()
             let verticalTranslateMVP: GLKMatrix4 = GLKMatrix4Multiply(viewProjectionMatrix!, verticalTranslate!)
             for section in sectionsInView {
                 if (animatingColorChange) {
-                    section.draw(verticalTranslateMVP, renderType: mixRenderType!);
+                    section.draw(verticalTranslateMVP, renderType: mixRenderType!)
                 } else {
-                    section.draw(verticalTranslateMVP, renderType: currentRenderer!);
+                    section.draw(verticalTranslateMVP, renderType: currentRenderer!)
                 }
             }
             lineRenderType!.matrix = verticalTranslateMVP
             if (wallsInView) {
                 if (animatingColorChange) {
                     mixRenderType!.matrix = verticalTranslateMVP
-                    mixRenderType!.drawShape(leftWall!);
-                    mixRenderType!.drawShape(centerDivider!);
-                    mixRenderType!.drawShape(rightWall!);
+                    mixRenderType!.drawShape(leftWall!)
+                    mixRenderType!.drawShape(centerDivider!)
+                    mixRenderType!.drawShape(rightWall!)
                 } else {
                     currentRenderer!.matrix = verticalTranslateMVP
-                    currentRenderer!.drawShape(leftWall!);
-                    currentRenderer!.drawShape(centerDivider!);
-                    currentRenderer!.drawShape(rightWall!);
+                    currentRenderer!.drawShape(leftWall!)
+                    currentRenderer!.drawShape(centerDivider!)
+                    currentRenderer!.drawShape(rightWall!)
                 }
             }
             if (titleInView) {
                 let time = Int64(NSDate().timeIntervalSince1970*1000)
-                let dt = time - lastTitleCalculation;
-                var sane: Bool = true;
+                let dt = time - lastTitleCalculation
+                var sane: Bool = true
                 if (lastTitleCalculation == -1 || dt <= 0) {
-                    lastTitleCalculation = time;
-                    sane = false;
+                    lastTitleCalculation = time
+                    sane = false
                     defaultBackgroundRenderer!.alpha = titleAlpha
                     titleRenderType!.alpha = titleAlpha
-                    titleRenderType!.drawShape(titleRectangle!);
-                    defaultBackgroundRenderer!.drawText(titleText!);
-                    titleRenderType!.drawShape(tapToStartRectangle!);
-                    defaultBackgroundRenderer!.drawText(tapAndHoldText!);
-                    defaultBackgroundRenderer!.drawText(toStartText!);
-                    titleRenderType!.drawShape(titleHighScoreBox!);
-                    defaultBackgroundRenderer!.drawText(titleHighScoreText!);
-                    titleRenderType!.drawShape(leaderboardBox!);
-                    titleRenderType!.drawShape(achievementBox!);
-                    defaultBackgroundRenderer!.drawImage(achievementImage!);
-                    defaultBackgroundRenderer!.drawImage(leaderboardImage!);
+                    titleRenderType!.drawShape(titleRectangle!)
+                    defaultBackgroundRenderer!.drawText(titleText!)
+                    titleRenderType!.drawShape(tapToStartRectangle!)
+                    defaultBackgroundRenderer!.drawText(tapAndHoldText!)
+                    defaultBackgroundRenderer!.drawText(toStartText!)
+                    titleRenderType!.drawShape(titleHighScoreBox!)
+                    defaultBackgroundRenderer!.drawText(titleHighScoreText!)
+                    titleRenderType!.drawShape(leaderboardBox!)
+                    titleRenderType!.drawShape(achievementBox!)
+                    defaultBackgroundRenderer!.drawImage(achievementImage!)
+                    defaultBackgroundRenderer!.drawImage(leaderboardImage!)
                     
                     if (!purchasedSecondChance) {
-                        titleRenderType!.drawShape(purchaseSecondChanceBox!);
-                        defaultBackgroundRenderer!.drawText(buyNoAdsAndText!);
-                        defaultBackgroundRenderer!.drawText(secondChancesText!);
+                        titleRenderType!.drawShape(purchaseSecondChanceBox!)
+                        defaultBackgroundRenderer!.drawText(buyNoAdsAndText!)
+                        defaultBackgroundRenderer!.drawText(secondChancesText!)
                     }
                 }
                 if (sane) {
-                    let alphaChange = Float(dt) * (1.0/500.0);
-                    titleAlpha -= alphaChange;
+                    let alphaChange = Float(dt) * (1.0/500.0)
+                    titleAlpha -= alphaChange
                     if (titleAlpha < 0) {
-                        titleInView = false;
-                        titleAlpha = 0;
+                        titleInView = false
+                        titleAlpha = 0
                     }
-                    lastTitleCalculation = time;
+                    lastTitleCalculation = time
                     titleRenderType!.alpha = titleAlpha
-                    titleRenderType!.drawShape(titleRectangle!);
-                    titleRenderType!.drawShape(tapToStartRectangle!);
-                    titleRenderType!.drawShape(titleHighScoreBox!);
-                    titleRenderType!.drawShape(leaderboardBox!);
-                    titleRenderType!.drawShape(achievementBox!);
+                    titleRenderType!.drawShape(titleRectangle!)
+                    titleRenderType!.drawShape(tapToStartRectangle!)
+                    titleRenderType!.drawShape(titleHighScoreBox!)
+                    titleRenderType!.drawShape(leaderboardBox!)
+                    titleRenderType!.drawShape(achievementBox!)
                     defaultBackgroundRenderer!.alpha = titleAlpha
-                    defaultBackgroundRenderer!.drawText(titleText!);
-                    defaultBackgroundRenderer!.drawText(tapAndHoldText!);
-                    defaultBackgroundRenderer!.drawText(toStartText!);
-                    defaultBackgroundRenderer!.drawText(titleHighScoreText!);
-                    defaultBackgroundRenderer!.drawImage(achievementImage!);
-                    defaultBackgroundRenderer!.drawImage(leaderboardImage!);
+                    defaultBackgroundRenderer!.drawText(titleText!)
+                    defaultBackgroundRenderer!.drawText(tapAndHoldText!)
+                    defaultBackgroundRenderer!.drawText(toStartText!)
+                    defaultBackgroundRenderer!.drawText(titleHighScoreText!)
+                    defaultBackgroundRenderer!.drawImage(achievementImage!)
+                    defaultBackgroundRenderer!.drawImage(leaderboardImage!)
                     
                     if (!purchasedSecondChance) {
-                        titleRenderType!.drawShape(purchaseSecondChanceBox!);
-                        defaultBackgroundRenderer!.drawText(buyNoAdsAndText!);
-                        defaultBackgroundRenderer!.drawText(secondChancesText!);
+                        titleRenderType!.drawShape(purchaseSecondChanceBox!)
+                        defaultBackgroundRenderer!.drawText(buyNoAdsAndText!)
+                        defaultBackgroundRenderer!.drawText(secondChancesText!)
                     }
                     
                     defaultBackgroundRenderer!.alpha = 1
                     if (!titleInView) {
-                        titleRectangle = nil;
-                        titleText = nil;
-                        tapToStartRectangle = nil;
-                        tapAndHoldText = nil;
-                        toStartText = nil;
+                        titleRectangle = nil
+                        titleText = nil
+                        tapToStartRectangle = nil
+                        tapAndHoldText = nil
+                        toStartText = nil
                     }
                 }
             }
             if (circlesInView) {
-                lineRenderType!.drawShape(leftCircle!);
-                lineRenderType!.drawShape(rightCircle!);
+                lineRenderType!.drawShape(leftCircle!)
+                lineRenderType!.drawShape(rightCircle!)
             }
             lineRenderType!.matrix = verticalTranslateMVP
-            lineRenderType!.drawPath(leftPath);
-            lineRenderType!.drawPath(rightPath);
+            lineRenderType!.drawPath(leftPath)
+            lineRenderType!.drawPath(rightPath)
             greyRenderType!.matrix = viewProjectionMatrix
             defaultBackgroundRenderer!.matrix = viewProjectionMatrix
             if (score < 16) {
-                greyRenderType!.drawText(scoreText!);
+                greyRenderType!.drawText(scoreText!)
             } else {
                 defaultBackgroundRenderer!.drawText(scoreText!)
             }
@@ -1141,10 +1153,10 @@ class MainGameState {
         self.viewProjectionMatrix = viewProjectionMatrix
         
         if (circlesInView) {
-            leftCircle = Circle();
+            leftCircle = Circle()
             leftCircle?.precision = 360
             leftCircle?.radius = height/10
-            rightCircle = Circle();
+            rightCircle = Circle()
             rightCircle?.precision = 360
             rightCircle?.radius = height/10
             leftCircle?.centerX = width/4
@@ -1157,98 +1169,98 @@ class MainGameState {
             rightCircle?.refresh()
         }
         if (wallsInView) {
-            leftWall = Rectangle();
-            leftWall?.origin = (0, 0, 0);
+            leftWall = Rectangle()
+            leftWall?.origin = (0, 0, 0)
             leftWall?.width = 15
             leftWall?.height = height
-            leftWall?.refresh();
-            centerDivider = Rectangle();
-            centerDivider?.origin = (width/2 - 7.5, 0, 0);
+            leftWall?.refresh()
+            centerDivider = Rectangle()
+            centerDivider?.origin = (width/2 - 7.5, 0, 0)
             centerDivider?.width = 15
             centerDivider?.height = height
-            centerDivider?.refresh();
-            rightWall = Rectangle();
-            rightWall?.origin = (width - 15, 0, 0);
+            centerDivider?.refresh()
+            rightWall = Rectangle()
+            rightWall?.origin = (width - 15, 0, 0)
             rightWall?.width = 15
             rightWall?.height = height
-            rightWall?.refresh();
+            rightWall?.refresh()
         }
         if (titleInView) {
-            titleRectangle = RoundedRectangle();
-            let titleRectangleWidth = 2*width/3;
+            titleRectangle = RoundedRectangle()
+            let titleRectangleWidth = 2*width/3
             titleRectangle?.width = titleRectangleWidth
-            let titleRectangleY = height/5;
-            let titleRectangleHeight = height/5;
-            titleRectangle?.center = (width/2, titleRectangleY, 0);
+            let titleRectangleY = height/5
+            let titleRectangleHeight = height/5
+            titleRectangle?.center = (width/2, titleRectangleY, 0)
             titleRectangle?.height = titleRectangleHeight
             titleRectangle?.cornerRadius = 10
             titleRectangle?.precision = 60
-            titleRectangle?.refresh();
-            titleText = Text();
-            titleText?.setFont("FFF Forward");
+            titleRectangle?.refresh()
+            titleText = Text()
+            titleText?.setFont("FFF Forward")
             titleText?.text = "Transverse"
             titleText?.textSize = titleRectangleHeight - 10
             titleText?.originX = width/2 - titleText!.getWidth()/2
             titleText?.originY = titleRectangleY - (titleRectangleHeight - 10)/2
             titleText?.originZ = 0
-            titleText?.refresh();
-            tapToStartRectangle = RoundedRectangle();
+            titleText?.refresh()
+            tapToStartRectangle = RoundedRectangle()
             tapToStartRectangle?.width = titleRectangleWidth
-            tapToStartRectangle?.center = (width/2, height/2, 0);
-            tapToStartRectangle?.height = (height/4);
+            tapToStartRectangle?.center = (width/2, height/2, 0)
+            tapToStartRectangle?.height = (height/4)
             tapToStartRectangle?.cornerRadius = 10
             tapToStartRectangle?.precision = 60
-            tapToStartRectangle?.refresh();
-            tapAndHoldText = Text();
-            tapAndHoldText?.setFont("FFF Forward");
+            tapToStartRectangle?.refresh()
+            tapAndHoldText = Text()
+            tapAndHoldText?.setFont("FFF Forward")
             tapAndHoldText?.text =  "Tap and hold"
             tapAndHoldText?.textSize = (height/4)/3
             tapAndHoldText?.originX = width/2 - tapAndHoldText!.getWidth()/2
             tapAndHoldText?.originY = height/2 - (height/4)/3
             tapAndHoldText?.originZ = 0
-            tapAndHoldText?.refresh();
-            toStartText = Text();
-            toStartText?.setFont("FFF Forward");
+            tapAndHoldText?.refresh()
+            toStartText = Text()
+            toStartText?.setFont("FFF Forward")
             toStartText?.text = "to start!"
             toStartText?.textSize = (height/4)/3
             toStartText?.originX = width/2 - toStartText!.getWidth()/2
             toStartText?.originY = height/2
             toStartText?.originZ = 0
-            toStartText?.refresh();
+            toStartText?.refresh()
             
-            let bottomButtonHeight = height/6;
+            let bottomButtonHeight = height/6
             
-            titleHighScoreBox = RoundedRectangle();
+            titleHighScoreBox = RoundedRectangle()
             titleHighScoreBox?.height = bottomButtonHeight
-            titleHighScoreBox?.center = (width/2, 4*height/5, 0);
+            titleHighScoreBox?.center = (width/2, 4*height/5, 0)
             titleHighScoreBox?.cornerRadius = 10
             titleHighScoreBox?.width = 11*width/32
             titleHighScoreBox?.precision = 60
-            titleHighScoreBox?.refresh();
+            titleHighScoreBox?.refresh()
             
-            titleHighScoreText = Text();
-            titleHighScoreText?.setFont("FFF Forward");
+            titleHighScoreText = Text()
+            titleHighScoreText?.setFont("FFF Forward")
             titleHighScoreText?.text = "Best: \(highScore)"
             titleHighScoreText?.textSize = (2*height/3)/5
             titleHighScoreText?.originX = width/2 - titleHighScoreText!.getWidth()/2
             titleHighScoreText?.originY = 4*height/5 - (2*height/3)/10
             titleHighScoreText?.originZ = 0
-            titleHighScoreText?.refresh();
+            titleHighScoreText?.refresh()
             
-            let leaderboardCenterX = width/2 - 11 * width / 64 - width / 36 - bottomButtonHeight/2;
+            let leaderboardCenterX = width/2 - 11 * width / 64 - width / 36 - bottomButtonHeight/2
             
-            leaderboardBox = RoundedRectangle();
+            leaderboardBox = RoundedRectangle()
             leaderboardBox?.height = bottomButtonHeight
             leaderboardBox?.width = bottomButtonHeight
             leaderboardBox?.cornerRadius = 10
             leaderboardBox?.precision = 60
-            leaderboardBox?.center = (leaderboardCenterX, 4*height/5, 0);
-            leaderboardBox?.refresh();
+            leaderboardBox?.center = (leaderboardCenterX, 4*height/5, 0)
+            leaderboardBox?.refresh()
             
-            let leaderboardImageHeight = 5*bottomButtonHeight/8;
-            let leaderboardImageWidth = leaderboardImageHeight * (196.0/210.0);
+            let leaderboardImageHeight = 5*bottomButtonHeight/8
+            let leaderboardImageWidth = leaderboardImageHeight * (196.0/210.0)
             
-            leaderboardImage = Image();
+            leaderboardImage = Image()
             leaderboardImage?.textureHandle = Textures.leaderboardTexture
             leaderboardImage?.vertices = [
                 leaderboardCenterX - leaderboardImageWidth/2, 4*height/5 - leaderboardImageHeight/2, 0,
@@ -1269,47 +1281,47 @@ class MainGameState {
             var achievementCenterX: Float
             
             if (!purchasedSecondChance) {
-                achievementCenterX = width/2 - 11 * width / 64 - width / 36 - bottomButtonHeight - width/36 - bottomButtonHeight/2;
-                purchaseSecondChanceBox = RoundedRectangle();
+                achievementCenterX = width/2 - 11 * width / 64 - width / 36 - bottomButtonHeight - width/36 - bottomButtonHeight/2
+                purchaseSecondChanceBox = RoundedRectangle()
                 purchaseSecondChanceBox?.height = bottomButtonHeight
                 purchaseSecondChanceBox?.width = width/4
-                purchaseSecondChanceBox?.center = (width/2 + 11 * width/64 + width/36 + width/8, 4*height/5, 0);
+                purchaseSecondChanceBox?.center = (width/2 + 11 * width/64 + width/36 + width/8, 4*height/5, 0)
                 purchaseSecondChanceBox?.precision = 60
                 purchaseSecondChanceBox?.cornerRadius = 10
-                purchaseSecondChanceBox?.refresh();
+                purchaseSecondChanceBox?.refresh()
                 
-                buyNoAdsAndText = Text();
-                buyNoAdsAndText?.setFont("FFF Forward");
+                buyNoAdsAndText = Text()
+                buyNoAdsAndText?.setFont("FFF Forward")
                 buyNoAdsAndText?.text = "No Ads And"
                 buyNoAdsAndText?.textSize = height/16
                 buyNoAdsAndText?.originX = width/2 + 11 * width/64 + width/36 + width/8 - buyNoAdsAndText!.getWidth()/2
                 buyNoAdsAndText?.originY = 4*height/5 - height/16
                 buyNoAdsAndText?.originZ = 0
-                buyNoAdsAndText?.refresh();
+                buyNoAdsAndText?.refresh()
                 
-                secondChancesText = Text();
-                secondChancesText?.setFont("FFF Forward");
+                secondChancesText = Text()
+                secondChancesText?.setFont("FFF Forward")
                 secondChancesText?.text = "Second Chances"
                 secondChancesText?.textSize = height/16
                 secondChancesText?.originX = width/2 + 11 * width/64 + width/36 + width/8 - secondChancesText!.getWidth()/2
                 secondChancesText?.originY = 4*height/5
                 secondChancesText?.originZ = 0
-                secondChancesText?.refresh();
+                secondChancesText?.refresh()
             } else {
-                achievementCenterX = width/2 + 11 * width / 64 + width / 36 + bottomButtonHeight/2;
+                achievementCenterX = width/2 + 11 * width / 64 + width / 36 + bottomButtonHeight/2
             }
             
-            achievementBox = RoundedRectangle();
+            achievementBox = RoundedRectangle()
             achievementBox?.height = bottomButtonHeight
             achievementBox?.width = bottomButtonHeight
             achievementBox?.cornerRadius = 10
             achievementBox?.precision = 60
-            achievementBox?.center = (achievementCenterX, 4*height/5, 0);
-            achievementBox?.refresh();
+            achievementBox?.center = (achievementCenterX, 4*height/5, 0)
+            achievementBox?.refresh()
             
-            let achievementImageWidth = 5*bottomButtonHeight/8;
-            let achievementImageHeight = achievementImageWidth * (215.0/256.0);
-            achievementImage = Image();
+            let achievementImageWidth = 5*bottomButtonHeight/8
+            let achievementImageHeight = achievementImageWidth * (215.0/256.0)
+            achievementImage = Image()
             achievementImage?.textureHandle = Textures.trophyTexture
             achievementImage?.vertices = [
                 achievementCenterX - achievementImageWidth/2, 4*height/5 - achievementImageHeight/2, 0,
@@ -1328,15 +1340,15 @@ class MainGameState {
             ]
         }
 
-        backgroundRectangle = Rectangle();
+        backgroundRectangle = Rectangle()
         backgroundRectangle?.width = width
         backgroundRectangle?.height = height
-        backgroundRectangle?.origin = (0, 0, 0);
-        backgroundRectangle?.refresh();
-        scoreText = Text();
-        scoreText?.setFont("FFF Forward");
+        backgroundRectangle?.origin = (0, 0, 0)
+        backgroundRectangle?.refresh()
+        scoreText = Text()
+        scoreText?.setFont("FFF Forward")
         scoreText?.textSize = 50
-        refreshScore();
+        refreshScore()
 
     }
     
@@ -1345,53 +1357,53 @@ class MainGameState {
         scoreText?.originX = width - 25 - scoreText!.getWidth()
         scoreText?.originY = 3
         scoreText?.originZ = 0
-        scoreText?.refresh();
+        scoreText?.refresh()
         if (score != 0) {
-            var brightness: Float;
-            var bgBrightness : Float;
-            var saturation: Float;
-            var bgSaturation: Float;
+            var brightness: Float
+            var bgBrightness : Float
+            var saturation: Float
+            var bgSaturation: Float
             if (score < 8) {
                 if (Float(drand48()) < 0.15) {
-                    saturation = 0.5*Float(drand48());
-                    brightness = 0.3*Float(drand48());
+                    saturation = 0.5*Float(drand48())
+                    brightness = 0.3*Float(drand48())
                 } else {
-                    saturation = 1;
-                    brightness = 0.55 + 0.3*Float(drand48());
+                    saturation = 1
+                    brightness = 0.55 + 0.3*Float(drand48())
                 }
-                bgSaturation = 0.1;
-                bgBrightness = 0.95;
+                bgSaturation = 0.1
+                bgBrightness = 0.95
             } else if (score < 16) {
                 if (Float(drand48()) < 0.15) {
-                    saturation = 0.5*Float(drand48());
-                    brightness = 0.3*Float(drand48());
+                    saturation = 0.5*Float(drand48())
+                    brightness = 0.3*Float(drand48())
                 } else {
-                    saturation = 1;
-                    brightness = 0.3 + 0.3*Float(drand48());
+                    saturation = 1
+                    brightness = 0.3 + 0.3*Float(drand48())
                 }
-                bgSaturation = 0.3;
-                bgBrightness = 0.90;
+                bgSaturation = 0.3
+                bgBrightness = 0.90
             } else if (score < 24) {
-                bgSaturation = 1;
-                bgBrightness = 0.55 + 0.3*Float(drand48());
-                saturation = 0.1;
-                brightness = 0.95;
+                bgSaturation = 1
+                bgBrightness = 0.55 + 0.3*Float(drand48())
+                saturation = 0.1
+                brightness = 0.95
             } else if (score < 32) {
-                bgSaturation = 1;
-                bgBrightness = 0.55 + 0.3*Float(drand48());
-                saturation = 0;
-                brightness = 0;
+                bgSaturation = 1
+                bgBrightness = 0.55 + 0.3*Float(drand48())
+                saturation = 0
+                brightness = 0
             } else {
-                saturation = 1;
-                brightness = 1;
-                bgSaturation = 0;
-                bgBrightness = 0;
+                saturation = 1
+                brightness = 1
+                bgSaturation = 0
+                bgBrightness = 0
             }
             
             
-            let hue = Float(drand48());
+            let hue = Float(drand48())
             
-            let renderType = SolidRenderType();
+            let renderType = SolidRenderType()
             let renderColor = UIColor(hue: CGFloat(hue), saturation: CGFloat(saturation), brightness: CGFloat(brightness), alpha: 1.0)
             var red: CGFloat = 0
             var green: CGFloat = 0
@@ -1399,21 +1411,21 @@ class MainGameState {
             var alpha: CGFloat = 0
             
             renderColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-            renderType.color = (Float(red), Float(green), Float(blue));
+            renderType.color = (Float(red), Float(green), Float(blue))
             renderType.alpha = 1
-            previousRenderType = currentRenderer;
-            currentRenderer = renderType;
+            previousRenderType = currentRenderer
+            currentRenderer = renderType
             
-            let backgroundRenderType = SolidRenderType();
+            let backgroundRenderType = SolidRenderType()
             let backgroundRenderColor = UIColor(hue: CGFloat(hue), saturation: CGFloat(bgSaturation), brightness: CGFloat(bgBrightness), alpha: 1.0)
             backgroundRenderColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-            backgroundRenderType.color = (Float(red), Float(green), Float(blue));
+            backgroundRenderType.color = (Float(red), Float(green), Float(blue))
             backgroundRenderType.alpha = 1
             
-            previousBackgroundRenderType = self.backgroundRenderType;
-            self.backgroundRenderType = backgroundRenderType;
+            previousBackgroundRenderType = self.backgroundRenderType
+            self.backgroundRenderType = backgroundRenderType
             
-            mixRenderType = SolidRenderType();
+            mixRenderType = SolidRenderType()
             mixRenderType?.alpha = 1
             mixRenderType?.color = previousRenderType!.color
             
@@ -1422,6 +1434,19 @@ class MainGameState {
             mixBackgroundRenderType?.color = previousBackgroundRenderType!.color
             animatingColorChange = true
             timeOfChange = Int64(NSDate().timeIntervalSince1970*1000)
+        }
+    }
+    
+    func unityAdsVideoCompleted(rewardItemKey: String!, skipped: Bool) {
+        if (!skipped && inSecondChanceMenu && UnityAds.sharedInstance().getZone() == "rewardedVideo") {
+            scheduledSecondChance = true
+        }
+    }
+    
+    func onAdColonyV4VCReward(success: Bool, currencyName: String, currencyAmount amount: Int32, inZone zoneID: String) {
+        print("finish")
+        if (success) {
+            scheduledSecondChance = true
         }
     }
 }

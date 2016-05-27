@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        UnityAds.sharedInstance().startWithGameId("1069657", andViewController: self.window?.rootViewController)
+        
         return true
     }
 
