@@ -165,6 +165,8 @@ class MainGameState {
     init(viewController: GameViewController) {
         gameViewController = viewController
         
+        readHighScore()
+        
         greyRenderType = SolidRenderType()
         greyRenderType?.alpha = 1
         greyRenderType?.color = (0.4, 0.4, 0.4)
@@ -196,8 +198,9 @@ class MainGameState {
         
     }
     
-    func readHighSchore() {
-        //todo
+    func readHighScore() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        highScore = defaults.integerForKey("highScore")
     }
     
     func handleTouchEvent(touch: UITouch) {
@@ -332,7 +335,9 @@ class MainGameState {
     
     func updateHighScore(score: Int) {
         highScore = score
-        //TODO
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setInteger(highScore, forKey: "highScore")
+        defaults.synchronize()
     }
     
     func handleLoss() {
@@ -774,34 +779,6 @@ class MainGameState {
         return section
     }
     
-    func hueToRGB(pValue: Float, qValue: Float, hValue: Float) -> Float {
-        let p = pValue
-        let q = qValue
-        var h = hValue
-        if (h < 0) {
-            h += 1
-        }
-        if (h > 1 ) {
-            h -= 1
-        }
-        if (6 * h < 1)
-        {
-            return p + ((q - p) * 6 * h);
-        }
-        
-        if (2 * h < 1 )
-        {
-            return  q;
-        }
-        
-        if (3 * h < 2)
-        {
-            return p + ( (q - p) * 6 * ((2.0 / 3.0) - h) );
-        }
-        
-        return p;
-    }
-    
     func generateSections() {
         if (endCurrentGenerate >= verticalChange - 10) {
             let section = getSection()
@@ -1146,7 +1123,12 @@ class MainGameState {
             lineRenderType!.drawPath(leftPath);
             lineRenderType!.drawPath(rightPath);
             greyRenderType!.matrix = viewProjectionMatrix
-            greyRenderType!.drawText(scoreText!);
+            defaultBackgroundRenderer!.matrix = viewProjectionMatrix
+            if (score < 16) {
+                greyRenderType!.drawText(scoreText!);
+            } else {
+                defaultBackgroundRenderer!.drawText(scoreText!)
+            }
         }
     }
     
@@ -1365,39 +1347,71 @@ class MainGameState {
         scoreText?.originZ = 0
         scoreText?.refresh();
         if (score != 0) {
-            let renderType: SolidRenderType = SolidRenderType();
-            let hue = Float(drand48());
-            var luminance = Float(drand48()) * 0.5;
-            var saturation = Float(drand48());
-            var q: Float
-            if (luminance < 0.5) {
-                q = luminance * (1 + saturation);
+            var brightness: Float;
+            var bgBrightness : Float;
+            var saturation: Float;
+            var bgSaturation: Float;
+            if (score < 8) {
+                if (Float(drand48()) < 0.15) {
+                    saturation = 0.5*Float(drand48());
+                    brightness = 0.3*Float(drand48());
+                } else {
+                    saturation = 1;
+                    brightness = 0.55 + 0.3*Float(drand48());
+                }
+                bgSaturation = 0.1;
+                bgBrightness = 0.95;
+            } else if (score < 16) {
+                if (Float(drand48()) < 0.15) {
+                    saturation = 0.5*Float(drand48());
+                    brightness = 0.3*Float(drand48());
+                } else {
+                    saturation = 1;
+                    brightness = 0.3 + 0.3*Float(drand48());
+                }
+                bgSaturation = 0.3;
+                bgBrightness = 0.90;
+            } else if (score < 24) {
+                bgSaturation = 1;
+                bgBrightness = 0.55 + 0.3*Float(drand48());
+                saturation = 0.1;
+                brightness = 0.95;
+            } else if (score < 32) {
+                bgSaturation = 1;
+                bgBrightness = 0.55 + 0.3*Float(drand48());
+                saturation = 0;
+                brightness = 0;
             } else {
-                q = (luminance + saturation) - (saturation * luminance);
+                saturation = 1;
+                brightness = 1;
+                bgSaturation = 0;
+                bgBrightness = 0;
             }
-            var p = 2 * luminance - q;
-            let red = max(0, hueToRGB(p, qValue: q, hValue: hue + (1.0 / 3.0)));
-            let green = max(0, hueToRGB(p, qValue: q, hValue: hue));
-            let blue = max(0, hueToRGB(p, qValue: q, hValue: hue - (1.0 / 3.0)));
-            renderType.color = (red, green, blue);
+            
+            
+            let hue = Float(drand48());
+            
+            let renderType = SolidRenderType();
+            let renderColor = UIColor(hue: CGFloat(hue), saturation: CGFloat(saturation), brightness: CGFloat(brightness), alpha: 1.0)
+            var red: CGFloat = 0
+            var green: CGFloat = 0
+            var blue: CGFloat = 0
+            var alpha: CGFloat = 0
+            
+            renderColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+            renderType.color = (Float(red), Float(green), Float(blue));
             renderType.alpha = 1
             previousRenderType = currentRenderer;
             currentRenderer = renderType;
             
-            let backgroundRenderer: SolidRenderType = SolidRenderType();
-            luminance = 0.9;
-            saturation = 0.1;
+            let backgroundRenderType = SolidRenderType();
+            let backgroundRenderColor = UIColor(hue: CGFloat(hue), saturation: CGFloat(bgSaturation), brightness: CGFloat(bgBrightness), alpha: 1.0)
+            backgroundRenderColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+            backgroundRenderType.color = (Float(red), Float(green), Float(blue));
+            backgroundRenderType.alpha = 1
             
-            q = (luminance + saturation) - (saturation * luminance);
-            
-            p = 2 * luminance - q;
-            let redBack = max(0, hueToRGB(p, qValue: q, hValue: hue + (1.0 / 3.0)));
-            let greenBack = max(0, hueToRGB(p, qValue: q, hValue: hue));
-            let blueBack = max(0, hueToRGB(p, qValue: q, hValue: hue - (1.0 / 3.0)));
-            backgroundRenderer.color = (redBack, greenBack, blueBack);
-            backgroundRenderer.alpha = 1
-            previousBackgroundRenderType = backgroundRenderer;
-            backgroundRenderType = backgroundRenderer;
+            previousBackgroundRenderType = self.backgroundRenderType;
+            self.backgroundRenderType = backgroundRenderType;
             
             mixRenderType = SolidRenderType();
             mixRenderType?.alpha = 1
