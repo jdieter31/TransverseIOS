@@ -14,12 +14,20 @@ class SolidRenderType: RenderType {
     var alpha: Float = 1
     var matrix: GLKMatrix4? = nil
     var color: (red: Float, green: Float, blue: Float) = (1, 1, 1)
+    var color2: (red: Float, green: Float, blue: Float)?
+    var width: Float = 0
+    var dual: Bool = false
     
     init() {
         
     }
     
     func drawAlphaShape(shape: AlphaShape) {
+        if (dual) {
+            drawAlphaShapeDual(shape)
+            return
+        }
+        
         glUseProgram(Shaders.solidLineProgram)
         
         let positionHandle: GLint = glGetAttribLocation(Shaders.solidLineProgram, "vPosition")
@@ -40,7 +48,39 @@ class SolidRenderType: RenderType {
         shape.draw(positionHandle, alphaHandle: alphaHandle)
     }
     
+    private func drawAlphaShapeDual(shape: AlphaShape) {
+        glUseProgram(Shaders.dualColorAlphaProgram)
+        
+        let positionHandle: GLint = glGetAttribLocation(Shaders.dualColorAlphaProgram, "vPosition")
+        
+        let matrixHandle: GLint = glGetUniformLocation(Shaders.dualColorAlphaProgram, "uMVPMatrix")
+        
+        if var matrix: GLKMatrix4 = self.matrix {
+            withUnsafePointer(&matrix, {
+                glUniformMatrix4fv(matrixHandle, 1, GLboolean(GL_FALSE), UnsafePointer($0))
+            })
+        }
+        
+        let colorHandle: GLint = glGetUniformLocation(Shaders.dualColorAlphaProgram, "vColor");
+        glUniform4f(colorHandle, color.red, color.green, color.blue, alpha)
+        
+        let colorHandle2: GLint = glGetUniformLocation(Shaders.dualColorAlphaProgram, "vColor2");
+        glUniform4f(colorHandle2, color2!.red, color2!.green, color2!.blue, alpha)
+        
+        let widthHandle: GLint = glGetUniformLocation(Shaders.dualColorAlphaProgram, "width")
+        glUniform1f(widthHandle, width)
+        
+        let alphaHandle: GLint = glGetAttribLocation(Shaders.dualColorAlphaProgram, "aAlpha")
+        
+        shape.draw(positionHandle, alphaHandle: alphaHandle)
+    }
+    
     func drawShape(shape: Shape) {
+        if (dual) {
+            drawShapeDual(shape)
+            return
+        }
+        
         glUseProgram(Shaders.solidColorProgram)
         
         let positionHandle: GLint = glGetAttribLocation(Shaders.solidColorProgram, "vPosition")
@@ -55,6 +95,32 @@ class SolidRenderType: RenderType {
         
         let colorHandle: GLint = glGetUniformLocation(Shaders.solidColorProgram, "vColor");
         glUniform4f(colorHandle, color.red, color.green, color.blue, alpha)
+        
+        shape.draw(positionHandle)
+    }
+    
+    private func drawShapeDual(shape: Shape) {
+        
+        glUseProgram(Shaders.dualColorProgram)
+        
+        let positionHandle: GLint = glGetAttribLocation(Shaders.dualColorProgram, "vPosition")
+        
+        let matrixHandle: GLint = glGetUniformLocation(Shaders.dualColorProgram, "uMVPMatrix")
+        
+        if var matrix: GLKMatrix4 = self.matrix {
+            withUnsafePointer(&matrix, {
+                glUniformMatrix4fv(matrixHandle, 1, GLboolean(GL_FALSE), UnsafePointer($0))
+            })
+        }
+        
+        let colorHandle: GLint = glGetUniformLocation(Shaders.dualColorProgram, "vColor");
+        glUniform4f(colorHandle, color.red, color.green, color.blue, alpha)
+        
+        let colorHandle2: GLint = glGetUniformLocation(Shaders.dualColorProgram, "vColor2");
+        glUniform4f(colorHandle2, color2!.red, color2!.green, color2!.blue, alpha)
+        
+        let widthHandle: GLint = glGetUniformLocation(Shaders.dualColorProgram, "width")
+        glUniform1f(widthHandle, width)
         
         shape.draw(positionHandle)
     }
@@ -111,5 +177,11 @@ class SolidRenderType: RenderType {
         let pointSizeLoc: GLint = glGetUniformLocation(Shaders.pathProgram, "pointSize")
         
         path.draw(positionHandle, alphaHandle: alphaHandle, pointSizeHandle: pointSizeLoc)
+    }
+    
+    func setDualColor(color: (red: Float, green: Float, blue: Float), width: Float) {
+        dual = true
+        color2 = color
+        self.width = width
     }
 }

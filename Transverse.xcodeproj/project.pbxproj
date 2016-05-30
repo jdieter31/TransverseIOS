@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D03297AE1CF5508E00FF0922 /* DoubleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03297AD1CF5508E00FF0922 /* DoubleSection.swift */; };
 		D03297B01CF560B200FF0922 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03297AF1CF560B200FF0922 /* Path.swift */; };
+		D03412DD1CFCF02A00ECDCAC /* splashscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = D03412DC1CFCF02A00ECDCAC /* splashscreen.png */; };
+		D03412DF1CFCFACA00ECDCAC /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03412DE1CFCFACA00ECDCAC /* SplashScreen.swift */; };
 		D074C4051CF119F6001A3AFC /* AlphaShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4041CF119F6001A3AFC /* AlphaShape.swift */; };
 		D074C4071CF11A74001A3AFC /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4061CF11A74001A3AFC /* Shape.swift */; };
 		D074C4091CF11ABC001A3AFC /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4081CF11ABC001A3AFC /* Circle.swift */; };
@@ -21,6 +23,27 @@
 		D074C4551CF16A6E001A3AFC /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = D074C4541CF16A6E001A3AFC /* forward.png */; };
 		D074C4571CF16A73001A3AFC /* leaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = D074C4561CF16A73001A3AFC /* leaderboard.png */; };
 		D074C4591CF16CB3001A3AFC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4581CF16CB3001A3AFC /* Image.swift */; };
+		D09071EC1CF9005D00829740 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D09071EB1CF9005D00829740 /* GoogleService-Info.plist */; };
+		D09071ED1CF9005D00829740 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D09071EB1CF9005D00829740 /* GoogleService-Info.plist */; };
+		D09071EE1CF9005D00829740 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D09071EB1CF9005D00829740 /* GoogleService-Info.plist */; };
+		D09071F31CF9012600829740 /* Pods-Transverse.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B301B4C17306FE7AA77B649A /* Pods-Transverse.debug.xcconfig */; };
+		D09071F41CF9012B00829740 /* Pods-Transverse.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CCC5305E0A28289AAE16C451 /* Pods-Transverse.release.xcconfig */; };
+		D09071F51CF9012B00829740 /* Pods-TransverseTests.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A1BB4994F575B3B809280E16 /* Pods-TransverseTests.debug.xcconfig */; };
+		D09071F61CF9012B00829740 /* Pods-TransverseTests.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9B67A8BE5530F0E97B40ECDD /* Pods-TransverseTests.release.xcconfig */; };
+		D09071F71CF9012B00829740 /* Pods-TransverseUITests.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = AB51B9C46B275C4B00CFE0C4 /* Pods-TransverseUITests.debug.xcconfig */; };
+		D09071F81CF9012B00829740 /* Pods-TransverseUITests.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = FFFCCD009A5128190079054C /* Pods-TransverseUITests.release.xcconfig */; };
+		D09071FA1CFBA4CE00829740 /* DualColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D09071F91CFBA4CE00829740 /* DualColor.vsh */; };
+		D09071FB1CFBA4CE00829740 /* DualColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D09071F91CFBA4CE00829740 /* DualColor.vsh */; };
+		D09071FC1CFBA4CE00829740 /* DualColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D09071F91CFBA4CE00829740 /* DualColor.vsh */; };
+		D09071FE1CFBA4DE00829740 /* DualColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D09071FD1CFBA4DE00829740 /* DualColor.fsh */; };
+		D09071FF1CFBA4DE00829740 /* DualColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D09071FD1CFBA4DE00829740 /* DualColor.fsh */; };
+		D09072001CFBA4DE00829740 /* DualColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D09071FD1CFBA4DE00829740 /* DualColor.fsh */; };
+		D09072021CFBA5FC00829740 /* DualColorAlpha.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D09072011CFBA5FC00829740 /* DualColorAlpha.vsh */; };
+		D09072031CFBA5FC00829740 /* DualColorAlpha.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D09072011CFBA5FC00829740 /* DualColorAlpha.vsh */; };
+		D09072041CFBA5FC00829740 /* DualColorAlpha.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D09072011CFBA5FC00829740 /* DualColorAlpha.vsh */; };
+		D09072061CFBA61000829740 /* DualColorAlpha.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D09072051CFBA61000829740 /* DualColorAlpha.fsh */; };
+		D09072071CFBA61000829740 /* DualColorAlpha.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D09072051CFBA61000829740 /* DualColorAlpha.fsh */; };
+		D09072081CFBA61000829740 /* DualColorAlpha.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D09072051CFBA61000829740 /* DualColorAlpha.fsh */; };
 		D0A2398F1CF6CA8300A53FDA /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D0A2398E1CF6CA8300A53FDA /* Particle.png */; };
 		D0A53A021CF0EA5F002DE853 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53A011CF0EA5F002DE853 /* Shaders.swift */; };
 		D0A53A041CF10A5A002DE853 /* MainGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53A031CF10A5A002DE853 /* MainGameState.swift */; };
@@ -91,8 +114,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B67A8BE5530F0E97B40ECDD /* Pods-TransverseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransverseTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TransverseTests/Pods-TransverseTests.release.xcconfig"; sourceTree = "<group>"; };
+		A1BB4994F575B3B809280E16 /* Pods-TransverseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransverseTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TransverseTests/Pods-TransverseTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AB51B9C46B275C4B00CFE0C4 /* Pods-TransverseUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransverseUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TransverseUITests/Pods-TransverseUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B301B4C17306FE7AA77B649A /* Pods-Transverse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transverse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Transverse/Pods-Transverse.debug.xcconfig"; sourceTree = "<group>"; };
+		CCC5305E0A28289AAE16C451 /* Pods-Transverse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transverse.release.xcconfig"; path = "Pods/Target Support Files/Pods-Transverse/Pods-Transverse.release.xcconfig"; sourceTree = "<group>"; };
 		D03297AD1CF5508E00FF0922 /* DoubleSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSection.swift; sourceTree = "<group>"; };
 		D03297AF1CF560B200FF0922 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		D03412DC1CFCF02A00ECDCAC /* splashscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashscreen.png; sourceTree = "<group>"; };
+		D03412DE1CFCFACA00ECDCAC /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashScreen.swift; path = ../SplashScreen.swift; sourceTree = "<group>"; };
 		D074C4041CF119F6001A3AFC /* AlphaShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlphaShape.swift; path = ../AlphaShape.swift; sourceTree = "<group>"; };
 		D074C4061CF11A74001A3AFC /* Shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
 		D074C4081CF11ABC001A3AFC /* Circle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
@@ -105,6 +135,11 @@
 		D074C4541CF16A6E001A3AFC /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forward.png; path = ../../Desktop/forward.png; sourceTree = "<group>"; };
 		D074C4561CF16A73001A3AFC /* leaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leaderboard.png; path = ../../Desktop/leaderboard.png; sourceTree = "<group>"; };
 		D074C4581CF16CB3001A3AFC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		D09071EB1CF9005D00829740 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D09071F91CFBA4CE00829740 /* DualColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DualColor.vsh; sourceTree = "<group>"; };
+		D09071FD1CFBA4DE00829740 /* DualColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DualColor.fsh; sourceTree = "<group>"; };
+		D09072011CFBA5FC00829740 /* DualColorAlpha.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DualColorAlpha.vsh; sourceTree = "<group>"; };
+		D09072051CFBA61000829740 /* DualColorAlpha.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DualColorAlpha.fsh; sourceTree = "<group>"; };
 		D0A2398E1CF6CA8300A53FDA /* Particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Particle.png; sourceTree = "<group>"; };
 		D0A53A011CF0EA5F002DE853 /* Shaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		D0A53A031CF10A5A002DE853 /* MainGameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainGameState.swift; sourceTree = "<group>"; };
@@ -127,10 +162,10 @@
 		D0D22B441CF80CBC00AD1A5D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		D0D22B461CF80CC500AD1A5D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D0D22B481CF80CCD00AD1A5D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		D0D22B4A1CF80D0A00AD1A5D /* UnityAds.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = UnityAds.bundle; path = ../UnityAds.bundle; sourceTree = "<group>"; };
-		D0D22B4C1CF80D1300AD1A5D /* UnityAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UnityAds.framework; path = ../UnityAds.framework; sourceTree = "<group>"; };
+		D0D22B4A1CF80D0A00AD1A5D /* UnityAds.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UnityAds.bundle; sourceTree = "<group>"; };
+		D0D22B4C1CF80D1300AD1A5D /* UnityAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UnityAds.framework; sourceTree = "<group>"; };
 		D0D22B511CF8102E00AD1A5D /* unity-ads-swift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "unity-ads-swift-Bridging-Header.h"; sourceTree = "<group>"; };
-		D0D22B541CF818D200AD1A5D /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AdColony.framework; sourceTree = "<group>"; };
+		D0D22B541CF818D200AD1A5D /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdColony.framework; path = Transverse/AdColony.framework; sourceTree = "<group>"; };
 		D0D22B561CF8190300AD1A5D /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		D0D22B581CF8191000AD1A5D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D0D22B5A1CF8192D00AD1A5D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -162,6 +197,7 @@
 		D0E470501CF031C70003E80D /* SolidImage.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidImage.vsh; sourceTree = "<group>"; };
 		D0E470521CF031E10003E80D /* SolidLine.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidLine.fsh; sourceTree = "<group>"; };
 		D0E470541CF031F60003E80D /* SolidLine.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidLine.vsh; sourceTree = "<group>"; };
+		FFFCCD009A5128190079054C /* Pods-TransverseUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransverseUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TransverseUITests/Pods-TransverseUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,9 +245,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B71FEBF35726C2DF1196296 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B301B4C17306FE7AA77B649A /* Pods-Transverse.debug.xcconfig */,
+				CCC5305E0A28289AAE16C451 /* Pods-Transverse.release.xcconfig */,
+				A1BB4994F575B3B809280E16 /* Pods-TransverseTests.debug.xcconfig */,
+				9B67A8BE5530F0E97B40ECDD /* Pods-TransverseTests.release.xcconfig */,
+				AB51B9C46B275C4B00CFE0C4 /* Pods-TransverseUITests.debug.xcconfig */,
+				FFFCCD009A5128190079054C /* Pods-TransverseUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A2203F897B5ED19A89E72E30 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D0E470061CF02EB40003E80D = {
 			isa = PBXGroup;
 			children = (
+				D09071EB1CF9005D00829740 /* GoogleService-Info.plist */,
+				D0D22B541CF818D200AD1A5D /* AdColony.framework */,
 				D0D22B681CF8199500AD1A5D /* WebKit.framework */,
 				D0D22B661CF8197000AD1A5D /* Social.framework */,
 				D0D22B641CF8196A00AD1A5D /* QuartzCore.framework */,
@@ -222,10 +280,22 @@
 				D0D22B5A1CF8192D00AD1A5D /* CoreGraphics.framework */,
 				D0D22B581CF8191000AD1A5D /* AudioToolbox.framework */,
 				D0D22B561CF8190300AD1A5D /* libz.1.2.5.tbd */,
+				D0D22B4A1CF80D0A00AD1A5D /* UnityAds.bundle */,
+				D0D22B461CF80CC500AD1A5D /* StoreKit.framework */,
+				D0D22B481CF80CCD00AD1A5D /* SystemConfiguration.framework */,
+				D0D22B441CF80CBC00AD1A5D /* CoreTelephony.framework */,
+				D0D22B421CF80CB100AD1A5D /* CoreMedia.framework */,
+				D0D22B401CF80CA500AD1A5D /* CoreFoundation.framework */,
+				D0D22B3E1CF80C8500AD1A5D /* CFNetwork.framework */,
+				D0D22B3C1CF80C7B00AD1A5D /* AVFoundation.framework */,
+				D0D22B3A1CF80C7100AD1A5D /* AdSupport.framework */,
+				D0D22B4C1CF80D1300AD1A5D /* UnityAds.framework */,
 				D0E470111CF02EB40003E80D /* Transverse */,
 				D0E4702A1CF02EB40003E80D /* TransverseTests */,
 				D0E470351CF02EB40003E80D /* TransverseUITests */,
 				D0E470101CF02EB40003E80D /* Products */,
+				5B71FEBF35726C2DF1196296 /* Pods */,
+				A2203F897B5ED19A89E72E30 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -242,22 +312,13 @@
 		D0E470111CF02EB40003E80D /* Transverse */ = {
 			isa = PBXGroup;
 			children = (
-				D0D22B541CF818D200AD1A5D /* AdColony.framework */,
-				D0D22B4A1CF80D0A00AD1A5D /* UnityAds.bundle */,
-				D0D22B481CF80CCD00AD1A5D /* SystemConfiguration.framework */,
-				D0D22B461CF80CC500AD1A5D /* StoreKit.framework */,
-				D0D22B441CF80CBC00AD1A5D /* CoreTelephony.framework */,
-				D0D22B421CF80CB100AD1A5D /* CoreMedia.framework */,
-				D0D22B401CF80CA500AD1A5D /* CoreFoundation.framework */,
-				D0D22B3E1CF80C8500AD1A5D /* CFNetwork.framework */,
-				D0D22B3C1CF80C7B00AD1A5D /* AVFoundation.framework */,
-				D0D22B3A1CF80C7100AD1A5D /* AdSupport.framework */,
-				D0D22B4C1CF80D1300AD1A5D /* UnityAds.framework */,
 				D0A2398E1CF6CA8300A53FDA /* Particle.png */,
 				D074C4561CF16A73001A3AFC /* leaderboard.png */,
 				D074C4541CF16A6E001A3AFC /* forward.png */,
+				D03412DC1CFCF02A00ECDCAC /* splashscreen.png */,
 				D0C597301CF4080800F8F7C3 /* forward.xml */,
 				D074C4521CF16A69001A3AFC /* trophy.png */,
+				D03412DE1CFCFACA00ECDCAC /* SplashScreen.swift */,
 				D074C44E1CF140BE001A3AFC /* UtilityMath.swift */,
 				D074C44A1CF12B45001A3AFC /* SolidRenderType.swift */,
 				D074C4481CF129C0001A3AFC /* RenderType.swift */,
@@ -295,6 +356,10 @@
 				D0E470541CF031F60003E80D /* SolidLine.vsh */,
 				D0B646A11CF6BC960071555C /* point.fsh */,
 				D0B6469F1CF6BC890071555C /* point.vsh */,
+				D09071F91CFBA4CE00829740 /* DualColor.vsh */,
+				D09071FD1CFBA4DE00829740 /* DualColor.fsh */,
+				D09072011CFBA5FC00829740 /* DualColorAlpha.vsh */,
+				D09072051CFBA61000829740 /* DualColorAlpha.fsh */,
 				D0D22B511CF8102E00AD1A5D /* unity-ads-swift-Bridging-Header.h */,
 			);
 			path = Transverse;
@@ -325,9 +390,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0E4703B1CF02EB40003E80D /* Build configuration list for PBXNativeTarget "Transverse" */;
 			buildPhases = (
+				CB496A8C08590872E8FF373B /* 📦 Check Pods Manifest.lock */,
 				D0E4700B1CF02EB40003E80D /* Sources */,
 				D0E4700C1CF02EB40003E80D /* Frameworks */,
 				D0E4700D1CF02EB40003E80D /* Resources */,
+				9FBF400F7B2B22F33143E8A2 /* 📦 Embed Pods Frameworks */,
+				9998823FE07AEB4130BDC175 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -342,9 +410,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0E4703E1CF02EB40003E80D /* Build configuration list for PBXNativeTarget "TransverseTests" */;
 			buildPhases = (
+				283CAA11571136A1CEAA75AD /* 📦 Check Pods Manifest.lock */,
 				D0E470231CF02EB40003E80D /* Sources */,
 				D0E470241CF02EB40003E80D /* Frameworks */,
 				D0E470251CF02EB40003E80D /* Resources */,
+				87C422DAA91A71E3B156B0FC /* 📦 Embed Pods Frameworks */,
+				D9E962C6671D682D722E4E5B /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -360,9 +431,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0E470411CF02EB40003E80D /* Build configuration list for PBXNativeTarget "TransverseUITests" */;
 			buildPhases = (
+				D398A72F935736187F9613CA /* 📦 Check Pods Manifest.lock */,
 				D0E4702E1CF02EB40003E80D /* Sources */,
 				D0E4702F1CF02EB40003E80D /* Frameworks */,
 				D0E470301CF02EB40003E80D /* Resources */,
+				741925592C58948531C834DD /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -428,20 +501,32 @@
 				D0E4701C1CF02EB40003E80D /* Main.storyboard in Resources */,
 				D074C4571CF16A73001A3AFC /* leaderboard.png in Resources */,
 				D0B646A01CF6BC890071555C /* point.vsh in Resources */,
+				D03412DD1CFCF02A00ECDCAC /* splashscreen.png in Resources */,
 				D0E470551CF031F60003E80D /* SolidLine.vsh in Resources */,
+				D09071F41CF9012B00829740 /* Pods-Transverse.release.xcconfig in Resources */,
 				D0E470451CF0310D0003E80D /* SolidColor.fsh in Resources */,
 				D0E470531CF031E10003E80D /* SolidLine.fsh in Resources */,
 				D074C4551CF16A6E001A3AFC /* forward.png in Resources */,
 				D0E4704F1CF031AB0003E80D /* SolidImage.fsh in Resources */,
+				D09071F51CF9012B00829740 /* Pods-TransverseTests.debug.xcconfig in Resources */,
 				D0E470491CF0313B0003E80D /* Image.fsh in Resources */,
+				D09071FA1CFBA4CE00829740 /* DualColor.vsh in Resources */,
 				D0E4701E1CF02EB40003E80D /* Assets.xcassets in Resources */,
+				D09071F81CF9012B00829740 /* Pods-TransverseUITests.release.xcconfig in Resources */,
+				D09071F61CF9012B00829740 /* Pods-TransverseTests.release.xcconfig in Resources */,
+				D09071FE1CFBA4DE00829740 /* DualColor.fsh in Resources */,
 				D0C597311CF4080800F8F7C3 /* forward.xml in Resources */,
 				D074C4531CF16A69001A3AFC /* trophy.png in Resources */,
 				D0D22B4B1CF80D0A00AD1A5D /* UnityAds.bundle in Resources */,
 				D0E470211CF02EB40003E80D /* LaunchScreen.storyboard in Resources */,
+				D09071F31CF9012600829740 /* Pods-Transverse.debug.xcconfig in Resources */,
+				D09072021CFBA5FC00829740 /* DualColorAlpha.vsh in Resources */,
 				D0E4704B1CF0314D0003E80D /* Image.vsh in Resources */,
+				D09071EC1CF9005D00829740 /* GoogleService-Info.plist in Resources */,
+				D09072061CFBA61000829740 /* DualColorAlpha.fsh in Resources */,
 				D0E470511CF031C70003E80D /* SolidImage.vsh in Resources */,
 				D0E470471CF031280003E80D /* SolidColor.vsh in Resources */,
+				D09071F71CF9012B00829740 /* Pods-TransverseUITests.debug.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +534,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D09072031CFBA5FC00829740 /* DualColorAlpha.vsh in Resources */,
+				D09072071CFBA61000829740 /* DualColorAlpha.fsh in Resources */,
+				D09071ED1CF9005D00829740 /* GoogleService-Info.plist in Resources */,
+				D09071FF1CFBA4DE00829740 /* DualColor.fsh in Resources */,
+				D09071FB1CFBA4CE00829740 /* DualColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,16 +546,145 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D09072041CFBA5FC00829740 /* DualColorAlpha.vsh in Resources */,
+				D09072081CFBA61000829740 /* DualColorAlpha.fsh in Resources */,
+				D09071EE1CF9005D00829740 /* GoogleService-Info.plist in Resources */,
+				D09072001CFBA4DE00829740 /* DualColor.fsh in Resources */,
+				D09071FC1CFBA4CE00829740 /* DualColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		283CAA11571136A1CEAA75AD /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		741925592C58948531C834DD /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TransverseUITests/Pods-TransverseUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		87C422DAA91A71E3B156B0FC /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TransverseTests/Pods-TransverseTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9998823FE07AEB4130BDC175 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Transverse/Pods-Transverse-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9FBF400F7B2B22F33143E8A2 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Transverse/Pods-Transverse-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CB496A8C08590872E8FF373B /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D398A72F935736187F9613CA /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D9E962C6671D682D722E4E5B /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TransverseTests/Pods-TransverseTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D0E4700B1CF02EB40003E80D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D03412DF1CFCFACA00ECDCAC /* SplashScreen.swift in Sources */,
 				D074C4091CF11ABC001A3AFC /* Circle.swift in Sources */,
 				D03297B01CF560B200FF0922 /* Path.swift in Sources */,
 				D0C5972F1CF4031400F8F7C3 /* Text.swift in Sources */,
@@ -630,6 +849,7 @@
 		};
 		D0E4703C1CF02EB40003E80D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B301B4C17306FE7AA77B649A /* Pods-Transverse.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -638,6 +858,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Transverse",
+					"$(PROJECT_DIR)/UnityAds.bundle",
 				);
 				INFOPLIST_FILE = Transverse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -650,6 +871,7 @@
 		};
 		D0E4703D1CF02EB40003E80D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCC5305E0A28289AAE16C451 /* Pods-Transverse.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -658,6 +880,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Transverse",
+					"$(PROJECT_DIR)/UnityAds.bundle",
 				);
 				INFOPLIST_FILE = Transverse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -670,9 +893,14 @@
 		};
 		D0E4703F1CF02EB40003E80D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1BB4994F575B3B809280E16 /* Pods-TransverseTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/UnityAds.bundle",
+				);
 				INFOPLIST_FILE = TransverseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.provectusstudios.TransverseTests;
@@ -683,8 +911,13 @@
 		};
 		D0E470401CF02EB40003E80D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B67A8BE5530F0E97B40ECDD /* Pods-TransverseTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/UnityAds.bundle",
+				);
 				INFOPLIST_FILE = TransverseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.provectusstudios.TransverseTests;
@@ -695,8 +928,13 @@
 		};
 		D0E470421CF02EB40003E80D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB51B9C46B275C4B00CFE0C4 /* Pods-TransverseUITests.debug.xcconfig */;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/UnityAds.bundle",
+				);
 				INFOPLIST_FILE = TransverseUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.provectusstudios.TransverseUITests;
@@ -707,7 +945,12 @@
 		};
 		D0E470431CF02EB40003E80D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFFCCD009A5128190079054C /* Pods-TransverseUITests.release.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/UnityAds.bundle",
+				);
 				INFOPLIST_FILE = TransverseUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.provectusstudios.TransverseUITests;

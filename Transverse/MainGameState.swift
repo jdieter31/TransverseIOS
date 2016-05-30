@@ -172,6 +172,12 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         
         super.init()
         
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Main Menu")
+        
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
+        
         AdColony.configureWithAppID("app09b63d44677f48e6ab", zoneIDs: ["vz6ae2ce67fcf642c1b1", "vz27856e528ba4462fbe"], delegate: self, logging: false)
         
         UnityAds.sharedInstance().delegate = self
@@ -240,6 +246,11 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 }
                 
                 if (rightDown && leftDown) {
+                    let tracker = GAI.sharedInstance().defaultTracker
+                    tracker.set(kGAIScreenName, value: "Gameplay")
+                    
+                    let builder = GAIDictionaryBuilder.createScreenView()
+                    tracker.send(builder.build() as [NSObject : AnyObject])
                     started = true
                     lastMoveCalc = Int64(NSDate().timeIntervalSince1970*1000)
                 }
@@ -285,7 +296,21 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 if (retryRectangle!.containsPoint(x, y: y)) {
                     scheduledRestart = true
                 } else if (loseShareBox!.containsPoint(x, y: y)) {
-                    //TODO Share
+                    let tracker = GAI.sharedInstance().defaultTracker
+                    
+                    tracker.send(GAIDictionaryBuilder.createEventWithCategory("Social", action: "Share", label: nil, value: nil).build() as [NSObject : AnyObject])
+                    
+                    
+                    UIGraphicsBeginImageContextWithOptions(gameViewController.view.bounds.size, true, 0)
+                    gameViewController.view.drawViewHierarchyInRect(gameViewController.view.bounds, afterScreenUpdates: true)
+                    let image = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    
+                    let text = "I scored \(score) points on #Transverse! Can you beat it?"
+                    
+                    let activityVC = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
+                    
+                    gameViewController.presentViewController(activityVC, animated: true, completion: nil)
                 } else if (loseAchievementBox!.containsPoint(x, y: y)) {
                     //TODO Achievements
                 } else if (loseLeaderboardBox!.containsPoint(x, y: y)) {
@@ -366,6 +391,12 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
     }
     
     func createSecondChance() {
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Gameplay")
+        
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
+        
         if let currentSection = currentSection {
             currentSection.empty()
         }
@@ -421,6 +452,12 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
     }
     
     func createSecondChanceMenu() {
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Second Chance Menu")
+        
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
+        
         hadSecondChance = true
         inSecondChanceMenu = true
         
@@ -497,6 +534,13 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
     }
     
     func finishGame() {
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Loss Menu")
+        
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
+        tracker.send(GAIDictionaryBuilder.createEventWithCategory("Game", action: "Finished Game", label: nil, value: score).build() as [NSObject : AnyObject])
+        
         if (score > highScore) {
             updateHighScore(score)
         }
@@ -808,6 +852,11 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
     }
     
     func triggerRestart() {
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "Main Menu")
+        
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
         hadSecondChance = false
         inSecondChanceMenu = false
         scheduledRestart = false
@@ -879,11 +928,24 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             var blue = ((300.0 - Float(dt))/300.0)*previousRenderType!.color.blue + (Float(dt)/300.0)*currentRenderer!.color.blue
             var green = ((300.0 - Float(dt))/300.0)*previousRenderType!.color.green + (Float(dt)/300.0)*currentRenderer!.color.green
             mixRenderType!.color = (red, green, blue)
+            if (currentRenderer!.dual) {
+                let red2 = ((300.0 - Float(dt))/300.0)*previousRenderType!.color2!.red + (Float(dt)/300.0)*currentRenderer!.color2!.red
+                let blue2 = ((300.0 - Float(dt))/300.0)*previousRenderType!.color2!.blue + (Float(dt)/300.0)*currentRenderer!.color2!.blue
+                let green2 = ((300.0 - Float(dt))/300.0)*previousRenderType!.color2!.green + (Float(dt)/300.0)*currentRenderer!.color2!.green
+                mixRenderType!.color2 = (red2, green2, blue2)
+            }
+            
             
             red = ((300.0 - Float(dt))/300.0)*previousBackgroundRenderType!.color.red + (Float(dt)/300.0)*backgroundRenderType!.color.red
             blue = ((300.0 - Float(dt))/300.0)*previousBackgroundRenderType!.color.blue + (Float(dt)/300.0)*backgroundRenderType!.color.blue
             green = ((300.0 - Float(dt))/300.0)*previousBackgroundRenderType!.color.green + (Float(dt)/300.0)*backgroundRenderType!.color.green
             mixBackgroundRenderType!.color = (red, green, blue)
+            if (backgroundRenderType!.dual){
+                let red2 = ((300.0 - Float(dt))/300.0)*previousBackgroundRenderType!.color2!.red + (Float(dt)/300.0)*backgroundRenderType!.color2!.red
+                let blue2 = ((300.0 - Float(dt))/300.0)*previousBackgroundRenderType!.color2!.blue + (Float(dt)/300.0)*backgroundRenderType!.color2!.blue
+                let green2 = ((300.0 - Float(dt))/300.0)*previousBackgroundRenderType!.color2!.green + (Float(dt)/300.0)*backgroundRenderType!.color2!.green
+                mixBackgroundRenderType!.color2 = (red2, green2, blue2)
+            }
             
             mixBackgroundRenderType!.matrix = viewProjectionMatrix
             mixBackgroundRenderType!.alpha = 1
@@ -1136,7 +1198,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             lineRenderType!.drawPath(rightPath)
             greyRenderType!.matrix = viewProjectionMatrix
             defaultBackgroundRenderer!.matrix = viewProjectionMatrix
-            if (score < 16) {
+            if (score < 10) {
                 greyRenderType!.drawText(scoreText!)
             } else {
                 defaultBackgroundRenderer!.drawText(scoreText!)
@@ -1363,7 +1425,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             var bgBrightness : Float
             var saturation: Float
             var bgSaturation: Float
-            if (score < 8) {
+            if (score < 5) {
                 if (Float(drand48()) < 0.15) {
                     saturation = 0.5*Float(drand48())
                     brightness = 0.3*Float(drand48())
@@ -1373,7 +1435,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 }
                 bgSaturation = 0.1
                 bgBrightness = 0.95
-            } else if (score < 16) {
+            } else if (score < 10) {
                 if (Float(drand48()) < 0.15) {
                     saturation = 0.5*Float(drand48())
                     brightness = 0.3*Float(drand48())
@@ -1383,21 +1445,31 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 }
                 bgSaturation = 0.3
                 bgBrightness = 0.90
-            } else if (score < 24) {
+            } else if (score < 15) {
                 bgSaturation = 1
                 bgBrightness = 0.55 + 0.3*Float(drand48())
                 saturation = 0.1
                 brightness = 0.95
-            } else if (score < 32) {
+            } else if (score < 20) {
                 bgSaturation = 1
                 bgBrightness = 0.55 + 0.3*Float(drand48())
                 saturation = 0
                 brightness = 0
-            } else {
+            } else  if (score < 30) {
                 saturation = 1
                 brightness = 1
                 bgSaturation = 0
                 bgBrightness = 0
+            } else if (score < 40) {
+                saturation = 1
+                brightness = 1
+                bgSaturation = 0
+                bgBrightness = 0
+            } else {
+                saturation = 0
+                brightness = 0
+                bgSaturation = 0.7
+                bgBrightness = 1
             }
             
             
@@ -1432,6 +1504,37 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             mixBackgroundRenderType = SolidRenderType()
             mixBackgroundRenderType?.alpha = 1
             mixBackgroundRenderType?.color = previousBackgroundRenderType!.color
+            
+            if (score >= 30 && score < 40) {
+                var hue2: Float
+                var difference: Float
+                repeat {
+                    hue2 = Float(drand48())
+                    difference = min(((hue2 - hue) + 1) % 1, (-(hue2 - hue) + 1) % 1)
+                } while difference < (120.0/360.0)
+                let renderColor2 = UIColor(hue: CGFloat(hue2), saturation: CGFloat(saturation), brightness: CGFloat(brightness), alpha: 1.0)
+                renderColor2.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+                renderType.setDualColor((Float(red), Float(green), Float(blue)), width: width)
+                if (!previousRenderType!.dual) {
+                    previousRenderType?.setDualColor(previousRenderType!.color, width: width)
+                }
+                mixRenderType?.setDualColor(previousRenderType!.color2!, width: width)
+            } else if (score >= 40) {
+                var hue2: Float
+                var difference: Float
+                repeat {
+                    hue2 = Float(drand48())
+                    difference = min(((hue2 - hue) + 1) % 1, (-(hue2 - hue) + 1) % 1)
+                } while difference < (120.0/360.0)
+                let renderColor2 = UIColor(hue: CGFloat(hue2), saturation: CGFloat(bgSaturation), brightness: CGFloat(bgBrightness), alpha: 1.0)
+                renderColor2.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+                backgroundRenderType.setDualColor((Float(red), Float(green), Float(blue)), width: width)
+                if (!previousBackgroundRenderType!.dual) {
+                    previousBackgroundRenderType?.setDualColor(previousBackgroundRenderType!.color, width: width)
+                }
+                mixBackgroundRenderType?.setDualColor(previousBackgroundRenderType!.color2!, width: width)
+            }
+            
             animatingColorChange = true
             timeOfChange = Int64(NSDate().timeIntervalSince1970*1000)
         }

@@ -18,6 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UnityAds.sharedInstance().startWithGameId("1069657", andViewController: self.window?.rootViewController)
         
+        var configureError:NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+        
+        // Optional: configure GAI options.
+        let gai = GAI.sharedInstance()
+        gai.trackUncaughtExceptions = true  // report uncaught exceptions
+        
         return true
     }
 

@@ -16,6 +16,8 @@ class Shaders {
     static var solidImageProgram: GLuint = 0
     static var solidLineProgram: GLuint = 0
     static var pathProgram: GLuint = 0
+    static var dualColorProgram: GLuint = 0
+    static var dualColorAlphaProgram: GLuint = 0
     
     static var vsSolidColorHandle: GLuint = 0
     static var fsSolidColorHandle: GLuint = 0
@@ -27,6 +29,10 @@ class Shaders {
     static var fsSolidLineHandle: GLuint = 0
     static var vsPathHandle: GLuint = 0
     static var fsPathHandle: GLuint = 0
+    static var vsDualColorHandle: GLuint = 0
+    static var fsDualColorHandle: GLuint = 0
+    static var vsDualColorAlphaHandle: GLuint = 0
+    static var fsDualColorAlphaHandle: GLuint = 0
     
     private static func loadShader(type: GLenum, file: String) -> GLuint {
         var shader : GLuint = glCreateShader(type)
@@ -104,7 +110,30 @@ class Shaders {
         glAttachShader(pathProgram, vsPathHandle);   // add the vertex shader to program
         glAttachShader(pathProgram, fsPathHandle); // add the fragment shader to program
         glLinkProgram(pathProgram);// creates OpenGL ES program executables
-        print("\(pathProgram)")
+        
+        let vsDualColorSource = NSBundle.mainBundle().pathForResource("DualColor", ofType: "vsh")!
+        let fsDualColorSource = NSBundle.mainBundle().pathForResource("DualColor", ofType: "fsh")!
+        
+        // Create the shaders
+        vsDualColorHandle = Shaders.loadShader(GLenum(GL_VERTEX_SHADER), file: vsDualColorSource);
+        fsDualColorHandle = Shaders.loadShader(GLenum(GL_FRAGMENT_SHADER), file: fsDualColorSource);
+        
+        dualColorProgram = glCreateProgram();             // create empty OpenGL ES Program
+        glAttachShader(dualColorProgram, vsDualColorHandle);   // add the vertex shader to program
+        glAttachShader(dualColorProgram, fsDualColorHandle); // add the fragment shader to program
+        glLinkProgram(dualColorProgram);                  // creates OpenGL ES program executables
+        
+        let vsDualColorAlphaSource = NSBundle.mainBundle().pathForResource("DualColorAlpha", ofType: "vsh")!
+        let fsDualColorAlphaSource = NSBundle.mainBundle().pathForResource("DualColorAlpha", ofType: "fsh")!
+        
+        // Create the shaders
+        vsDualColorAlphaHandle = Shaders.loadShader(GLenum(GL_VERTEX_SHADER), file: vsDualColorAlphaSource);
+        fsDualColorAlphaHandle = Shaders.loadShader(GLenum(GL_FRAGMENT_SHADER), file: fsDualColorAlphaSource);
+        
+        dualColorAlphaProgram = glCreateProgram();             // create empty OpenGL ES Program
+        glAttachShader(dualColorAlphaProgram, vsDualColorAlphaHandle);   // add the vertex shader to program
+        glAttachShader(dualColorAlphaProgram, fsDualColorAlphaHandle); // add the fragment shader to program
+        glLinkProgram(dualColorAlphaProgram);// creates OpenGL ES program executables
 
     }
 }
