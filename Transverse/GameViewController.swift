@@ -164,5 +164,9 @@ class GameViewController: GLKViewController {
             }
         }
     }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Landscape
+    }
 }
 

@@ -19,10 +19,10 @@
 		D074C44D1CF132B6001A3AFC /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C44C1CF132B6001A3AFC /* Line.swift */; };
 		D074C44F1CF140BE001A3AFC /* UtilityMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C44E1CF140BE001A3AFC /* UtilityMath.swift */; };
 		D074C4511CF16213001A3AFC /* Textures.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4501CF16213001A3AFC /* Textures.swift */; };
-		D074C4531CF16A69001A3AFC /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = D074C4521CF16A69001A3AFC /* trophy.png */; };
-		D074C4551CF16A6E001A3AFC /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = D074C4541CF16A6E001A3AFC /* forward.png */; };
-		D074C4571CF16A73001A3AFC /* leaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = D074C4561CF16A73001A3AFC /* leaderboard.png */; };
 		D074C4591CF16CB3001A3AFC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4581CF16CB3001A3AFC /* Image.swift */; };
+		D07A0CA61D063D8200733DF9 /* leaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = D07A0CA51D063D8200733DF9 /* leaderboard.png */; };
+		D07A0CA81D063D9400733DF9 /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = D07A0CA71D063D9400733DF9 /* forward.png */; };
+		D07A0CAA1D063D9D00733DF9 /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = D07A0CA91D063D9D00733DF9 /* trophy.png */; };
 		D09071EC1CF9005D00829740 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D09071EB1CF9005D00829740 /* GoogleService-Info.plist */; };
 		D09071ED1CF9005D00829740 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D09071EB1CF9005D00829740 /* GoogleService-Info.plist */; };
 		D09071EE1CF9005D00829740 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D09071EB1CF9005D00829740 /* GoogleService-Info.plist */; };
@@ -131,10 +131,10 @@
 		D074C44C1CF132B6001A3AFC /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		D074C44E1CF140BE001A3AFC /* UtilityMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityMath.swift; sourceTree = "<group>"; };
 		D074C4501CF16213001A3AFC /* Textures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Textures.swift; sourceTree = "<group>"; };
-		D074C4521CF16A69001A3AFC /* trophy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trophy.png; path = ../../Desktop/trophy.png; sourceTree = "<group>"; };
-		D074C4541CF16A6E001A3AFC /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forward.png; path = ../../Desktop/forward.png; sourceTree = "<group>"; };
-		D074C4561CF16A73001A3AFC /* leaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leaderboard.png; path = ../../Desktop/leaderboard.png; sourceTree = "<group>"; };
 		D074C4581CF16CB3001A3AFC /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		D07A0CA51D063D8200733DF9 /* leaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaderboard.png; sourceTree = "<group>"; };
+		D07A0CA71D063D9400733DF9 /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward.png; sourceTree = "<group>"; };
+		D07A0CA91D063D9D00733DF9 /* trophy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy.png; sourceTree = "<group>"; };
 		D09071EB1CF9005D00829740 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D09071F91CFBA4CE00829740 /* DualColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DualColor.vsh; sourceTree = "<group>"; };
 		D09071FD1CFBA4DE00829740 /* DualColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DualColor.fsh; sourceTree = "<group>"; };
@@ -313,11 +313,11 @@
 			isa = PBXGroup;
 			children = (
 				D0A2398E1CF6CA8300A53FDA /* Particle.png */,
-				D074C4561CF16A73001A3AFC /* leaderboard.png */,
-				D074C4541CF16A6E001A3AFC /* forward.png */,
 				D03412DC1CFCF02A00ECDCAC /* splashscreen.png */,
+				D07A0CA51D063D8200733DF9 /* leaderboard.png */,
+				D07A0CA71D063D9400733DF9 /* forward.png */,
 				D0C597301CF4080800F8F7C3 /* forward.xml */,
-				D074C4521CF16A69001A3AFC /* trophy.png */,
+				D07A0CA91D063D9D00733DF9 /* trophy.png */,
 				D03412DE1CFCFACA00ECDCAC /* SplashScreen.swift */,
 				D074C44E1CF140BE001A3AFC /* UtilityMath.swift */,
 				D074C44A1CF12B45001A3AFC /* SolidRenderType.swift */,
@@ -499,14 +499,13 @@
 				D0B646A21CF6BC960071555C /* point.fsh in Resources */,
 				D0A2398F1CF6CA8300A53FDA /* Particle.png in Resources */,
 				D0E4701C1CF02EB40003E80D /* Main.storyboard in Resources */,
-				D074C4571CF16A73001A3AFC /* leaderboard.png in Resources */,
 				D0B646A01CF6BC890071555C /* point.vsh in Resources */,
 				D03412DD1CFCF02A00ECDCAC /* splashscreen.png in Resources */,
 				D0E470551CF031F60003E80D /* SolidLine.vsh in Resources */,
 				D09071F41CF9012B00829740 /* Pods-Transverse.release.xcconfig in Resources */,
 				D0E470451CF0310D0003E80D /* SolidColor.fsh in Resources */,
 				D0E470531CF031E10003E80D /* SolidLine.fsh in Resources */,
-				D074C4551CF16A6E001A3AFC /* forward.png in Resources */,
+				D07A0CA81D063D9400733DF9 /* forward.png in Resources */,
 				D0E4704F1CF031AB0003E80D /* SolidImage.fsh in Resources */,
 				D09071F51CF9012B00829740 /* Pods-TransverseTests.debug.xcconfig in Resources */,
 				D0E470491CF0313B0003E80D /* Image.fsh in Resources */,
@@ -515,8 +514,8 @@
 				D09071F81CF9012B00829740 /* Pods-TransverseUITests.release.xcconfig in Resources */,
 				D09071F61CF9012B00829740 /* Pods-TransverseTests.release.xcconfig in Resources */,
 				D09071FE1CFBA4DE00829740 /* DualColor.fsh in Resources */,
+				D07A0CA61D063D8200733DF9 /* leaderboard.png in Resources */,
 				D0C597311CF4080800F8F7C3 /* forward.xml in Resources */,
-				D074C4531CF16A69001A3AFC /* trophy.png in Resources */,
 				D0D22B4B1CF80D0A00AD1A5D /* UnityAds.bundle in Resources */,
 				D0E470211CF02EB40003E80D /* LaunchScreen.storyboard in Resources */,
 				D09071F31CF9012600829740 /* Pods-Transverse.debug.xcconfig in Resources */,
@@ -524,6 +523,7 @@
 				D0E4704B1CF0314D0003E80D /* Image.vsh in Resources */,
 				D09071EC1CF9005D00829740 /* GoogleService-Info.plist in Resources */,
 				D09072061CFBA61000829740 /* DualColorAlpha.fsh in Resources */,
+				D07A0CAA1D063D9D00733DF9 /* trophy.png in Resources */,
 				D0E470511CF031C70003E80D /* SolidImage.vsh in Resources */,
 				D0E470471CF031280003E80D /* SolidColor.vsh in Resources */,
 				D09071F71CF9012B00829740 /* Pods-TransverseUITests.debug.xcconfig in Resources */,

@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashscreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="BdF-XH-ysu">
-                                <rect key="frame" x="70" y="177" width="460" height="246"/>
+                                <rect key="frame" x="40" y="161" width="520" height="278"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="BdF-XH-ysu" secondAttribute="height" multiplier="15:8" id="m14-nY-unc"/>
                                 </constraints>
@@ -28,10 +28,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="BdF-XH-ysu" firstAttribute="leading" secondItem="0BW-eg-vsn" secondAttribute="leadingMargin" constant="50" id="Bzd-eC-6A9"/>
+                            <constraint firstItem="BdF-XH-ysu" firstAttribute="leading" secondItem="0BW-eg-vsn" secondAttribute="leadingMargin" constant="20" id="Bzd-eC-6A9"/>
                             <constraint firstItem="BdF-XH-ysu" firstAttribute="centerY" secondItem="0BW-eg-vsn" secondAttribute="centerY" id="EEz-Yw-h6f"/>
                             <constraint firstItem="BdF-XH-ysu" firstAttribute="centerX" secondItem="0BW-eg-vsn" secondAttribute="centerX" id="cKI-nV-D4g"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="BdF-XH-ysu" secondAttribute="trailing" constant="50" id="nFK-Ep-uOv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BdF-XH-ysu" secondAttribute="trailing" constant="20" id="nFK-Ep-uOv"/>
                         </constraints>
                     </view>
                 </viewController>

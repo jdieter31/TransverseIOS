@@ -14,8 +14,12 @@ class SplashScreen : UIViewController {
     }
     
     func loadNextView() {
-        print("Pushing next view")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewControllerWithIdentifier("mainViewController")
+        UnityAds.sharedInstance().startWithGameId("1069657", andViewController: vc)
         self.presentViewController(vc, animated: true, completion: nil)    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
 }

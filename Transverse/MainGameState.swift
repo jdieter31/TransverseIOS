@@ -325,7 +325,8 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                     if (purchasedSecondChance) {
                         scheduledSecondChance = true
                     } else {
-                        if(drand48() > 0.5) {
+                        let rand = drand48()
+                        if(rand > 0.5) {
                             if (UnityAds.sharedInstance().setZone("rewardedVideo") && UnityAds.sharedInstance().canShow()) {
                                 UnityAds.sharedInstance().show()
                             }
@@ -895,7 +896,8 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 initialAd = false
             }
             if (gamesPlayedSinceAd >= gamesPerAd) {
-                if (drand48() > 0.5) {
+                let rand = drand48()
+                if (rand > 0.5) {
                     AdColony.playVideoAdForZone("vz27856e528ba4462fbe", withDelegate: nil)
                 } else {
                     if (UnityAds.sharedInstance().setZone("video") && UnityAds.sharedInstance().canShow()) {

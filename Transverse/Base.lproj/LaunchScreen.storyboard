@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashscreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="H1x-ym-5Wf">
-                                <rect key="frame" x="70" y="222" width="460" height="156"/>
+                                <rect key="frame" x="40" y="212" width="520" height="176"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="H1x-ym-5Wf" secondAttribute="height" multiplier="999:338" id="R18-zo-ClW"/>
                                 </constraints>
@@ -28,10 +28,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="H1x-ym-5Wf" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="50" id="5Xx-vr-r9J"/>
+                            <constraint firstItem="H1x-ym-5Wf" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="5Xx-vr-r9J"/>
                             <constraint firstItem="H1x-ym-5Wf" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="99S-t8-HJg"/>
                             <constraint firstItem="H1x-ym-5Wf" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Nub-gB-YJL"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="H1x-ym-5Wf" secondAttribute="trailing" constant="50" id="vPl-F4-tzS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="H1x-ym-5Wf" secondAttribute="trailing" constant="20" id="vPl-F4-tzS"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
