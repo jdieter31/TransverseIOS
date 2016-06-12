@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D02DC5431D0CD9830030F868 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = D02DC5421D0CD9830030F868 /* facebook.png */; };
+		D02DC5451D0CD9A40030F868 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = D02DC5441D0CD9A40030F868 /* twitter.png */; };
 		D03297AE1CF5508E00FF0922 /* DoubleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03297AD1CF5508E00FF0922 /* DoubleSection.swift */; };
 		D03297B01CF560B200FF0922 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03297AF1CF560B200FF0922 /* Path.swift */; };
 		D03412DD1CFCF02A00ECDCAC /* splashscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = D03412DC1CFCF02A00ECDCAC /* splashscreen.png */; };
@@ -119,6 +121,8 @@
 		AB51B9C46B275C4B00CFE0C4 /* Pods-TransverseUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransverseUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TransverseUITests/Pods-TransverseUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B301B4C17306FE7AA77B649A /* Pods-Transverse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transverse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Transverse/Pods-Transverse.debug.xcconfig"; sourceTree = "<group>"; };
 		CCC5305E0A28289AAE16C451 /* Pods-Transverse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transverse.release.xcconfig"; path = "Pods/Target Support Files/Pods-Transverse/Pods-Transverse.release.xcconfig"; sourceTree = "<group>"; };
+		D02DC5421D0CD9830030F868 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
+		D02DC5441D0CD9A40030F868 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		D03297AD1CF5508E00FF0922 /* DoubleSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSection.swift; sourceTree = "<group>"; };
 		D03297AF1CF560B200FF0922 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		D03412DC1CFCF02A00ECDCAC /* splashscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashscreen.png; sourceTree = "<group>"; };
@@ -318,6 +322,8 @@
 				D07A0CA71D063D9400733DF9 /* forward.png */,
 				D0C597301CF4080800F8F7C3 /* forward.xml */,
 				D07A0CA91D063D9D00733DF9 /* trophy.png */,
+				D02DC5421D0CD9830030F868 /* facebook.png */,
+				D02DC5441D0CD9A40030F868 /* twitter.png */,
 				D03412DE1CFCFACA00ECDCAC /* SplashScreen.swift */,
 				D074C44E1CF140BE001A3AFC /* UtilityMath.swift */,
 				D074C44A1CF12B45001A3AFC /* SolidRenderType.swift */,
@@ -502,6 +508,7 @@
 				D0B646A01CF6BC890071555C /* point.vsh in Resources */,
 				D03412DD1CFCF02A00ECDCAC /* splashscreen.png in Resources */,
 				D0E470551CF031F60003E80D /* SolidLine.vsh in Resources */,
+				D02DC5451D0CD9A40030F868 /* twitter.png in Resources */,
 				D09071F41CF9012B00829740 /* Pods-Transverse.release.xcconfig in Resources */,
 				D0E470451CF0310D0003E80D /* SolidColor.fsh in Resources */,
 				D0E470531CF031E10003E80D /* SolidLine.fsh in Resources */,
@@ -521,6 +528,7 @@
 				D09071F31CF9012600829740 /* Pods-Transverse.debug.xcconfig in Resources */,
 				D09072021CFBA5FC00829740 /* DualColorAlpha.vsh in Resources */,
 				D0E4704B1CF0314D0003E80D /* Image.vsh in Resources */,
+				D02DC5431D0CD9830030F868 /* facebook.png in Resources */,
 				D09071EC1CF9005D00829740 /* GoogleService-Info.plist in Resources */,
 				D09072061CFBA61000829740 /* DualColorAlpha.fsh in Resources */,
 				D07A0CAA1D063D9D00733DF9 /* trophy.png in Resources */,

@@ -14,13 +14,17 @@ class Textures {
     static var fffForwardFontTexture: GLuint = 0
     static var trophyTexture: GLuint = 0
     static var leaderboardTexture: GLuint = 0
-    static var particleTexture:GLuint = 0
+    static var particleTexture: GLuint = 0
+    static var fbTexture: GLuint = 0
+    static var twitterTexture: GLuint = 0
     
     static func loadTextures() {
         fffForwardFontTexture = loadTextureFromFile("forward.png")
         trophyTexture = loadTextureFromFile("trophy.png")
         leaderboardTexture = loadTextureFromFile("leaderboard.png")
         particleTexture = loadTextureFromFile("Particle.png")
+        fbTexture = loadTextureFromFile("facebook.png")
+        twitterTexture = loadTextureFromFile("twitter.png")
     }
     
     private static func loadTextureFromFile(fileName: String) -> GLuint {

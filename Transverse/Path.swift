@@ -74,7 +74,7 @@ class Path {
             let point = points[index]
             var pointIndex = -1
             for j in 0...(vertices.count/3 - 1) {
-                if (vertices[3*j] == point.x && vertices[3*j + 1] == point.y) {
+                if (vertices[3*j] == point.x && vertices[3*j + 1] == point.y && j != prevPointIndex) {
                     pointIndex = j
                     break
                 }
