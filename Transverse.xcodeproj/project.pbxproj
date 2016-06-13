@@ -9,8 +9,11 @@
 /* Begin PBXBuildFile section */
 		D02DC5431D0CD9830030F868 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = D02DC5421D0CD9830030F868 /* facebook.png */; };
 		D02DC5451D0CD9A40030F868 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = D02DC5441D0CD9A40030F868 /* twitter.png */; };
+		D02DC54C1D0D416D0030F868 /* sound_success.caf in Resources */ = {isa = PBXBuildFile; fileRef = D02DC54A1D0D40FD0030F868 /* sound_success.caf */; };
+		D02DC54D1D0D41710030F868 /* loss.caf in Resources */ = {isa = PBXBuildFile; fileRef = D02DC54B1D0D41060030F868 /* loss.caf */; };
+		D02DC54F1D0E2B930030F868 /* FingerTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02DC54E1D0E2B930030F868 /* FingerTrail.swift */; };
+		D02DC5511D0E2C150030F868 /* ColorFingerTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02DC5501D0E2C150030F868 /* ColorFingerTrail.swift */; };
 		D03297AE1CF5508E00FF0922 /* DoubleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03297AD1CF5508E00FF0922 /* DoubleSection.swift */; };
-		D03297B01CF560B200FF0922 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03297AF1CF560B200FF0922 /* Path.swift */; };
 		D03412DD1CFCF02A00ECDCAC /* splashscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = D03412DC1CFCF02A00ECDCAC /* splashscreen.png */; };
 		D03412DF1CFCFACA00ECDCAC /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03412DE1CFCFACA00ECDCAC /* SplashScreen.swift */; };
 		D074C4051CF119F6001A3AFC /* AlphaShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074C4041CF119F6001A3AFC /* AlphaShape.swift */; };
@@ -123,8 +126,11 @@
 		CCC5305E0A28289AAE16C451 /* Pods-Transverse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transverse.release.xcconfig"; path = "Pods/Target Support Files/Pods-Transverse/Pods-Transverse.release.xcconfig"; sourceTree = "<group>"; };
 		D02DC5421D0CD9830030F868 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
 		D02DC5441D0CD9A40030F868 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
+		D02DC54A1D0D40FD0030F868 /* sound_success.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound_success.caf; sourceTree = "<group>"; };
+		D02DC54B1D0D41060030F868 /* loss.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = loss.caf; sourceTree = "<group>"; };
+		D02DC54E1D0E2B930030F868 /* FingerTrail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FingerTrail.swift; sourceTree = "<group>"; };
+		D02DC5501D0E2C150030F868 /* ColorFingerTrail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFingerTrail.swift; sourceTree = "<group>"; };
 		D03297AD1CF5508E00FF0922 /* DoubleSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSection.swift; sourceTree = "<group>"; };
-		D03297AF1CF560B200FF0922 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		D03412DC1CFCF02A00ECDCAC /* splashscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashscreen.png; sourceTree = "<group>"; };
 		D03412DE1CFCFACA00ECDCAC /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashScreen.swift; path = ../SplashScreen.swift; sourceTree = "<group>"; };
 		D074C4041CF119F6001A3AFC /* AlphaShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlphaShape.swift; path = ../AlphaShape.swift; sourceTree = "<group>"; };
@@ -347,7 +353,8 @@
 				D0B1F3981CF5309600C5CF8F /* GateSubSection.swift */,
 				D03297AD1CF5508E00FF0922 /* DoubleSection.swift */,
 				D0B1F3961CF525EA00C5CF8F /* Gate.swift */,
-				D03297AF1CF560B200FF0922 /* Path.swift */,
+				D02DC54E1D0E2B930030F868 /* FingerTrail.swift */,
+				D02DC5501D0E2C150030F868 /* ColorFingerTrail.swift */,
 				D0E4701A1CF02EB40003E80D /* Main.storyboard */,
 				D0E4701D1CF02EB40003E80D /* Assets.xcassets */,
 				D0E4701F1CF02EB40003E80D /* LaunchScreen.storyboard */,
@@ -367,6 +374,8 @@
 				D09072011CFBA5FC00829740 /* DualColorAlpha.vsh */,
 				D09072051CFBA61000829740 /* DualColorAlpha.fsh */,
 				D0D22B511CF8102E00AD1A5D /* unity-ads-swift-Bridging-Header.h */,
+				D02DC54A1D0D40FD0030F868 /* sound_success.caf */,
+				D02DC54B1D0D41060030F868 /* loss.caf */,
 			);
 			path = Transverse;
 			sourceTree = "<group>";
@@ -515,6 +524,7 @@
 				D07A0CA81D063D9400733DF9 /* forward.png in Resources */,
 				D0E4704F1CF031AB0003E80D /* SolidImage.fsh in Resources */,
 				D09071F51CF9012B00829740 /* Pods-TransverseTests.debug.xcconfig in Resources */,
+				D02DC54D1D0D41710030F868 /* loss.caf in Resources */,
 				D0E470491CF0313B0003E80D /* Image.fsh in Resources */,
 				D09071FA1CFBA4CE00829740 /* DualColor.vsh in Resources */,
 				D0E4701E1CF02EB40003E80D /* Assets.xcassets in Resources */,
@@ -522,6 +532,7 @@
 				D09071F61CF9012B00829740 /* Pods-TransverseTests.release.xcconfig in Resources */,
 				D09071FE1CFBA4DE00829740 /* DualColor.fsh in Resources */,
 				D07A0CA61D063D8200733DF9 /* leaderboard.png in Resources */,
+				D02DC54C1D0D416D0030F868 /* sound_success.caf in Resources */,
 				D0C597311CF4080800F8F7C3 /* forward.xml in Resources */,
 				D0D22B4B1CF80D0A00AD1A5D /* UnityAds.bundle in Resources */,
 				D0E470211CF02EB40003E80D /* LaunchScreen.storyboard in Resources */,
@@ -694,7 +705,6 @@
 			files = (
 				D03412DF1CFCFACA00ECDCAC /* SplashScreen.swift in Sources */,
 				D074C4091CF11ABC001A3AFC /* Circle.swift in Sources */,
-				D03297B01CF560B200FF0922 /* Path.swift in Sources */,
 				D0C5972F1CF4031400F8F7C3 /* Text.swift in Sources */,
 				D0E470191CF02EB40003E80D /* GameViewController.swift in Sources */,
 				D0C5972D1CF3C13B00F8F7C3 /* Font.swift in Sources */,
@@ -704,6 +714,8 @@
 				D0B1F3971CF525EA00C5CF8F /* Gate.swift in Sources */,
 				D0A53A041CF10A5A002DE853 /* MainGameState.swift in Sources */,
 				D0B1F3991CF5309600C5CF8F /* GateSubSection.swift in Sources */,
+				D02DC54F1D0E2B930030F868 /* FingerTrail.swift in Sources */,
+				D02DC5511D0E2C150030F868 /* ColorFingerTrail.swift in Sources */,
 				D0B1F3951CF5233600C5CF8F /* SubSection.swift in Sources */,
 				D074C4511CF16213001A3AFC /* Textures.swift in Sources */,
 				D074C4591CF16CB3001A3AFC /* Image.swift in Sources */,

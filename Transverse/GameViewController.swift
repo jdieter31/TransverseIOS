@@ -9,7 +9,7 @@
 import GLKit
 import OpenGLES
 
-let SHOULD_LOG_FPS : Bool = true
+let SHOULD_LOG_FPS : Bool = false
 
 class GameViewController: GLKViewController {
     

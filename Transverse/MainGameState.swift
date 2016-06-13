@@ -9,6 +9,7 @@
 import Foundation
 import GLKit
 import OpenGLES
+import AVFoundation
 
 class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
     
@@ -43,8 +44,8 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
     
     var verticalTranslate: GLKMatrix4?
     
-    var leftPath: Path = Path()
-    var rightPath: Path = Path()
+    var leftFingerTrail: FingerTrail?
+    var rightFingerTrail: FingerTrail?
     
     var viewProjectionMatrix: GLKMatrix4? = nil
     var width: Float = 0
@@ -201,6 +202,9 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
     var fbRenderType: SolidRenderType?
     var twitterRenderType: SolidRenderType?
     
+    var succesSoundAudio: AVAudioPlayer?
+    var lossSoundAudio: AVAudioPlayer?
+    
     init(viewController: GameViewController) {
         
         gameViewController = viewController
@@ -222,7 +226,6 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         dragControlScheme = defaults.boolForKey("dragControlScheme")
         showIndicator = defaults.boolForKey("showIndicator")
         
-        
         greyRenderType = SolidRenderType()
         greyRenderType?.alpha = 1
         greyRenderType?.color = (0.4, 0.4, 0.4)
@@ -231,9 +234,6 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         lineRenderType?.alpha = 1
         lineRenderType?.color = (0.322, 0.808, 1.0)
         verticalTranslate = GLKMatrix4Identity
-        
-        leftPath.width = 7
-        rightPath.width = 7
         
         backgroundRenderType = SolidRenderType()
         defaultBackgroundRenderer = backgroundRenderType
@@ -256,6 +256,17 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         twitterRenderType?.color = (0.333, 0.675, 0.933)
         twitterRenderType?.alpha = 1
         currentRenderer = greyRenderType
+        
+        let successSoundURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("sound_success", ofType: "caf")!)
+        let lossSoundURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("loss", ofType: "caf")!)
+        do {
+            succesSoundAudio = try AVAudioPlayer(contentsOfURL: successSoundURL)
+            lossSoundAudio = try AVAudioPlayer(contentsOfURL: lossSoundURL)
+            succesSoundAudio?.prepareToPlay()
+            lossSoundAudio?.prepareToPlay()
+        } catch {
+            print("Failed to load files")
+        }
         
     }
     
@@ -354,10 +365,10 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                     lastRightY = height/2
                 }
                 if (rightDown && leftDown) {
-                    leftPath = Path()
-                    leftPath.width = 7
-                    rightPath = Path()
-                    rightPath.width = 7
+                    leftFingerTrail = ColorFingerTrail(width: 7, length: height/2)
+                    (leftFingerTrail as! ColorFingerTrail).color = (0.322, 0.808, 1)
+                    rightFingerTrail = ColorFingerTrail(width: 7, length: height/2)
+                    (rightFingerTrail as! ColorFingerTrail).color = (0.322, 0.808, 1)
                     startingSecondChance = false
                     scheduledLoss = false
                     started = true
@@ -465,6 +476,10 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         } else {
             finishGame()
         }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            self.lossSoundAudio?.currentTime = 0
+            self.lossSoundAudio?.play()
+        })
     }
     
     func createSecondChance() {
@@ -487,10 +502,6 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         startingSecondChance = true
         rightDown = false
         leftDown = false
-        leftPath = Path()
-        leftPath.width = 7
-        rightPath = Path()
-        rightPath.width = 7
         
         leftSecondChanceCircle = Circle()
         leftSecondChanceCircle?.precision = 360
@@ -547,10 +558,10 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             toRetryText?.originZ = 0
             toRetryText?.refresh()
         } else {
-            outerDragLeftCircle = Circle();
+            outerDragLeftCircle = Circle()
             outerDragLeftCircle?.precision  = 360
             outerDragLeftCircle?.radius = height/15
-            outerDragRightCircle = Circle();
+            outerDragRightCircle = Circle()
             outerDragRightCircle?.precision = 360
             outerDragRightCircle?.radius = height/15
             outerDragLeftCircle?.centerX = width/4
@@ -559,69 +570,69 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             outerDragRightCircle?.centerX = 3*width/4
             outerDragRightCircle?.centerY = height/2 + verticalChange
             outerDragRightCircle?.centerZ = 0
-            outerDragLeftCircle?.refresh();
+            outerDragLeftCircle?.refresh()
             outerDragRightCircle?.refresh()
-            rightDragRectangle = Rectangle();
+            rightDragRectangle = Rectangle()
             rightDragRectangle?.origin = (width/2 + 7.5, height/2 + verticalChange, 0)
             rightDragRectangle?.height = height / 8
-            rightDragRectangle?.width = width/2 - 22.5;
-            rightDragRectangle?.refresh();
-            leftDragRectangle = Rectangle();
-            leftDragRectangle?.origin = (15, height/2 + verticalChange, 0);
+            rightDragRectangle?.width = width/2 - 22.5
+            rightDragRectangle?.refresh()
+            leftDragRectangle = Rectangle()
+            leftDragRectangle?.origin = (15, height/2 + verticalChange, 0)
             leftDragRectangle?.height = height / 8
             leftDragRectangle?.width = width/2 - 22.5
-            leftDragRectangle?.refresh();
+            leftDragRectangle?.refresh()
             
-            leftArrowsLeftText = Text();
+            leftArrowsLeftText = Text()
             leftArrowsLeftText?.text = "<<<"
             leftArrowsLeftText?.setFont("FFF Forward")
             leftArrowsLeftText?.textSize = height/12
             leftArrowsLeftText?.originX = 15 + (width - 45)/8 - leftArrowsLeftText!.getWidth()/2
             leftArrowsLeftText?.originY = 9 * height / 16 - height/24 + verticalChange
             leftArrowsLeftText?.originZ = 0
-            leftArrowsLeftText?.refresh();
+            leftArrowsLeftText?.refresh()
             
-            leftArrowsRightText = Text();
+            leftArrowsRightText = Text()
             leftArrowsRightText?.text = ">>>"
-            leftArrowsRightText?.setFont("FFF Forward");
+            leftArrowsRightText?.setFont("FFF Forward")
             leftArrowsRightText?.textSize = height/12
             leftArrowsRightText?.originX = 15 + 3*(width - 45)/8 - leftArrowsRightText!.getWidth()/2
             leftArrowsRightText?.originY = 9 * height / 16 - height/24 + verticalChange
-            leftArrowsRightText?.refresh();
+            leftArrowsRightText?.refresh()
             
-            rightArrowsLeftText = Text();
+            rightArrowsLeftText = Text()
             rightArrowsLeftText?.text = "<<<"
             rightArrowsLeftText?.setFont("FFF Forward")
             rightArrowsLeftText?.textSize = height/12
             rightArrowsLeftText?.originX = 30 + 5*(width - 45)/8 - rightArrowsLeftText!.getWidth()/2
             rightArrowsLeftText?.originY = 9 * height / 16 - height/24 + verticalChange
             rightArrowsLeftText?.originZ = 0
-            rightArrowsLeftText?.refresh();
+            rightArrowsLeftText?.refresh()
             
-            rightArrowsRightText = Text();
+            rightArrowsRightText = Text()
             rightArrowsRightText?.text = ">>>"
-            rightArrowsRightText?.setFont("FFF Forward");
+            rightArrowsRightText?.setFont("FFF Forward")
             rightArrowsRightText?.textSize = height/12
             rightArrowsRightText?.originX = 30 + 7*(width - 45)/8 - rightArrowsRightText!.getWidth()/2
             rightArrowsRightText?.originY = 9 * height / 16 - height/24 + verticalChange
-            rightArrowsRightText?.refresh();
+            rightArrowsRightText?.refresh()
             
-            dragInfoBox = Rectangle();
-            dragInfoBox?.origin = (15, height/2 - height/12 - height/11 + verticalChange, 0);
+            dragInfoBox = Rectangle()
+            dragInfoBox?.origin = (15, height/2 - height/12 - height/11 + verticalChange, 0)
             dragInfoBox?.width = width - 30
             dragInfoBox?.height = height/12
-            dragInfoBox?.refresh();
+            dragInfoBox?.refresh()
             
-            dragAndHoldOnBothSidesToStart = Text();
+            dragAndHoldOnBothSidesToStart = Text()
             dragAndHoldOnBothSidesToStart?.text = "Drag and hold on both sides to continue!"
             dragAndHoldOnBothSidesToStart?.setFont("FFF Forward")
             dragAndHoldOnBothSidesToStart?.textSize = height/16
             dragAndHoldOnBothSidesToStart?.originX = width/2 - dragAndHoldOnBothSidesToStart!.getWidth()/2
             dragAndHoldOnBothSidesToStart?.originY = height/2 - height/11 - height/24 - height/32 + verticalChange
             dragAndHoldOnBothSidesToStart?.originZ = 0
-            dragAndHoldOnBothSidesToStart?.refresh();
+            dragAndHoldOnBothSidesToStart?.refresh()
             
-            dragOffset = verticalChange;
+            dragOffset = verticalChange
         }
     }
     
@@ -862,7 +873,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         
         var leftPast: Bool = false
         
-        leftPath.addTopPoint(leftXStable, y: leftYStable + verticalChange)
+        leftFingerTrail!.addTopPoint(leftXStable, y: leftYStable + verticalChange)
         if (wallsInView) {
             if (leftWall!.lineSegmentCrosses(lastLeftX, startY: lastLeftY + lastVerticalChange, endX: leftXStable, endY: leftYStable + verticalChange)
                 || rightWall!.lineSegmentCrosses(lastLeftX, startY: lastLeftY + lastVerticalChange, endX: leftXStable, endY: leftYStable + verticalChange)
@@ -887,7 +898,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         
         
         var rightPast: Bool = false
-        rightPath.addTopPoint(rightXStable, y: rightYStable + verticalChange)
+        rightFingerTrail!.addTopPoint(rightXStable, y: rightYStable + verticalChange)
         if (wallsInView) {
             if (leftWall!.lineSegmentCrosses(lastRightX, startY: lastRightY + lastVerticalChange, endX: rightXStable, endY: rightYStable + verticalChange)
                 || rightWall!.lineSegmentCrosses(lastRightX, startY: lastRightY + lastVerticalChange, endX: rightXStable, endY: rightYStable + verticalChange)
@@ -923,50 +934,11 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 self.currentSection = sectionsInView[0]
             }
             sectionToPass = nextSectionToPass
-        }
-        
-        var pointsToRemove: Int = 0
-        var totalDistance: Float = 0
-        if (leftPath.points.count > 2) {
-            var prevPoint = leftPath.points[leftPath.points.count - 1]
-            var i: Int = leftPath.points.count - 2
-            while i >= 0 {
-                let point = leftPath.points[i]
-                totalDistance += sqrt(pow(point.x - prevPoint.x, 2) + pow(point.y - prevPoint.y, 2))
-                if (totalDistance >= height/4) {
-                    leftPath.setAlpha(i, alphaValue: (height/2 - totalDistance) / (height/4))
-                }
-                if (totalDistance >= height/2) {
-                    pointsToRemove = i + 1
-                    break
-                }
-                prevPoint = point
-                
-                i -= 1
-            }
-            leftPath.removeBottomPoints(pointsToRemove)
-        }
-        
-        pointsToRemove = 0
-        totalDistance = 0
-        if (rightPath.points.count > 2) {
-            var prevPoint = rightPath.points[rightPath.points.count - 1]
-            var i: Int = rightPath.points.count - 2
-            while i >= 0 {
-                let point = rightPath.points[i]
-                totalDistance += sqrt(pow(point.x - prevPoint.x, 2) + pow(point.y - prevPoint.y, 2))
-                if (totalDistance >= height/4) {
-                    rightPath.setAlpha(i, alphaValue: (height/2 - totalDistance) / (height/4))
-                }
-                if (totalDistance >= height/2) {
-                    pointsToRemove = i + 1
-                    break
-                }
-                prevPoint = point
-                
-                i -= 1
-            }
-            rightPath.removeBottomPoints(pointsToRemove)
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                self.succesSoundAudio?.currentTime = 0
+                self.succesSoundAudio?.play()
+            })
         }
     }
     
@@ -1048,10 +1020,6 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         score = 0
         leftDown = false
         rightDown = false
-        leftPath = Path()
-        leftPath.width = 7
-        rightPath = Path()
-        rightPath.width = 7
         titleInView = true
         circlesInView = true
         wallsInView = true
@@ -1184,16 +1152,16 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 backgroundRenderType!.drawText(tapAndHoldText!)
                 backgroundRenderType!.drawText(toStartText!)
             } else {
-                titleRenderType!.drawShape(leftDragRectangle!);
-                titleRenderType!.drawShape(rightDragRectangle!);
-                titleRenderType!.drawShape(dragInfoBox!);
-                backgroundRenderType!.drawText(dragAndHoldOnBothSidesToStart!);
-                greyRenderType!.drawShape(outerDragLeftCircle!);
-                greyRenderType!.drawShape(outerDragRightCircle!);
-                backgroundRenderType!.drawText(leftArrowsLeftText!);
-                backgroundRenderType!.drawText(leftArrowsRightText!);
-                backgroundRenderType!.drawText(rightArrowsLeftText!);
-                backgroundRenderType!.drawText(rightArrowsRightText!);
+                titleRenderType!.drawShape(leftDragRectangle!)
+                titleRenderType!.drawShape(rightDragRectangle!)
+                titleRenderType!.drawShape(dragInfoBox!)
+                backgroundRenderType!.drawText(dragAndHoldOnBothSidesToStart!)
+                greyRenderType!.drawShape(outerDragLeftCircle!)
+                greyRenderType!.drawShape(outerDragRightCircle!)
+                backgroundRenderType!.drawText(leftArrowsLeftText!)
+                backgroundRenderType!.drawText(leftArrowsRightText!)
+                backgroundRenderType!.drawText(rightArrowsLeftText!)
+                backgroundRenderType!.drawText(rightArrowsRightText!)
             }
                 
             titleRenderType!.drawShape(titleHighScoreBox!)
@@ -1216,31 +1184,31 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             
             if (dragControlScheme) {
                 if (leftDown) {
-                    lineRenderType!.drawShape(dragLeftCircle!);
+                    lineRenderType!.drawShape(dragLeftCircle!)
                 } else {
-                    backgroundRenderType!.drawShape(dragLeftCircle!);
+                    backgroundRenderType!.drawShape(dragLeftCircle!)
                 }
                 if (rightDown) {
-                    lineRenderType!.drawShape(dragRightCircle!);
+                    lineRenderType!.drawShape(dragRightCircle!)
                 } else {
-                    backgroundRenderType!.drawShape(dragRightCircle!);
+                    backgroundRenderType!.drawShape(dragRightCircle!)
                 }
             } else {
                 if (leftDown) {
-                    lineRenderType!.drawShape(leftCircle!);
+                    lineRenderType!.drawShape(leftCircle!)
                 } else {
-                    greyRenderType!.drawShape(leftCircle!);
+                    greyRenderType!.drawShape(leftCircle!)
                 }
                 if (rightDown) {
-                    lineRenderType!.drawShape(rightCircle!);
+                    lineRenderType!.drawShape(rightCircle!)
                 } else {
-                    greyRenderType!.drawShape(rightCircle!);
+                    greyRenderType!.drawShape(rightCircle!)
                 }
             }
             
             if (!dragControlScheme && showIndicator) {
-                lineRenderType!.drawShape(dragLeftCircle!);
-                lineRenderType!.drawShape(dragRightCircle!);
+                lineRenderType!.drawShape(dragLeftCircle!)
+                lineRenderType!.drawShape(dragRightCircle!)
             }
         } else if (inLossMenu || inSecondChanceMenu) {
             let verticalTranslateMVP: GLKMatrix4 = GLKMatrix4Multiply(viewProjectionMatrix!, verticalTranslate!)
@@ -1311,9 +1279,9 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 greyRenderType!.matrix = viewProjectionMatrix
                 defaultBackgroundRenderer!.matrix = viewProjectionMatrix
                 if (score < 10) {
-                    greyRenderType!.drawText(scoreText!);
+                    greyRenderType!.drawText(scoreText!)
                 } else {
-                    defaultBackgroundRenderer!.drawText(scoreText!);
+                    defaultBackgroundRenderer!.drawText(scoreText!)
                 }
             }
         } else if (startingSecondChance) {
@@ -1334,54 +1302,54 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 section.draw(verticalTranslateMVP, renderType: currentRenderer!)
             }
             if (!dragControlScheme) {
-                titleRenderType!.drawShape(startingSecondChanceRectangle!);
-                defaultBackgroundRenderer!.drawText(secondChanceTapAndHoldText!);
-                defaultBackgroundRenderer!.drawText(toRetryText!);
+                titleRenderType!.drawShape(startingSecondChanceRectangle!)
+                defaultBackgroundRenderer!.drawText(secondChanceTapAndHoldText!)
+                defaultBackgroundRenderer!.drawText(toRetryText!)
                 if (leftDown) {
-                    lineRenderType!.drawShape(leftSecondChanceCircle!);
+                    lineRenderType!.drawShape(leftSecondChanceCircle!)
                 } else {
-                    greyRenderType!.drawShape(leftSecondChanceCircle!);
+                    greyRenderType!.drawShape(leftSecondChanceCircle!)
                 }
                 if (rightDown) {
-                    lineRenderType!.drawShape(rightSecondChanceCircle!);
+                    lineRenderType!.drawShape(rightSecondChanceCircle!)
                 } else {
-                    greyRenderType!.drawShape(rightSecondChanceCircle!);
+                    greyRenderType!.drawShape(rightSecondChanceCircle!)
                 }
             } else {
-                titleRenderType!.drawShape(leftDragRectangle!);
-                titleRenderType!.drawShape(rightDragRectangle!);
-                titleRenderType!.drawShape(dragInfoBox!);
-                defaultBackgroundRenderer!.drawText(dragAndHoldOnBothSidesToStart!);
-                greyRenderType!.drawShape(outerDragLeftCircle!);
-                greyRenderType!.drawShape(outerDragRightCircle!);
-                defaultBackgroundRenderer!.drawText(leftArrowsLeftText!);
-                defaultBackgroundRenderer!.drawText(leftArrowsRightText!);
-                defaultBackgroundRenderer!.drawText(rightArrowsLeftText!);
-                defaultBackgroundRenderer!.drawText(rightArrowsRightText!);
+                titleRenderType!.drawShape(leftDragRectangle!)
+                titleRenderType!.drawShape(rightDragRectangle!)
+                titleRenderType!.drawShape(dragInfoBox!)
+                defaultBackgroundRenderer!.drawText(dragAndHoldOnBothSidesToStart!)
+                greyRenderType!.drawShape(outerDragLeftCircle!)
+                greyRenderType!.drawShape(outerDragRightCircle!)
+                defaultBackgroundRenderer!.drawText(leftArrowsLeftText!)
+                defaultBackgroundRenderer!.drawText(leftArrowsRightText!)
+                defaultBackgroundRenderer!.drawText(rightArrowsLeftText!)
+                defaultBackgroundRenderer!.drawText(rightArrowsRightText!)
                 if (leftDown) {
-                    lineRenderType!.drawShape(dragLeftCircle!);
+                    lineRenderType!.drawShape(dragLeftCircle!)
                 } else {
-                    defaultBackgroundRenderer!.drawShape(dragLeftCircle!);
+                    defaultBackgroundRenderer!.drawShape(dragLeftCircle!)
                 }
                 if (rightDown) {
-                    lineRenderType!.drawShape(dragRightCircle!);
+                    lineRenderType!.drawShape(dragRightCircle!)
                 } else {
-                    defaultBackgroundRenderer!.drawShape(dragRightCircle!);
+                    defaultBackgroundRenderer!.drawShape(dragRightCircle!)
                 }
             }
             
             
             if (!dragControlScheme && showIndicator) {
-                lineRenderType!.drawShape(dragLeftCircle!);
-                lineRenderType!.drawShape(dragRightCircle!);
+                lineRenderType!.drawShape(dragLeftCircle!)
+                lineRenderType!.drawShape(dragRightCircle!)
             }
             
             greyRenderType?.matrix = viewProjectionMatrix
             defaultBackgroundRenderer?.matrix = viewProjectionMatrix
             if (score < 10) {
-                greyRenderType!.drawText(scoreText!);
+                greyRenderType!.drawText(scoreText!)
             } else {
-                defaultBackgroundRenderer!.drawText(scoreText!);
+                defaultBackgroundRenderer!.drawText(scoreText!)
             }
         } else {
             if (scheduledLoss) {
@@ -1431,27 +1399,27 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                     twitterRenderType!.drawShape(twitterCircle!)
                     defaultBackgroundRenderer!.drawImage(twitterImage!)
                     if (!dragControlScheme) {
-                        titleRenderType!.drawShape(tapToStartRectangle!);
-                        defaultBackgroundRenderer!.drawText(tapAndHoldText!);
-                        defaultBackgroundRenderer!.drawText(toStartText!);
+                        titleRenderType!.drawShape(tapToStartRectangle!)
+                        defaultBackgroundRenderer!.drawText(tapAndHoldText!)
+                        defaultBackgroundRenderer!.drawText(toStartText!)
                     } else {
-                        titleRenderType!.drawShape(leftDragRectangle!);
-                        titleRenderType!.drawShape(rightDragRectangle!);
-                        titleRenderType!.drawShape(dragInfoBox!);
-                        defaultBackgroundRenderer!.drawText(dragAndHoldOnBothSidesToStart!);
-                        greyRenderType!.drawShape(outerDragLeftCircle!);
-                        greyRenderType!.drawShape(outerDragRightCircle!);
-                        defaultBackgroundRenderer!.drawText(leftArrowsLeftText!);
-                        defaultBackgroundRenderer!.drawText(leftArrowsRightText!);
-                        defaultBackgroundRenderer!.drawText(rightArrowsLeftText!);
-                        defaultBackgroundRenderer!.drawText(rightArrowsRightText!);
+                        titleRenderType!.drawShape(leftDragRectangle!)
+                        titleRenderType!.drawShape(rightDragRectangle!)
+                        titleRenderType!.drawShape(dragInfoBox!)
+                        defaultBackgroundRenderer!.drawText(dragAndHoldOnBothSidesToStart!)
+                        greyRenderType!.drawShape(outerDragLeftCircle!)
+                        greyRenderType!.drawShape(outerDragRightCircle!)
+                        defaultBackgroundRenderer!.drawText(leftArrowsLeftText!)
+                        defaultBackgroundRenderer!.drawText(leftArrowsRightText!)
+                        defaultBackgroundRenderer!.drawText(rightArrowsLeftText!)
+                        defaultBackgroundRenderer!.drawText(rightArrowsRightText!)
                     }
                     titleRenderType!.drawShape(titleHighScoreBox!)
                     defaultBackgroundRenderer!.drawText(titleHighScoreText!)
                     titleRenderType!.drawShape(leaderboardBox!)
                     titleRenderType!.drawShape(achievementBox!)
-                    titleRenderType!.drawShape(switchControlSchemeBox!);
-                    defaultBackgroundRenderer!.drawText(switchControlsText!);
+                    titleRenderType!.drawShape(switchControlSchemeBox!)
+                    defaultBackgroundRenderer!.drawText(switchControlsText!)
                     defaultBackgroundRenderer!.drawImage(achievementImage!)
                     defaultBackgroundRenderer!.drawImage(leaderboardImage!)
                     
@@ -1482,24 +1450,24 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                     titleRenderType!.drawShape(achievementBox!)
 
                     if (!dragControlScheme) {
-                        titleRenderType!.drawShape(tapToStartRectangle!);
-                        defaultBackgroundRenderer!.drawText(tapAndHoldText!);
-                        defaultBackgroundRenderer!.drawText(toStartText!);
+                        titleRenderType!.drawShape(tapToStartRectangle!)
+                        defaultBackgroundRenderer!.drawText(tapAndHoldText!)
+                        defaultBackgroundRenderer!.drawText(toStartText!)
                     } else {
-                        titleRenderType!.drawShape(leftDragRectangle!);
-                        titleRenderType!.drawShape(rightDragRectangle!);
-                        titleRenderType!.drawShape(dragInfoBox!);
-                        defaultBackgroundRenderer!.drawText(dragAndHoldOnBothSidesToStart!);
-                        greyRenderType!.drawShape(outerDragLeftCircle!);
-                        greyRenderType!.drawShape(outerDragRightCircle!);
-                        defaultBackgroundRenderer!.drawText(leftArrowsLeftText!);
-                        defaultBackgroundRenderer!.drawText(leftArrowsRightText!);
-                        defaultBackgroundRenderer!.drawText(rightArrowsLeftText!);
-                        defaultBackgroundRenderer!.drawText(rightArrowsRightText!);
+                        titleRenderType!.drawShape(leftDragRectangle!)
+                        titleRenderType!.drawShape(rightDragRectangle!)
+                        titleRenderType!.drawShape(dragInfoBox!)
+                        defaultBackgroundRenderer!.drawText(dragAndHoldOnBothSidesToStart!)
+                        greyRenderType!.drawShape(outerDragLeftCircle!)
+                        greyRenderType!.drawShape(outerDragRightCircle!)
+                        defaultBackgroundRenderer!.drawText(leftArrowsLeftText!)
+                        defaultBackgroundRenderer!.drawText(leftArrowsRightText!)
+                        defaultBackgroundRenderer!.drawText(rightArrowsLeftText!)
+                        defaultBackgroundRenderer!.drawText(rightArrowsRightText!)
                     }
                     
-                    titleRenderType!.drawShape(switchControlSchemeBox!);
-                    defaultBackgroundRenderer!.drawText(switchControlsText!);
+                    titleRenderType!.drawShape(switchControlSchemeBox!)
+                    defaultBackgroundRenderer!.drawText(switchControlsText!)
                     
                     defaultBackgroundRenderer!.drawText(titleText!)
                     defaultBackgroundRenderer!.drawText(titleHighScoreText!)
@@ -1539,19 +1507,18 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 dragLeftCircle!.centerX = leftX
                 dragLeftCircle!.centerY = indicatorY
                 dragLeftCircle!.centerZ = 0
-                dragLeftCircle!.refresh();
+                dragLeftCircle!.refresh()
                 dragRightCircle!.centerX  = rightX
                 dragRightCircle!.centerY = indicatorY
                 dragRightCircle!.centerZ = 0
-                dragRightCircle!.refresh();
+                dragRightCircle!.refresh()
                 lineRenderType!.matrix = viewProjectionMatrix
-                lineRenderType!.drawShape(dragLeftCircle!);
-                lineRenderType!.drawShape(dragRightCircle!);
+                lineRenderType!.drawShape(dragLeftCircle!)
+                lineRenderType!.drawShape(dragRightCircle!)
             }
             
-            lineRenderType!.matrix = verticalTranslateMVP
-            lineRenderType!.drawPath(leftPath)
-            lineRenderType!.drawPath(rightPath)
+            leftFingerTrail!.draw(verticalTranslateMVP)
+            rightFingerTrail!.draw(verticalTranslateMVP)
             greyRenderType!.matrix = viewProjectionMatrix
             defaultBackgroundRenderer!.matrix = viewProjectionMatrix
             if (score < 10) {
@@ -1569,6 +1536,11 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         self.width = width
         self.height = height
         self.viewProjectionMatrix = viewProjectionMatrix
+        
+        leftFingerTrail = ColorFingerTrail(width: 7, length: height/2)
+        (leftFingerTrail as! ColorFingerTrail).color = (0.322, 0.808, 1)
+        rightFingerTrail = ColorFingerTrail(width: 7, length: height/2)
+        (rightFingerTrail as! ColorFingerTrail).color = (0.322, 0.808, 1)
         
         if (circlesInView && !dragControlScheme) {
             leftCircle = Circle()
@@ -1633,7 +1605,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             
             let fbImageWidth: Float = width/25
             let fbImageHeight: Float = width/25
-            fbImage = Image();
+            fbImage = Image()
             fbImage?.textureHandle = Textures.fbTexture
             fbImage?.vertices = [
                 width/2 + width/3 + width/20 - fbImageWidth/2, height/5 - fbImageHeight/2, 0,
@@ -1651,7 +1623,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 1,0
             ]
             
-            twitterCircle = Circle();
+            twitterCircle = Circle()
             twitterCircle?.centerX = width/2 - width/3 - width/20
             twitterCircle?.centerY = height/5
             twitterCircle?.centerZ = 0
@@ -1661,7 +1633,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             
             let twitterImageWidth: Float = width/20
             let twitterImageHeight: Float = width/20
-            twitterImage = Image();
+            twitterImage = Image()
             twitterImage?.textureHandle = Textures.twitterTexture
             twitterImage?.vertices = [
                 width/2 - width/3 - width/20 - twitterImageWidth/2, height/5 - twitterImageHeight/2, 0,
@@ -1719,10 +1691,10 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 toStartText?.originZ = 0
                 toStartText?.refresh()
             } else {
-                outerDragLeftCircle = Circle();
+                outerDragLeftCircle = Circle()
                 outerDragLeftCircle?.precision  = 360
                 outerDragLeftCircle?.radius = height/15
-                outerDragRightCircle = Circle();
+                outerDragRightCircle = Circle()
                 outerDragRightCircle?.precision = 360
                 outerDragRightCircle?.radius = height/15
                 outerDragLeftCircle?.centerX = width/4
@@ -1731,67 +1703,67 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 outerDragRightCircle?.centerX = 3*width/4
                 outerDragRightCircle?.centerY = height/2
                 outerDragRightCircle?.centerZ = 0
-                outerDragLeftCircle?.refresh();
+                outerDragLeftCircle?.refresh()
                 outerDragRightCircle?.refresh()
-                rightDragRectangle = Rectangle();
+                rightDragRectangle = Rectangle()
                 rightDragRectangle?.origin = (width/2 + 7.5, height/2, 0)
                 rightDragRectangle?.height = height / 8
-                rightDragRectangle?.width = width/2 - 22.5;
-                rightDragRectangle?.refresh();
-                leftDragRectangle = Rectangle();
-                leftDragRectangle?.origin = (15, height/2, 0);
+                rightDragRectangle?.width = width/2 - 22.5
+                rightDragRectangle?.refresh()
+                leftDragRectangle = Rectangle()
+                leftDragRectangle?.origin = (15, height/2, 0)
                 leftDragRectangle?.height = height / 8
                 leftDragRectangle?.width = width/2 - 22.5
-                leftDragRectangle?.refresh();
+                leftDragRectangle?.refresh()
                 
-                leftArrowsLeftText = Text();
+                leftArrowsLeftText = Text()
                 leftArrowsLeftText?.text = "<<<"
                 leftArrowsLeftText?.setFont("FFF Forward")
                 leftArrowsLeftText?.textSize = height/12
                 leftArrowsLeftText?.originX = 15 + (width - 45)/8 - leftArrowsLeftText!.getWidth()/2
                 leftArrowsLeftText?.originY = 9 * height / 16 - height/24
                 leftArrowsLeftText?.originZ = 0
-                leftArrowsLeftText?.refresh();
+                leftArrowsLeftText?.refresh()
                 
-                leftArrowsRightText = Text();
+                leftArrowsRightText = Text()
                 leftArrowsRightText?.text = ">>>"
-                leftArrowsRightText?.setFont("FFF Forward");
+                leftArrowsRightText?.setFont("FFF Forward")
                 leftArrowsRightText?.textSize = height/12
                 leftArrowsRightText?.originX = 15 + 3*(width - 45)/8 - leftArrowsRightText!.getWidth()/2
                 leftArrowsRightText?.originY = 9 * height / 16 - height/24
-                leftArrowsRightText?.refresh();
+                leftArrowsRightText?.refresh()
                 
-                rightArrowsLeftText = Text();
+                rightArrowsLeftText = Text()
                 rightArrowsLeftText?.text = "<<<"
                 rightArrowsLeftText?.setFont("FFF Forward")
                 rightArrowsLeftText?.textSize = height/12
                 rightArrowsLeftText?.originX = 30 + 5*(width - 45)/8 - rightArrowsLeftText!.getWidth()/2
                 rightArrowsLeftText?.originY = 9 * height / 16 - height/24
                 rightArrowsLeftText?.originZ = 0
-                rightArrowsLeftText?.refresh();
+                rightArrowsLeftText?.refresh()
                 
-                rightArrowsRightText = Text();
+                rightArrowsRightText = Text()
                 rightArrowsRightText?.text = ">>>"
-                rightArrowsRightText?.setFont("FFF Forward");
+                rightArrowsRightText?.setFont("FFF Forward")
                 rightArrowsRightText?.textSize = height/12
                 rightArrowsRightText?.originX = 30 + 7*(width - 45)/8 - rightArrowsRightText!.getWidth()/2
                 rightArrowsRightText?.originY = 9 * height / 16 - height/24
-                rightArrowsRightText?.refresh();
+                rightArrowsRightText?.refresh()
                 
-                dragInfoBox = Rectangle();
-                dragInfoBox?.origin = (15, height/2 - height/12 - height/11, 0);
+                dragInfoBox = Rectangle()
+                dragInfoBox?.origin = (15, height/2 - height/12 - height/11, 0)
                 dragInfoBox?.width = width - 30
                 dragInfoBox?.height = height/12
-                dragInfoBox?.refresh();
+                dragInfoBox?.refresh()
                 
-                dragAndHoldOnBothSidesToStart = Text();
+                dragAndHoldOnBothSidesToStart = Text()
                 dragAndHoldOnBothSidesToStart?.text = "Drag and hold on both sides to continue!"
                 dragAndHoldOnBothSidesToStart?.setFont("FFF Forward")
                 dragAndHoldOnBothSidesToStart?.textSize = height/16
                 dragAndHoldOnBothSidesToStart?.originX = width/2 - dragAndHoldOnBothSidesToStart!.getWidth()/2
                 dragAndHoldOnBothSidesToStart?.originY = height/2 - height/11 - height/24 - height/32
                 dragAndHoldOnBothSidesToStart?.originZ = 0
-                dragAndHoldOnBothSidesToStart?.refresh();
+                dragAndHoldOnBothSidesToStart?.refresh()
             }
             
             let bottomButtonHeight = height/6
@@ -1813,16 +1785,16 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             titleHighScoreText?.originZ = 0
             titleHighScoreText?.refresh()
             
-            switchControlSchemeBox = RoundedRectangle();
+            switchControlSchemeBox = RoundedRectangle()
             switchControlSchemeBox?.height = height/10
-            switchControlSchemeBox?.center = (width/2, 11 * height / 12, 0);
+            switchControlSchemeBox?.center = (width/2, 11 * height / 12, 0)
             switchControlSchemeBox?.cornerRadius = 10
             switchControlSchemeBox?.width = 11 * width / 32
             switchControlSchemeBox?.precision = 60
-            switchControlSchemeBox?.refresh();
+            switchControlSchemeBox?.refresh()
             
-            switchControlsText = Text();
-            switchControlsText?.setFont("FFF Forward");
+            switchControlsText = Text()
+            switchControlsText?.setFont("FFF Forward")
             switchControlsText?.text = "Switch Controls"
             switchControlsText?.textSize = height/16
             switchControlsText?.originX = width/2 - switchControlsText!.getWidth()/2
