@@ -20,6 +20,6 @@ class SplashScreen : UIViewController {
         self.presentViewController(vc, animated: true, completion: nil)    }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.Portrait
+        return UIInterfaceOrientationMask.Landscape
     }
 }

@@ -10,8 +10,9 @@ import Foundation
 import GLKit
 import OpenGLES
 import AVFoundation
+import GameKit
 
-class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
+class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenterControllerDelegate {
     
     //Schedule game events cause by touch events
     var scheduledLoss: Bool = false
@@ -297,12 +298,31 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                     leftDown = true
                     leftPointer = touch
                 } else if (leaderboardBox!.containsPoint(x, y: y)) {
-                    //Leaderboard TODO
+                    let tracker = GAI.sharedInstance().defaultTracker
+                    tracker.set(kGAIScreenName, value: "Leaderboard")
+                    
+                    let builder = GAIDictionaryBuilder.createScreenView()
+                    tracker.send(builder.build() as [NSObject : AnyObject])
+                    let gcVC: GKGameCenterViewController = GKGameCenterViewController()
+                    gcVC.gameCenterDelegate = self
+                    gcVC.viewState = GKGameCenterViewControllerState.Leaderboards
+                    gcVC.leaderboardIdentifier = "top_score"
+                    gcVC.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
+                    gameViewController.presentViewController(gcVC, animated: true, completion: nil)
                 } else if (achievementBox!.containsPoint(x, y: y)) {
-                    //Achievements TODO
-                } else if (!purchasedSecondChance && purchaseSecondChanceBox != nil && purchaseSecondChanceBox!.containsPoint(x, y: y)) {
+                    let tracker = GAI.sharedInstance().defaultTracker
+                    tracker.set(kGAIScreenName, value: "Achievements")
+                    
+                    let builder = GAIDictionaryBuilder.createScreenView()
+                    tracker.send(builder.build() as [NSObject : AnyObject])
+                    let gcVC: GKGameCenterViewController = GKGameCenterViewController()
+                    gcVC.gameCenterDelegate = self
+                    gcVC.viewState = GKGameCenterViewControllerState.Achievements
+                    gcVC.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
+                    gameViewController.presentViewController(gcVC, animated: true, completion: nil)
+                } /* else if (!purchasedSecondChance && purchaseSecondChanceBox != nil && purchaseSecondChanceBox!.containsPoint(x, y: y)) {
                     //IAP TODO
-                } else if (switchControlSchemeBox!.containsPoint(x, y: y)) {
+                } */ else if (switchControlSchemeBox!.containsPoint(x, y: y)) {
                     scheduledControlSwitch = true
                 } else if (fbCircle!.containsPoint(x, y: y)) {
                     UIApplication.sharedApplication().openURL(NSURL(string: "http://www.facebook.com/provectusstudios")!)
@@ -389,15 +409,36 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                     let image = UIGraphicsGetImageFromCurrentImageContext()
                     UIGraphicsEndImageContext()
                     
-                    let text = "I scored \(score) points on #Transverse! Can you beat it?"
+                    let text = "I scored \(score) points on #Transverse! Can you beat it? http://itunes.apple.com/app/id1123840539"
                     
                     let activityVC = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
                     
                     gameViewController.presentViewController(activityVC, animated: true, completion: nil)
                 } else if (loseAchievementBox!.containsPoint(x, y: y)) {
-                    //TODO Achievements
+                    let tracker = GAI.sharedInstance().defaultTracker
+                    tracker.set(kGAIScreenName, value: "Achievements")
+                    
+                    let builder = GAIDictionaryBuilder.createScreenView()
+                    tracker.send(builder.build() as [NSObject : AnyObject])
+                    
+                    let gcVC: GKGameCenterViewController = GKGameCenterViewController()
+                    gcVC.gameCenterDelegate = self
+                    gcVC.viewState = GKGameCenterViewControllerState.Achievements
+                    gcVC.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
+                    gameViewController.presentViewController(gcVC, animated: true, completion: nil)
                 } else if (loseLeaderboardBox!.containsPoint(x, y: y)) {
-                    //TODO Leaderboard
+                    let tracker = GAI.sharedInstance().defaultTracker
+                    tracker.set(kGAIScreenName, value: "Leaderboard")
+                    
+                    let builder = GAIDictionaryBuilder.createScreenView()
+                    tracker.send(builder.build() as [NSObject : AnyObject])
+                    
+                    let gcVC: GKGameCenterViewController = GKGameCenterViewController()
+                    gcVC.gameCenterDelegate = self
+                    gcVC.viewState = GKGameCenterViewControllerState.Leaderboards
+                    gcVC.leaderboardIdentifier = "top_score"
+                    gcVC.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
+                    gameViewController.presentViewController(gcVC, animated: true, completion: nil)
                 }
             }
             if (inSecondChanceMenu) {
@@ -463,6 +504,10 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         }
     }
     
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     func updateHighScore(score: Int) {
         highScore = score
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -525,10 +570,10 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         dragRightCircle?.precision = 60
         dragRightCircle?.radius = height/60
         dragLeftCircle?.centerX = width/4
-        dragLeftCircle?.centerY = height/2 + verticalChange
+        dragLeftCircle?.centerY = height/2
         dragLeftCircle?.centerZ = 0
         dragRightCircle?.centerX = 3 * width / 4
-        dragRightCircle?.centerY = height/2 + verticalChange
+        dragRightCircle?.centerY = height/2
         dragRightCircle?.centerZ = 0
         dragLeftCircle?.refresh()
         dragRightCircle?.refresh()
@@ -715,7 +760,104 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
     }
     
     func unlockAchievements() {
-        //todo
+        if (score == 0) {
+            let achievement = GKAchievement(identifier: "zeropoint")
+            achievement.percentComplete = 100
+            achievement.showsCompletionBanner = true
+            GKAchievement.reportAchievements([achievement], withCompletionHandler: { (error: NSError?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    print("Game center achievement submitted")
+                }
+            })
+        }
+        if (score >= 10) {
+            let achievement = GKAchievement(identifier: "tenpoint")
+            achievement.percentComplete = 100
+            achievement.showsCompletionBanner = true
+            GKAchievement.reportAchievements([achievement], withCompletionHandler: { (error: NSError?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    print("Game center achievement submitted")
+                }
+            })
+        }
+        if (score >= 20) {
+            let achievement = GKAchievement(identifier: "twentypoint")
+            achievement.percentComplete = 100
+            achievement.showsCompletionBanner = true
+            GKAchievement.reportAchievements([achievement], withCompletionHandler: { (error: NSError?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    print("Game center achievement submitted")
+                }
+            })
+        }
+        if (score >= 30) {
+            let achievement = GKAchievement(identifier: "thirtypoint")
+            achievement.percentComplete = 100
+            achievement.showsCompletionBanner = true
+            GKAchievement.reportAchievements([achievement], withCompletionHandler: { (error: NSError?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    print("Game center achievement submitted")
+                }
+            })
+        }
+        if (score >= 40) {
+            let achievement = GKAchievement(identifier: "fourtypoint")
+            achievement.percentComplete = 100
+            achievement.showsCompletionBanner = true
+            GKAchievement.reportAchievements([achievement], withCompletionHandler: { (error: NSError?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    print("Game center achievement submitted")
+                }
+            })
+        }
+        if (score >= 50) {
+            let achievement = GKAchievement(identifier: "fiftypoint")
+            achievement.percentComplete = 100
+            achievement.showsCompletionBanner = true
+            GKAchievement.reportAchievements([achievement], withCompletionHandler: { (error: NSError?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    print("Game center achievement submitted")
+                }
+            })
+        }
+        if (score >= 100) {
+            let achievement = GKAchievement(identifier: "hundredpoint")
+            achievement.percentComplete = 100
+            achievement.showsCompletionBanner = true
+            GKAchievement.reportAchievements([achievement], withCompletionHandler: { (error: NSError?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    print("Game center achievement submitted")
+                }
+            })
+        }
+    }
+
+    func gcReportScore() {
+        let leaderboardID = "top_score"
+        let sScore = GKScore(leaderboardIdentifier: leaderboardID)
+        sScore.value = Int64(score)
+        
+        GKScore.reportScores([sScore], withCompletionHandler: { (error: NSError?) -> Void in
+            if error != nil {
+                print(error!.localizedDescription)
+            } else {
+                print("Game center score submitted")
+            }
+        })
     }
     
     func finishGame() {
@@ -725,6 +867,8 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject : AnyObject])
         tracker.send(GAIDictionaryBuilder.createEventWithCategory("Game", action: "Finished Game", label: nil, value: score).build() as [NSObject : AnyObject])
+        
+        gcReportScore()
         
         if (score > highScore) {
             updateHighScore(score)
@@ -945,7 +1089,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
     func calculateMove() {
         let time = Int64(NSDate().timeIntervalSince1970*1000)
         let dt = time - lastMoveCalc
-        if (dt < 0) {
+        if (dt < 0 || dt > 200) {
             lastMoveCalc = time
             return
         }
@@ -1176,11 +1320,11 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             titleRenderType!.drawShape(switchControlSchemeBox!)
             backgroundRenderType!.drawText(switchControlsText!)
             
-            if (!purchasedSecondChance) {
+            /* if (!purchasedSecondChance) {
                 titleRenderType!.drawShape(purchaseSecondChanceBox!)
                 backgroundRenderType!.drawText(buyNoAdsAndText!)
                 backgroundRenderType!.drawText(secondChancesText!)
-            }
+            } */
             
             if (dragControlScheme) {
                 if (leftDown) {
@@ -1293,6 +1437,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             greyRenderType!.matrix = verticalTranslateMVP
             currentRenderer!.matrix = verticalTranslateMVP
             defaultBackgroundRenderer!.matrix = verticalTranslateMVP
+            lineRenderType!.matrix = verticalTranslateMVP
             if (wallsInView) {
                 currentRenderer!.drawShape(leftWall!)
                 currentRenderer!.drawShape(centerDivider!)
@@ -1326,6 +1471,9 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 defaultBackgroundRenderer!.drawText(leftArrowsRightText!)
                 defaultBackgroundRenderer!.drawText(rightArrowsLeftText!)
                 defaultBackgroundRenderer!.drawText(rightArrowsRightText!)
+                
+                lineRenderType!.matrix = viewProjectionMatrix
+                defaultBackgroundRenderer!.matrix = viewProjectionMatrix
                 if (leftDown) {
                     lineRenderType!.drawShape(dragLeftCircle!)
                 } else {
@@ -1338,7 +1486,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 }
             }
             
-            
+            lineRenderType!.matrix = viewProjectionMatrix
             if (!dragControlScheme && showIndicator) {
                 lineRenderType!.drawShape(dragLeftCircle!)
                 lineRenderType!.drawShape(dragRightCircle!)
@@ -1423,11 +1571,11 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                     defaultBackgroundRenderer!.drawImage(achievementImage!)
                     defaultBackgroundRenderer!.drawImage(leaderboardImage!)
                     
-                    if (!purchasedSecondChance) {
+                    /* if (!purchasedSecondChance) {
                         titleRenderType!.drawShape(purchaseSecondChanceBox!)
                         defaultBackgroundRenderer!.drawText(buyNoAdsAndText!)
                         defaultBackgroundRenderer!.drawText(secondChancesText!)
-                    }
+                    } */
                 }
                 if (sane) {
                     let alphaChange = Float(dt) * (1.0/500.0)
@@ -1476,11 +1624,11 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                     defaultBackgroundRenderer!.drawImage(fbImage!)
                     defaultBackgroundRenderer!.drawImage(twitterImage!)
                     
-                    if (!purchasedSecondChance) {
+                    /* if (!purchasedSecondChance) {
                         titleRenderType!.drawShape(purchaseSecondChanceBox!)
                         defaultBackgroundRenderer!.drawText(buyNoAdsAndText!)
                         defaultBackgroundRenderer!.drawText(secondChancesText!)
-                    }
+                    } */
                     
                     defaultBackgroundRenderer!.alpha = 1
                     if (!titleInView) {
@@ -1757,7 +1905,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 dragInfoBox?.refresh()
                 
                 dragAndHoldOnBothSidesToStart = Text()
-                dragAndHoldOnBothSidesToStart?.text = "Drag and hold on both sides to continue!"
+                dragAndHoldOnBothSidesToStart?.text = "Drag and hold on both sides to start!"
                 dragAndHoldOnBothSidesToStart?.setFont("FFF Forward")
                 dragAndHoldOnBothSidesToStart?.textSize = height/16
                 dragAndHoldOnBothSidesToStart?.originX = width/2 - dragAndHoldOnBothSidesToStart!.getWidth()/2
@@ -1835,7 +1983,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
             
             var achievementCenterX: Float
             
-            if (!purchasedSecondChance) {
+            /* if (!purchasedSecondChance) {
                 achievementCenterX = width/2 - 11 * width / 64 - width / 36 - bottomButtonHeight - width/36 - bottomButtonHeight/2
                 purchaseSecondChanceBox = RoundedRectangle()
                 purchaseSecondChanceBox?.height = bottomButtonHeight
@@ -1862,9 +2010,9 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate {
                 secondChancesText?.originY = 4*height/5
                 secondChancesText?.originZ = 0
                 secondChancesText?.refresh()
-            } else {
+            } else { */
                 achievementCenterX = width/2 + 11 * width / 64 + width / 36 + bottomButtonHeight/2
-            }
+            //}
             
             achievementBox = RoundedRectangle()
             achievementBox?.height = bottomButtonHeight

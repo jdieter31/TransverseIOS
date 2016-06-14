@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D01223621D0F879A008CD319 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01223611D0F879A008CD319 /* GameKit.framework */; };
 		D02DC5431D0CD9830030F868 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = D02DC5421D0CD9830030F868 /* facebook.png */; };
 		D02DC5451D0CD9A40030F868 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = D02DC5441D0CD9A40030F868 /* twitter.png */; };
 		D02DC54C1D0D416D0030F868 /* sound_success.caf in Resources */ = {isa = PBXBuildFile; fileRef = D02DC54A1D0D40FD0030F868 /* sound_success.caf */; };
@@ -69,7 +70,6 @@
 		D0D22B411CF80CA500AD1A5D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D22B401CF80CA500AD1A5D /* CoreFoundation.framework */; };
 		D0D22B431CF80CB100AD1A5D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D22B421CF80CB100AD1A5D /* CoreMedia.framework */; };
 		D0D22B451CF80CBC00AD1A5D /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D22B441CF80CBC00AD1A5D /* CoreTelephony.framework */; };
-		D0D22B471CF80CC500AD1A5D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D22B461CF80CC500AD1A5D /* StoreKit.framework */; };
 		D0D22B491CF80CCD00AD1A5D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D22B481CF80CCD00AD1A5D /* SystemConfiguration.framework */; };
 		D0D22B4B1CF80D0A00AD1A5D /* UnityAds.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0D22B4A1CF80D0A00AD1A5D /* UnityAds.bundle */; };
 		D0D22B4E1CF80DDB00AD1A5D /* UnityAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D22B4C1CF80D1300AD1A5D /* UnityAds.framework */; };
@@ -124,6 +124,7 @@
 		AB51B9C46B275C4B00CFE0C4 /* Pods-TransverseUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransverseUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TransverseUITests/Pods-TransverseUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B301B4C17306FE7AA77B649A /* Pods-Transverse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transverse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Transverse/Pods-Transverse.debug.xcconfig"; sourceTree = "<group>"; };
 		CCC5305E0A28289AAE16C451 /* Pods-Transverse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transverse.release.xcconfig"; path = "Pods/Target Support Files/Pods-Transverse/Pods-Transverse.release.xcconfig"; sourceTree = "<group>"; };
+		D01223611D0F879A008CD319 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		D02DC5421D0CD9830030F868 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
 		D02DC5441D0CD9A40030F868 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		D02DC54A1D0D40FD0030F868 /* sound_success.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound_success.caf; sourceTree = "<group>"; };
@@ -170,7 +171,6 @@
 		D0D22B401CF80CA500AD1A5D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		D0D22B421CF80CB100AD1A5D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D0D22B441CF80CBC00AD1A5D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		D0D22B461CF80CC500AD1A5D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D0D22B481CF80CCD00AD1A5D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D0D22B4A1CF80D0A00AD1A5D /* UnityAds.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UnityAds.bundle; sourceTree = "<group>"; };
 		D0D22B4C1CF80D1300AD1A5D /* UnityAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UnityAds.framework; sourceTree = "<group>"; };
@@ -217,13 +217,13 @@
 			files = (
 				D0D22B691CF8199500AD1A5D /* WebKit.framework in Frameworks */,
 				D0D22B491CF80CCD00AD1A5D /* SystemConfiguration.framework in Frameworks */,
-				D0D22B471CF80CC500AD1A5D /* StoreKit.framework in Frameworks */,
 				D0D22B671CF8197000AD1A5D /* Social.framework in Frameworks */,
 				D0D22B651CF8196A00AD1A5D /* QuartzCore.framework in Frameworks */,
 				D0D22B631CF8196100AD1A5D /* MessageUI.framework in Frameworks */,
 				D0D22B611CF8195800AD1A5D /* MediaPlayer.framework in Frameworks */,
 				D0D22B5E1CF8195100AD1A5D /* EventKit.framework in Frameworks */,
 				D0D22B5F1CF8195100AD1A5D /* EventKitUI.framework in Frameworks */,
+				D01223621D0F879A008CD319 /* GameKit.framework in Frameworks */,
 				D0D22B431CF80CB100AD1A5D /* CoreMedia.framework in Frameworks */,
 				D0D22B5B1CF8192D00AD1A5D /* CoreGraphics.framework in Frameworks */,
 				D0D22B591CF8191000AD1A5D /* AudioToolbox.framework in Frameworks */,
@@ -271,6 +271,7 @@
 		A2203F897B5ED19A89E72E30 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D01223611D0F879A008CD319 /* GameKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -291,7 +292,6 @@
 				D0D22B581CF8191000AD1A5D /* AudioToolbox.framework */,
 				D0D22B561CF8190300AD1A5D /* libz.1.2.5.tbd */,
 				D0D22B4A1CF80D0A00AD1A5D /* UnityAds.bundle */,
-				D0D22B461CF80CC500AD1A5D /* StoreKit.framework */,
 				D0D22B481CF80CCD00AD1A5D /* SystemConfiguration.framework */,
 				D0D22B441CF80CBC00AD1A5D /* CoreTelephony.framework */,
 				D0D22B421CF80CB100AD1A5D /* CoreMedia.framework */,
@@ -474,7 +474,15 @@
 				TargetAttributes = {
 					D0E4700E1CF02EB40003E80D = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 82RCWWM6ZQ;
+						DevelopmentTeam = 397BQ2CVVL;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 					D0E470261CF02EB40003E80D = {
 						CreatedOnToolsVersion = 7.3.1;

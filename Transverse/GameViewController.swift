@@ -8,10 +8,14 @@
 
 import GLKit
 import OpenGLES
+import GameKit
 
 let SHOULD_LOG_FPS : Bool = false
 
 class GameViewController: GLKViewController {
+    
+    var gameCenterEnabled: Bool = false
+    var gcDefaultLeaderBoard: String = ""
     
     var context: EAGLContext? = nil
     var initialized: Bool = false
@@ -54,6 +58,41 @@ class GameViewController: GLKViewController {
         if (SHOULD_LOG_FPS) {
             lastFPSCalc = NSDate().timeIntervalSince1970*1000;
         }
+        
+        authenticateLocalPlayer()
+    }
+
+    func authenticateLocalPlayer() {
+        let localPlayer: GKLocalPlayer = GKLocalPlayer.localPlayer()
+        
+        localPlayer.authenticateHandler = {(ViewController, error) -> Void in
+            if((ViewController) != nil) {
+                // 1 Show login if player is not logged in
+                ViewController!.modalPresentationStyle = UIModalPresentationStyle.CurrentContext
+                self.presentViewController(ViewController!, animated: true, completion: nil)
+            } else if (localPlayer.authenticated) {
+                // 2 Player is already euthenticated & logged in, load game center
+                self.gameCenterEnabled = true
+                
+                // Get the default leaderboard ID
+                localPlayer.loadDefaultLeaderboardIdentifierWithCompletionHandler({ (leaderboardIdentifer: String?, error: NSError?) -> Void in
+                    if error != nil {
+                        print(error)
+                    } else {
+                        self.gcDefaultLeaderBoard = leaderboardIdentifer!
+                    }
+                })
+                
+                
+            } else {
+                // 3 Game center is not enabled on the users device
+                self.gameCenterEnabled = false
+                print("Local player could not be authenticated, disabling game center")
+                print(error)
+            }
+            
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -167,6 +206,14 @@ class GameViewController: GLKViewController {
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.Landscape
+    }
+    
+    override func shouldAutorotate() -> Bool {
+        let orientation = UIApplication.sharedApplication().statusBarOrientation
+        if (orientation == UIInterfaceOrientation.LandscapeLeft || orientation == UIInterfaceOrientation.LandscapeRight) {
+            return true
+        }
+        return false
     }
 }
 
