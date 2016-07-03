@@ -206,6 +206,10 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
     var succesSoundAudio: AVAudioPlayer?
     var lossSoundAudio: AVAudioPlayer?
     
+    var muteButton: Circle?
+    var muted: Bool = false
+    var muteImage: Image?
+    
     init(viewController: GameViewController) {
         
         gameViewController = viewController
@@ -226,6 +230,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
         let defaults = NSUserDefaults.standardUserDefaults()
         dragControlScheme = defaults.boolForKey("dragControlScheme")
         showIndicator = defaults.boolForKey("showIndicator")
+        muted = defaults.boolForKey("muted")
         
         greyRenderType = SolidRenderType()
         greyRenderType?.alpha = 1
@@ -261,6 +266,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
         let successSoundURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("sound_success", ofType: "caf")!)
         let lossSoundURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("loss", ofType: "caf")!)
         do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
             succesSoundAudio = try AVAudioPlayer(contentsOfURL: successSoundURL)
             lossSoundAudio = try AVAudioPlayer(contentsOfURL: lossSoundURL)
             succesSoundAudio?.prepareToPlay()
@@ -328,6 +334,26 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
                     UIApplication.sharedApplication().openURL(NSURL(string: "http://www.facebook.com/provectusstudios")!)
                 } else if (twitterCircle!.containsPoint(x, y: y)) {
                     UIApplication.sharedApplication().openURL(NSURL(string: "http://twitter.com/provectustudios")!)
+                } else if (muteButton!.containsPoint(x, y: y)) {
+                    muted = !muted
+                    if (muted) {
+                        muteImage?.uvCoordinates = [
+                            0,0,
+                            0,1,
+                            0.5,1,
+                            0.5,0
+                        ]
+                    } else {
+                        muteImage?.uvCoordinates = [
+                            0.5,0,
+                            0.5,1,
+                            1,1,
+                            1,0
+                        ]
+                    }
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    defaults.setBool(muted, forKey: "muted")
+                    defaults.synchronize()
                 } else if (dragControlScheme && x > 15 && x < width/2 - 7.5) {
                     leftX = x
                     leftY = height/2
@@ -521,10 +547,12 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
         } else {
             finishGame()
         }
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            self.lossSoundAudio?.currentTime = 0
-            self.lossSoundAudio?.play()
-        })
+        if (!muted) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                self.lossSoundAudio?.currentTime = 0
+                self.lossSoundAudio?.play()
+            })
+        }
     }
     
     func createSecondChance() {
@@ -934,7 +962,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
         retryText?.refresh()
         
         loseShareBox = RoundedRectangle()
-        loseShareBox?.height = height/5
+        loseShareBox?.height = width/8
         loseShareBox?.width = width/4
         loseShareBox?.center = (17*width/24, height/2, 0)
         loseShareBox?.precision = 60
@@ -943,23 +971,23 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
         shareText = Text()
         shareText?.setFont("FFF Forward")
         shareText?.text = "Share"
-        shareText?.textSize = ((2*height/3)/5)
+        shareText?.textSize = ((2*width/3)/8)
         shareText?.originX = 17*width/24 - shareText!.getWidth()/2
-        shareText?.originY = height/2 - (height/3)/5
+        shareText?.originY = height/2 - (width/3)/8
         shareText?.originZ = 0
         shareText?.refresh()
         
         loseLeaderboardBox = RoundedRectangle()
-        loseLeaderboardBox?.height = height/5
-        loseLeaderboardBox?.width = height/5
-        loseLeaderboardBox?.center = (17*width/24 - width/8 - width/50 - height/10, height/2, 0)
+        loseLeaderboardBox?.height = width/8
+        loseLeaderboardBox?.width = width/8
+        loseLeaderboardBox?.center = (17*width/24 - width/8 - width/50 - width/16, height/2, 0)
         loseLeaderboardBox?.precision = 60
         loseLeaderboardBox?.cornerRadius = 10
         loseLeaderboardBox?.refresh()
         
-        let leaderboardImageHeight: Float = 5*(height/5)/8
+        let leaderboardImageHeight: Float = 5*(width/8)/8
         let leaderboardImageWidth: Float = leaderboardImageHeight * (196.0/210.0)
-        let leaderboardCenterX: Float = 17*width/24 - width/8 - width/50 - height/10
+        let leaderboardCenterX: Float = 17*width/24 - width/8 - width/50 - width/16
         loseLeaderboardImage = Image()
         loseLeaderboardImage?.textureHandle = Textures.leaderboardTexture
         loseLeaderboardImage?.vertices = [
@@ -979,16 +1007,16 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
         ]
         
         loseAchievementBox = RoundedRectangle()
-        loseAchievementBox?.height = height/5
-        loseAchievementBox?.width = height/5
-        loseAchievementBox?.center = (17*width/24 + width/8 + width/50 + height/10, height/2, 0)
+        loseAchievementBox?.height = width/8
+        loseAchievementBox?.width = width/8
+        loseAchievementBox?.center = (17*width/24 + width/8 + width/50 + width/16, height/2, 0)
         loseAchievementBox?.precision = 60
         loseAchievementBox?.cornerRadius = 10
         loseAchievementBox?.refresh()
         
-        let achievementImageWidth: Float = 5*(height/5)/8
+        let achievementImageWidth: Float = 5*(width/8)/8
         let achievementImageHeight: Float = achievementImageWidth * (215.0/256.0)
-        let achievementCenterX: Float = 17*width/24 + width/8 + width/50 + height/10
+        let achievementCenterX: Float = 17*width/24 + width/8 + width/50 + width/16
         loseAchievementImage = Image()
         loseAchievementImage?.textureHandle = Textures.trophyTexture
         loseAchievementImage?.vertices = [
@@ -1079,10 +1107,12 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
             }
             sectionToPass = nextSectionToPass
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                self.succesSoundAudio?.currentTime = 0
-                self.succesSoundAudio?.play()
-            })
+            if (!muted) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    self.succesSoundAudio?.currentTime = 0
+                    self.succesSoundAudio?.play()
+                })
+            }
         }
     }
     
@@ -1183,7 +1213,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
         refreshDimensions(width, height: height, viewProjectionMatrix: viewProjectionMatrix!, force: true)
         
         
-        if (!purchasedSecondChance) {
+        /* if (!purchasedSecondChance) {
             gamesPlayedSinceAd += 1
             if (initialAd && gamesPlayedSinceAd >= initialAds) {
                 gamesPlayedSinceAd = gamesPerAd
@@ -1200,7 +1230,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
                 }
                 gamesPlayedSinceAd = 0
             }
-        }
+        } */
         
     }
     
@@ -1316,6 +1346,9 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
             
             titleRenderType!.drawShape(achievementBox!)
             backgroundRenderType!.drawImage(achievementImage!)
+            
+            titleRenderType!.drawShape(muteButton!)
+            backgroundRenderType!.drawImage(muteImage!)
             
             titleRenderType!.drawShape(switchControlSchemeBox!)
             backgroundRenderType!.drawText(switchControlsText!)
@@ -1567,6 +1600,8 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
                     titleRenderType!.drawShape(leaderboardBox!)
                     titleRenderType!.drawShape(achievementBox!)
                     titleRenderType!.drawShape(switchControlSchemeBox!)
+                    titleRenderType!.drawShape(muteButton!)
+                    defaultBackgroundRenderer!.drawImage(muteImage!)
                     defaultBackgroundRenderer!.drawText(switchControlsText!)
                     defaultBackgroundRenderer!.drawImage(achievementImage!)
                     defaultBackgroundRenderer!.drawImage(leaderboardImage!)
@@ -1596,7 +1631,8 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
                     titleRenderType!.drawShape(titleHighScoreBox!)
                     titleRenderType!.drawShape(leaderboardBox!)
                     titleRenderType!.drawShape(achievementBox!)
-
+                    titleRenderType!.drawShape(muteButton!)
+                    
                     if (!dragControlScheme) {
                         titleRenderType!.drawShape(tapToStartRectangle!)
                         defaultBackgroundRenderer!.drawText(tapAndHoldText!)
@@ -1623,6 +1659,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
                     defaultBackgroundRenderer!.drawImage(leaderboardImage!)
                     defaultBackgroundRenderer!.drawImage(fbImage!)
                     defaultBackgroundRenderer!.drawImage(twitterImage!)
+                    defaultBackgroundRenderer!.drawImage(muteImage!)
                     
                     /* if (!purchasedSecondChance) {
                         titleRenderType!.drawShape(purchaseSecondChanceBox!)
@@ -1914,7 +1951,7 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
                 dragAndHoldOnBothSidesToStart?.refresh()
             }
             
-            let bottomButtonHeight = height/6
+            let bottomButtonHeight = 7 * width / 64
             
             titleHighScoreBox = RoundedRectangle()
             titleHighScoreBox?.height = bottomButtonHeight
@@ -1983,8 +2020,8 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
             
             var achievementCenterX: Float
             
-            /* if (!purchasedSecondChance) {
-                achievementCenterX = width/2 - 11 * width / 64 - width / 36 - bottomButtonHeight - width/36 - bottomButtonHeight/2
+            /* if (!purchasedSecondChance) { */
+                achievementCenterX = width/2 - 11 * width / 64 - width / 36 - bottomButtonHeight - width/36 - bottomButtonHeight/2 /*
                 purchaseSecondChanceBox = RoundedRectangle()
                 purchaseSecondChanceBox?.height = bottomButtonHeight
                 purchaseSecondChanceBox?.width = width/4
@@ -2010,9 +2047,9 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
                 secondChancesText?.originY = 4*height/5
                 secondChancesText?.originZ = 0
                 secondChancesText?.refresh()
-            } else { */
+            } else {
                 achievementCenterX = width/2 + 11 * width / 64 + width / 36 + bottomButtonHeight/2
-            //}
+            } */
             
             achievementBox = RoundedRectangle()
             achievementBox?.height = bottomButtonHeight
@@ -2041,6 +2078,45 @@ class MainGameState : NSObject, UnityAdsDelegate, AdColonyDelegate, GKGameCenter
                 1,1,
                 1,0
             ]
+            
+            let muteCenterX = ((width - 10) + (titleHighScoreBox!.center.x + titleHighScoreBox!.width/2))/2
+            
+            muteButton = Circle()
+            muteButton?.centerX = muteCenterX
+            muteButton?.centerY = 4 * height/5
+            muteButton?.radius = width/15
+            muteButton?.precision = 360
+            muteButton?.refresh()
+            
+            muteImage = Image()
+            let muteImageWidth = width/17
+            let muteImageHeight = width/17
+            muteImage?.textureHandle = Textures.muteTexture
+            muteImage?.vertices = [
+                muteCenterX - muteImageWidth/2, 4*height/5 - muteImageHeight/2, 0,
+                muteCenterX - muteImageWidth/2, 4*height/5 + muteImageHeight/2, 0,
+                muteCenterX + muteImageWidth/2, 4*height/5 + muteImageHeight/2, 0,
+                muteCenterX + muteImageWidth/2, 4*height/5 - muteImageHeight/2, 0
+            ]
+            muteImage?.drawOrder = [
+                0,1,2,0,2,3
+            ]
+            if (muted) {
+                muteImage?.uvCoordinates = [
+                    0,0,
+                    0,1,
+                    0.5,1,
+                    0.5,0
+                ]
+            } else {
+                muteImage?.uvCoordinates = [
+                    0.5,0,
+                    0.5,1,
+                    1,1,
+                    1,0
+                ]
+            }
+            
         }
 
         backgroundRectangle = Rectangle()

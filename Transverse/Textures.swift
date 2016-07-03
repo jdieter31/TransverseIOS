@@ -17,6 +17,7 @@ class Textures {
     static var particleTexture: GLuint = 0
     static var fbTexture: GLuint = 0
     static var twitterTexture: GLuint = 0
+    static var muteTexture: GLuint = 0
     
     static func loadTextures() {
         fffForwardFontTexture = loadTextureFromFile("forward.png")
@@ -25,6 +26,7 @@ class Textures {
         particleTexture = loadTextureFromFile("Particle.png")
         fbTexture = loadTextureFromFile("facebook.png")
         twitterTexture = loadTextureFromFile("twitter.png")
+        muteTexture = loadTextureFromFile("mute.png")
     }
     
     private static func loadTextureFromFile(fileName: String) -> GLuint {

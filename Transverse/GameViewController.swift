@@ -215,5 +215,9 @@ class GameViewController: GLKViewController {
         }
         return false
     }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
 }
 

@@ -99,6 +99,7 @@
 		D0E470511CF031C70003E80D /* SolidImage.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470501CF031C70003E80D /* SolidImage.vsh */; };
 		D0E470531CF031E10003E80D /* SolidLine.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470521CF031E10003E80D /* SolidLine.fsh */; };
 		D0E470551CF031F60003E80D /* SolidLine.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D0E470541CF031F60003E80D /* SolidLine.vsh */; };
+		D75743E11D15196500750604 /* mute.png in Resources */ = {isa = PBXBuildFile; fileRef = D75743E01D15196500750604 /* mute.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,6 +208,7 @@
 		D0E470501CF031C70003E80D /* SolidImage.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidImage.vsh; sourceTree = "<group>"; };
 		D0E470521CF031E10003E80D /* SolidLine.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidLine.fsh; sourceTree = "<group>"; };
 		D0E470541CF031F60003E80D /* SolidLine.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SolidLine.vsh; sourceTree = "<group>"; };
+		D75743E01D15196500750604 /* mute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mute.png; sourceTree = "<group>"; };
 		FFFCCD009A5128190079054C /* Pods-TransverseUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransverseUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TransverseUITests/Pods-TransverseUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -330,6 +332,7 @@
 				D07A0CA91D063D9D00733DF9 /* trophy.png */,
 				D02DC5421D0CD9830030F868 /* facebook.png */,
 				D02DC5441D0CD9A40030F868 /* twitter.png */,
+				D75743E01D15196500750604 /* mute.png */,
 				D03412DE1CFCFACA00ECDCAC /* SplashScreen.swift */,
 				D074C44E1CF140BE001A3AFC /* UtilityMath.swift */,
 				D074C44A1CF12B45001A3AFC /* SolidRenderType.swift */,
@@ -521,6 +524,7 @@
 			files = (
 				D0B646A21CF6BC960071555C /* point.fsh in Resources */,
 				D0A2398F1CF6CA8300A53FDA /* Particle.png in Resources */,
+				D75743E11D15196500750604 /* mute.png in Resources */,
 				D0E4701C1CF02EB40003E80D /* Main.storyboard in Resources */,
 				D0B646A01CF6BC890071555C /* point.vsh in Resources */,
 				D03412DD1CFCF02A00ECDCAC /* splashscreen.png in Resources */,
